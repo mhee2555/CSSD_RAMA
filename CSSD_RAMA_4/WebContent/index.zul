@@ -1,0 +1,48 @@
+<?page title="CSSD" contentType="text/html;charset=UTF-8"?>
+<?link rel="shortcut icon" type="image/x-icon" href="/images/pose_favicon.ico"?>
+<?link rel="icon" type="image/x-icon" href="/images/pose_favicon.ico"?>
+
+<zk xmlns:w="client">
+
+	<script type="text/javascript" src="/js/jquery.watermarkinput.js" />
+	
+	<borderlayout apply="com.poseintelligence.cssd.transaction.CssdLogin">
+		<west border="none" width="35%">
+			<hlayout hflex="1">
+				
+				<hlayout width="75px" />
+				
+				<vlayout vflex="1" spacing="10px">
+				
+					<vlayout height="75px" />
+			
+					<image src="/images/logo.png" width="200px" height="94px"/>
+					
+					<vlayout height="25px" />
+				
+					<label value="เข้าสู่ระบบ" style="color: #2e5fbd;font-size:20px;" />
+					<label id="Label_Caption" value="เข้าสู่ระบบ" style="color: #333333;font-size:16px;" />
+					
+					<vlayout height="25px" />
+					
+					<textbox id="Textbox_UserName" type="text" width="400px" style="text-align:center;color: #333333;font-size:18px;" w:onBind="jq(this).Watermark('ชื่อผู้ใช้งาน','gray')"/>
+					
+					<textbox id="Textbox_Password" type="password" width="400px" style="text-align:center;color: #333333;font-size:18px;" w:onBind="jq(this).Watermark('รหัสผ่าน','gray')"/>
+					
+					<vlayout height="25px" />
+					
+					<button id="Button_Submit" label="เข้าสู่ระบบ" width="400px" height="35px" style="color:#ffffff;background: #2e5fbd;border-radius: 4px;"/>
+					
+					<label id="Label_DB" value="${param['db']}" visible="false" />
+				</vlayout>
+			</hlayout>
+			
+		</west>
+		
+		<center border="none">
+			<image src="/images/background.png" width="100%" height="100%"/>
+		</center>
+		
+	</borderlayout>
+	
+</zk>

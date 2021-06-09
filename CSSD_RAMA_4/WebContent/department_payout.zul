@@ -1,0 +1,181 @@
+<?page title="department_payout" contentType="text/html;charset=UTF-8"?>
+<zk>
+	<window id="WindowForm" apply="com.poseintelligence.cssd.transaction.DepartmentPayout" border="normal" height="100%" width="100%">
+		<vlayout vflex="1" style="background: #2e5fbd;border-radius: 12px 12px 12px 12px;padding-top:12px;padding-bottom:12px;padding-left:12px;padding-right:12px;">	
+			<borderlayout style="background: #2e5fbd;" vflex="1" >
+				
+				<!-- Title -->
+				<north height="75px" style="background: #2e5fbd;" splittable="false" border="none">
+					<hlayout height="65px" valign="middle">
+					
+						<space/>
+					
+        				<label value="จ่ายเครื่องมือให้แผนก" style="font-size:24px;color:#FFFFFF;font-weight:bold;"/>
+        				
+        				<space/>
+        				
+        				<label id="Label_Department" value="" style="font-size:16px;color:#FFFFFF;"/>
+       					
+       					<space hflex="1"/>
+    
+						<textbox id="Textbox_Input" style="font-size:14px;position:relative;top:0px;left:0px;background: #ffffff;border: 1px solid #AAAAAA; color:#666666;border-radius: 12px 12px 12px 12px;" width="205px" height="35px"/>
+						<image id="Image_Qr" style="position:relative;top:1px;right:38px;cursor: pointer;" src="/images/qr_dropdown.png" width="28px" height="28px"/>
+						
+						<checkbox id="Checkbox_Mode" style="font-size:14px;color:#FFFFFF;font-weight:bold;position:relative;right:18px;" mold="switch" label="เพิ่ม" checked="false"/>
+	        		</hlayout>
+				</north>
+				
+		        <!-- Department -->
+		        <west width="15%" splittable="false" border="none" style="background: #FFFFFF;border-radius: 12px 12px 12px 12px;padding-top:12px;padding-bottom:12px;padding-left:12px;padding-right:12px;">
+			        <vlayout vflex="1">
+				        <hlayout valign="middle">
+				        	<space hflex="1"/>
+							<textbox id="Textbox_SerarhDepartment" style="font-size:14px;position:relative;top:0px;left:0px;background: #ffffff;border: 1px solid #AAAAAA; color:#666666;border-radius: 12px 12px 12px 12px;" width="190px" height="35px"/>
+							<image id="Image_Search" style="position:relative;top:0px;right:38px;cursor: pointer;" src="/images/ic_search_c.png" width="28px" height="28px"/>
+		        		</hlayout>
+	        		
+				 		<listbox id="Listbox_Department" vflex="true">
+							<listhead style="background: #2e5fbd;">
+			        			<listheader label="แผนก-ห้อง" width="100%" style="background: #2e5fbd;color:#FFFFFF;font-size:18px;"/>
+		        			</listhead>
+		        		</listbox>
+		        	</vlayout>	
+		        </west>
+		        
+		        <!-- Document -->
+		        <center border="0" style="background: #2e5fbd;padding-top:0px;padding-bottom:0px;padding-left:12px;padding-right:12px;">
+		        	<vlayout vflex="1" style="background: #FFFFFF;border-radius: 12px 12px 12px 12px;padding-top:12px;padding-bottom:12px;padding-left:12px;padding-right:12px;">
+				 		<listbox id="Listbox_Document" vflex="true">
+							<listhead style="background: #2e5fbd;">
+			        			<listheader style="background: #2e5fbd;color:#FFFFFF;">
+			        				<hlayout height="40px" valign="middle">	
+			        					<label value="ใบจ่ายของให้แผนก" style="font-size:18px;color:#FFFFFF;"/>
+
+       									<space hflex="1" visible="false"/>
+       									<label id="Label_Search" value="ยังไม่ปิด" style="font-size:18px;color:#FFFFFF;" visible="false"/>
+			        					<checkbox id="Checkbox_Search" style="font-size:18px;color:#FFFFFF;" mold="switch" checked="false" vflex="1" visible="false"/>
+
+			        				</hlayout>
+			        			</listheader>
+		        			</listhead>
+		        		</listbox>
+		        	</vlayout>
+		        </center>
+		        
+		        <!-- Item -->
+		        
+		        <east width="50%" splittable="false" border="none" style="background: #FFFFFF;border-radius: 12px 12px 12px 12px;padding-top:12px;padding-bottom:12px;padding-left:12px;padding-right:12px;">
+			        <vlayout vflex="1">
+				 		<listbox id="Listbox_Item" vflex="true">
+							<listhead style="background: #2e5fbd;">
+								<listheader label="No." width="45px" style="background: #2e5fbd;color:#FFFFFF;font-size:18px;"/>
+			        			<listheader label="รายการ"  style="background: #2e5fbd;color:#FFFFFF;font-size:18px;"/>
+			        			<listheader label="สต๊อก" width="100px" style="background: #2e5fbd;color:#FFFFFF;font-size:18px;" align="center"/>
+			        			<listheader label="ยิงจ่าย" width="100px" style="background: #2e5fbd;color:#FFFFFF;font-size:18px;" align="center"/>
+		        			</listhead>
+		        		</listbox>
+		        	</vlayout>	
+		        </east>
+		        
+		        <south height="75px" style="background: #2e5fbd;" splittable="false" border="none">
+		       	 	<div align="right" style="position:relative;top:16px;">
+	        			<image id="Image_ShowDocument" src="/images/bt_importnewint3.png" style="position:relative;top:0px;left:0px;cursor: pointer;" width="121px" height="54px"/>
+	        			<image id="Image_ShowReport" src="/images/bt_importnewint1.png" style="position:relative;top:0px;left:0px;cursor: pointer;" width="121px" height="54px"/>
+	        			<image id="Image_CloseDocument" src="/images/bt_close_payout.png" style="position:relative;top:0px;left:0px;cursor: pointer;" width="141px" height="54px"/>
+	        		</div>
+		        </south>
+		        
+		   	</borderlayout>
+	   	</vlayout>
+	</window>
+	
+	<!-- Info -->
+	<window id="Window_Document" border="normal" closable="true" visible="false" onClose="event.stopPropagation();self.setVisible(false);" >
+		<caption label="ข้อมูลการจ่ายย้อนหลัง" image="/images/ic_stock_w.png" style="background: #2e5fbd;color:#FFFFFF;font-size:20px;"/>
+		<borderlayout style="border:0px solid #FEFEFE;background: #FFFFFF;border-radius: 4px;">
+	        			
+			<north border="none" height="50px">
+				<hlayout valign="middle">
+         			
+					<div height="50px" width="20px" />
+	
+					<label value="แผนก" style="font-size:14px;color:#333333;"/>
+					<combobox id="Combobox_Department" width="99%" style="font-size:14px;background:#FFFFFF;"/>
+					
+					<label value="วันที่" style="font-size:14px;color:#333333;"/>
+					<datebox id="Datebox_DocDateSterileHistory" width="125px" format="dd-MM-yyyy" style="font-size:14px;" />
+					
+					<label value="ค้นหาเอกสาร"  style="font-size:14px;color:#333333;"/>
+					<textbox id="Textbox_Input" style="font-size:14px;position:relative;top:0px;left:0px;background: #ffffff;border: 1px solid #AAAAAA; color:#666666;" width="205px" height="35px" />
+							
+					<image id="Image_Search" style="position:relative;top:0px;right:35px;" src="/images/ic_search_c.png" width="24px" height="24px"/>
+					
+				</hlayout>
+			</north>
+			
+			<west border="none" width="45%">
+				<vlayout vflex="true">
+			 		<listbox id="Listbox_Document" vflex="true" mold="paging" pageSize="50" multiple="false" width="98%">
+				  		<listhead style="background: #2e5fbd;">
+				  			<listheader label="แผนก" style="background: #2e5fbd;color:#FFFFFF;font-size:14px;"/>
+				  			<listheader label="วันที่" width="125px" align="center" style="background: #2e5fbd;color:#FFFFFF;font-size:14px;"/>
+				  			<listheader label="เอกสาร" width="125px" align="center" style="background: #2e5fbd;color:#FFFFFF;font-size:14px;"/>
+				  			<listheader label="สถานะ" width="125px" align="center" style="background: #2e5fbd;color:#FFFFFF;font-size:14px;"/>
+			 			</listhead>
+			 		</listbox>
+				</vlayout>
+			</west>
+			
+			<center border="none">
+				<vlayout vflex="true">
+			 		<listbox id="Listbox_Detail" vflex="true" mold="paging" pageSize="50" multiple="false" width="98%">
+				  		<listhead style="background: #2e5fbd;">
+				  			<listheader label="No." width="40px" align="center" style="background: #2e5fbd;color:#FFFFFF;font-size:14px;"/>
+				            <listheader label="รหัสอุปกรณ์" width="125px" align="center" style="background: #2e5fbd;color:#FFFFFF;font-size:14px;"/>
+			        		<listheader label="ชื่ออุปกรณ์"  style="background: #2e5fbd;color:#FFFFFF;font-size:14px;"/>
+			        		<listheader label="จำนวน" width="70px" align="center" style="background: #2e5fbd;color:#FFFFFF;font-size:14px;"/>
+			 			</listhead>
+			 		</listbox>
+				</vlayout>
+			</center>
+			
+			<south height="75px" style="background: #2e5fbd;" splittable="false" border="none">
+	       	 	<div align="right" style="position:relative;top:16px;">
+        			<image id="Image_ShowReport" src="/images/bt_importnewint1.png" style="position:relative;top:0px;left:0px;cursor: pointer;" width="121px" height="54px"/>
+        		</div>
+	        </south>
+
+		</borderlayout>
+	</window>
+	
+	<!-- Item Sub-->
+	<window id="Window_ItemDetailSub" border="normal" closable="true" visible="false" onClose="event.stopPropagation();self.setVisible(false);" >
+		<caption label="" image="/images/ic_stock_w.png" style="background: #2e5fbd;color:#FFFFFF;font-size:20px;"/>
+		<vlayout vflex="1">
+	 		<listbox vflex="true">
+				<listhead style="background: #2e5fbd;">
+					<listheader label="No." width="45px" style="background: #2e5fbd;color:#FFFFFF;font-size:18px;"/>
+        			<listheader label="Usage Code" style="background: #2e5fbd;color:#FFFFFF;font-size:18px;" align="center"/>
+       			</listhead>
+       		</listbox>
+       	</vlayout>	
+	</window>
+	
+	<!-- Report-->
+	<window id="Window_Report" border="normal" closable="true" visible="false" onClose="event.stopPropagation();self.setVisible(false);" >
+		<caption label="" image="/images/ic_stock_w.png" style="background: #2e5fbd;color:#FFFFFF;font-size:20px;"/>
+		<vlayout vflex="1">
+	 		<iframe id="Iframe_Report" vflex="1" width="100%"/>
+       	</vlayout>	
+	</window>
+
+	<!-- Info -->
+	<window id="Window_PopUp" border="normal" closable="true" visible="false" onClose="event.stopPropagation();self.setVisible(false);" />
+
+	<!-- In Process-->
+	<window id="WinProcess" border="normal" width="175px" height="175px" visible="false" onClick="self.setVisible(false);">
+		<div align="center">
+			<image src="/images/loading3_3.gif" width="2000px" height="200px" />
+		</div>
+	</window>
+</zk>

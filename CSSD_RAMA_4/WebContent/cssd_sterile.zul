@@ -1,0 +1,8 @@
+<?page title="new page title" contentType="text/html;charset=UTF-8"?>
+<zk>
+<window apply="com.poseintelligence.cssd.transaction.CssdSterile" border="normal">
+
+	<button id="Button_Print" label="Print" image="/images/ic_import.png" width="125px" height="25px" style="color:#ffffff;background: #d9534f;border-radius: 4px;" />
+					
+</window>
+</zk>

@@ -1,0 +1,48 @@
+<zk xmlns:w="client">
+	<style>
+		body, html { height: 100%; }
+
+		body { padding: 0 0; /* 0 padding on top and bottom and 0
+		padding on right and left */
+		<!-- background image -->
+		background-image: url('images/timeout_cssd.png');
+
+		background-position: center center; background-repeat: no-repeat;
+		background-size: cover; }
+	</style>
+	
+	<zscript>
+		<![CDATA[ 
+		         
+				import javax.servlet.http.Cookie;
+				import javax.servlet.http.HttpServletRequest;
+				import javax.servlet.http.HttpServletResponse;
+
+		         void goToPage(){
+		        	 
+		        	//get cookie
+		 			Cookie [] cookies = ((HttpServletRequest)Executions.getCurrent().getNativeRequest()).getCookies();
+		 			int i = 0;
+		 			
+		 			String S_DB = "";
+		 			
+		 			if (cookies != null) {
+		 			 	for (Cookie cookie : cookies) {
+		 			   		if (cookie.getName().equals("S_DB")) {
+		 				  		S_DB = "?db=" + cookies[i].getValue();
+		 			     		break;
+		 			    	}
+		 			   
+		 			   		i++;
+		 			  	}	
+		 			}
+		 					 		
+					Executions.sendRedirect("index.zul" + S_DB);
+					
+		         }
+		]]>
+	</zscript>
+
+	<timer id="Time" delay="5000" running="true" repeats="false" onTimer='goToPage();'/>
+
+</zk>

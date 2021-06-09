@@ -1,0 +1,53 @@
+<?page title="CSSD" contentType="text/html;charset=UTF-8"?>
+<?link rel="shortcut icon" type="image/x-icon" href="/images/pose_favicon.ico"?>
+<?link rel="icon" type="image/x-icon" href="/images/pose_favicon.ico"?>
+<zk>
+
+	<style>
+       tr.z-listitem-seld { background-image:none; background-color:yellow;}
+    </style>
+  
+  	<window id="WindowForm" apply="com.poseintelligence.cssd.transaction.DepartmentExpiringSoon" style="background: #2e5fbd;" border="normal" height="100%" width="100%">
+
+		<caption image="/images/ic_dep_equipment_w.png" style="background: #2e5fbd;color:#FFFFFF;font-size:20px;" label="เตือนของใกล้หมดอายุ (Warning)"/>
+		
+		<borderlayout height="100%" width="100%" >
+	        
+	        <north height="37px" border="none">
+	        	<div align="right" height="37px">
+	
+	           		<hlayout valign="middle" height="37px" >
+	           		
+						<label value="ค้นหารายการ"  style="color:#333333;"/>
+						
+						<textbox id="Textbox_Search" style="background: #ffffff;border: 1px solid #666666; color:#666666;" width="175px" />
+						
+						<button id="Button_SearchDoc" label="ค้นหา" image="/images/ic_search2_x24.png" width="100px" height="25px" style="color:#333333;background: #FFFFFF;"/>
+					
+						<space width="24px"/>
+					</hlayout>
+				</div>
+	        	
+	        </north>
+	        
+	        <center border="none">
+	        	<vlayout spacing="1px" vflex="true" style="background: #f4f4f4;">
+	        		<listbox id="Listbox_item_stock" vflex="true" mold="paging" pageSize="20" multiple="false">
+		        		<listhead>
+		        			<listheader label="No." width="50px" style="background: #3979dd;color:#FFFFFF;font-size:16px;"/>
+		        			<listheader label="รหัสอุปกรณ์" width="100px" align="center" style="background: #3979dd;color:#FFFFFF;font-size:16px;"/>
+		        			<listheader label="อุปกรณ์" style="background: #3979dd;color:#FFFFFF;font-size:16px;"/>
+		        			<listheader label="วันบรรจุห่อ" width="150px" align="center" style="background: #3979dd;color:#FFFFFF;font-size:16px;"/>
+		        			<listheader label="วันหมดอายุ" width="150px" align="center" style="background: #3979dd;color:#FFFFFF;font-size:16px;"/>
+		        			<listheader label="แผนก"  style="background: #3979dd;color:#FFFFFF;font-size:16px;"/>
+		        			<listheader label="สถานะ" width="150px" align="center" style="background: #3979dd;color:#FFFFFF;font-size:16px;"/>
+		        			<listheader label="UsageID" width="200px" align="center" style="background: #3979dd;color:#FFFFFF;font-size:16px;"/>
+	        			</listhead>
+	        		</listbox>
+	        	</vlayout>
+	        </center>
+	   
+	   	</borderlayout>
+	</window>
+        
+</zk>

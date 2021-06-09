@@ -1,0 +1,211 @@
+<?page title="CSSD" contentType="text/html;charset=UTF-8"?>
+<?link rel="shortcut icon" type="image/x-icon" href="/images/pose_favicon.ico"?>
+<?link rel="icon" type="image/x-icon" href="/images/pose_favicon.ico"?>
+<?taglib uri="http://www.zkoss.org/dsp/web/core" prefix="c" ?>
+
+<zk>
+	<style>
+		.h-inline-block { display: inline-block; _display: inline; }
+	</style>
+
+	<timer id="Time" delay="60000" running="true" repeats="true" />
+
+	<borderlayout id="Main" apply="com.poseintelligence.cssd.transaction.DepartmentMenu" height="100%" width="100%">
+	
+		<north border="none" height="60px">
+			<hbox width="100%" align="center" style="background: #FFFFFF;">
+			
+				<image src="/images/ic_pose_logo_4.png" height="57px" width="300px"/>
+				
+				<space hflex="1"/>
+				
+				<toolbar sclass="nav_toolbar" hflex="1" style="background: #FFFFFF;border: 0px white solid;" align="end">
+					<toolbarbutton id="Toolbarbutton_Project"
+						image="/images/ic_building.png"
+						style="font-size:14px;color:#333333;" 
+						tooltiptext="โปรเจ็ค"/>
+					<toolbarbutton id="Toolbarbutton_Branch"
+						image="/images/ic_home_x24g.png"
+						style="font-size:14px;color:#333333;" 
+						tooltiptext="แผนก"/>
+					<toolbarbutton id="Toolbarbutton_User"
+						image="/images/ic_user_x24g.png"
+						style="font-size:14px;color:#333333;"
+						tooltiptext="ผู้ใช้งาน" />
+					<toolbarbutton id="Toolbarbutton_Refresh"
+						image="/images/ic_refresh_x24g.png" label="รีเฟรซ"
+						tooltiptext="รีเฟรซ" style="font-size:14px;color:#333333;" />
+					<toolbarbutton id="Toolbarbutton_Logout"
+						image="/images/ic_logout_x24g.png" label="ออกจากระบบ"
+						tooltiptext="ออกจากระบบ" style="font-size:14px;color:#333333;" />
+				</toolbar>
+			</hbox>
+		</north>
+		
+		<center border="none">
+			<borderlayout>
+				<west id="MenuList" title="เมนูโปรแกรม" size="350px" minsize="200" maxsize="400" flex="true" splittable="true" collapsible="true" border="normal" autoscroll="true" open="true" >
+					<vlayout spacing="1px" vflex="true">
+						<tree id="TreeMenu" hflex="1" vflex="true">
+							<treechildren>
+
+								<treeitem id="Treeitem_MainMenu">
+									<treerow>
+										<treecell label="หน้าเมนูหลัก (Main)" image="/images/ic_home.png" />
+									</treerow>
+								</treeitem>
+
+								<treeitem id="Treeitem_StockReceive">
+									<treerow>
+										<treecell
+											label="รับของเข้าสต็อกแผนก (Stock Receive)"
+											image="/images/ic_receive_stock.png" />
+									</treerow>
+								</treeitem>
+								
+								<treeitem id="Treeitem_Payout">
+					                <treerow>
+					                    <treecell label="จ่ายของให้แผนก (Payout)" image="/images/ic_sendsterile.png"/>
+					                </treerow>								                
+					            </treeitem>
+
+								<treeitem id="Treeitem_UseEquipment">
+									<treerow>
+										<treecell
+											label="แผนกเบิกใช้อุปกรณ์ (Use Equipment)"
+											image="/images/ic_dep_equipment.png" />
+									</treerow>
+								</treeitem>
+
+								<treeitem id="Treeitem_SendSterile" open="false" >
+									<treerow>
+										<treecell
+											label="ใบส่งล้าง (Sendsterile)"
+											image="/images/ic_sendsterile.png" />
+									</treerow>
+
+									<treechildren>
+										<treeitem id="Treeitem_SendSterile1">
+											<treerow>
+												<treecell
+													label="ใบส่งล้าง  (อุปกรณ์ในแผนก)"
+													image="/images/ic_use_equipment.png" />
+											</treerow>
+										</treeitem>
+
+										<treeitem id="Treeitem_SendSterile2">
+											<treerow>
+												<treecell
+													label="ใบส่งล้าง  (ไม่มีรหัสใช้งาน) "
+													image="/images/ic_use_equipment.png" />
+											</treerow>
+										</treeitem>
+
+									</treechildren>
+								</treeitem>
+								
+								<treeitem id="Treeitem_Report" open="false">
+									<treerow>
+										<treecell
+											label="รายงาน (Report)"
+											image="/images/ic_sendsterile.png" />
+									</treerow>
+
+									<treechildren>
+										<treeitem id="Treeitem_Report1">
+											<treerow>
+												<treecell
+													label="รายงานบันทึกรับอุปกรณ์"
+													image="/images/ic_sendsterile.png" />
+											</treerow>
+										</treeitem>
+
+										<treeitem id="Treeitem_Report2">
+											<treerow>
+												<treecell
+													label="รายงานจ่ายอุปกรณ์"
+													image="/images/ic_sendsterile.png" />
+											</treerow>
+										</treeitem>
+										
+										<treeitem id="Treeitem_Report3">
+											<treerow>
+												<treecell
+													label="รายงานส่งฆ่าเชื้ออุปกรณ์หมดอายุ"
+													image="/images/ic_sendsterile.png" />
+											</treerow>
+										</treeitem>
+										
+										<treeitem id="Treeitem_Report4">
+											<treerow>
+												<treecell
+													label="รายงานบันทึกการส่งอุปกรณ์ฆ่าเชื้อ"
+													image="/images/ic_sendsterile.png" />
+											</treerow>
+										</treeitem>
+
+									</treechildren>
+								</treeitem>
+								
+								<treeitem id="Treeitem_Tracking">
+									<treerow>
+										<treecell
+											label="ติดตามเครื่องมือ (Tracking)"
+											image="/images/ic_requistion.png" />
+									</treerow>
+								</treeitem>
+								
+								<treeitem id="Treeitem_Borrow">
+									<treerow>
+										<treecell
+											label="ยืม-คืนเครื่องมือระหว่างแผนก (Borrow)"
+											image="/images/ic_requistion.png" />
+									</treerow>
+								</treeitem>
+								
+								<treeitem id="Treeitem_Requisition">
+									<treerow>
+										<treecell
+											label="ขอเบิกอุปกรณ์จากจ่ายกลาง (Requisition)"
+											image="/images/ic_requistion.png" />
+									</treerow>
+								</treeitem>
+
+								<treeitem id="Treeitem_Stock">
+									<treerow>
+										<treecell
+											label="ข้อมูลสต็อก  (Stock)" image="/images/ic_stock.png" />
+									</treerow>
+								</treeitem>
+
+								<treeitem id="Treeitem_Setting">
+									<treerow>
+										<treecell
+											label="ตั้งค่าระบบ  (Setting)" image="/images/ic_settings.png" />
+									</treerow>
+								</treeitem>
+
+							</treechildren>
+						</tree>
+					</vlayout>
+				</west>
+
+				<center border="none" style="background: #f1f6fd;" autoscroll="false">
+					<include id="Include_Src" mode="auto" height="100%" width="100%" />
+				</center>
+				
+			</borderlayout>
+
+		</center>
+	</borderlayout>
+
+	<!-- Info -->
+	<window id="Window_PopUp" border="normal" closable="true" visible="false" onClose="event.stopPropagation();self.setVisible(false);" />
+
+	<!-- In Process-->
+	<window id="WinProcess" border="normal" width="175px" height="175px" visible="false" onClick="self.setVisible(false);">
+		<div align="center">
+			<image src="/images/loading3_3.gif" width="165px" height="165px" />
+		</div>
+	</window>
+</zk>

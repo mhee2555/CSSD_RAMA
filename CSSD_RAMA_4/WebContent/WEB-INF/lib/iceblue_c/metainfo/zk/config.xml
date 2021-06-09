@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<config>
+	<config-name>iceblue_c</config-name><!-- used to resolve dependency -->
+	<depends>zul</depends>
+	<version>
+		<version-class>org.zkoss.theme.iceblue_c.Version</version-class>
+		<version-uid>9.5.0.1</version-uid>
+	</version>
+
+	<listener>
+		<listener-class>org.zkoss.theme.iceblue_c.ThemeWebAppInit</listener-class>
+	</listener>
+</config>

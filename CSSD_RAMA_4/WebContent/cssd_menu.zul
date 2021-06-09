@@ -1,0 +1,107 @@
+<?page title="CSSD" contentType="text/html;charset=UTF-8"?>
+<?link rel="shortcut icon" type="image/x-icon" href="/images/pose_favicon.ico"?>
+<?link rel="icon" type="image/x-icon" href="/images/pose_favicon.ico"?>
+<?taglib uri="http://www.zkoss.org/dsp/web/core" prefix="c" ?>
+
+<zk>
+    <style>
+	    .h-inline-block {
+	        display: inline-block;
+	        _display: inline;
+	    }
+    </style>
+    
+	<timer id="Time" delay="60000" running="true" repeats="true"/>
+		    
+    <borderlayout id="Main" apply="com.poseintelligence.cssd.transaction.DepartmentMenu" height="100%" width="100%" >
+        <center border="none">
+            <tabbox id="Tabbox" height="100%" >
+                <tabs id="Tabs" >
+                    <tab label="หน้าหลัก" image="/images/ic_home_x24g.png"/>
+                </tabs> 
+               
+               <toolbar sclass="nav_toolbar" >
+	            	<toolbarbutton id="Toolbarbutton_Branch" image="/images/ic_home_x24g.png" style="font-size:14px;color:#333333;"/>
+	            	<toolbarbutton id="Toolbarbutton_User" image="/images/ic_user_x24g.png" style="font-size:14px;color:#333333;"/>
+	            	<toolbarbutton id="Toolbarbutton_Refresh" image="/images/ic_refresh_x24g.png" label="รีเฟรซ" tooltiptext="รีเฟรซ" style="font-size:14px;color:#333333;" />
+	            	<toolbarbutton id="Toolbarbutton_Logout" image="/images/ic_logout_x24g.png" label="ออกจากระบบ" tooltiptext="ออกจากระบบ" style="font-size:14px;color:#333333;" />
+	        	</toolbar>
+				
+                <tabpanels id="Tabpanels">
+                    <tabpanel style="">
+                        <borderlayout>
+                            <west id="MenuList" title="เมนูโปรแกรม" size="300px" minsize="200" maxsize="400" flex="true" splittable="true" collapsible="true" border="normal" autoscroll="true" open="true">
+						        <vlayout spacing="1px" vflex="true">
+							        <tree id="tree" hflex="1" vflex="true">
+								        <treechildren>
+								            <treeitem id="Treeitem_1">
+								                <treerow>
+								                    <treecell label="รับของเข้าสต็อก (Receive Stock)" image="/images/ic_home_x32.png"/>
+								                </treerow>								                
+								            </treeitem>
+								            
+								            <treeitem id="Treeitem_2">
+								                <treerow>
+								                    <treecell label="จ่ายของให้แผนก(Payout)" image="/images/ic_home_x32.png"/>
+								                </treerow>								                
+								            </treeitem>
+
+								            <treeitem open="false">
+								                <treerow>
+								                    <treecell label="ใบส่งล้าง Sendsterile" image="/images/ic_home_x32.png"/>
+								                </treerow>
+								                
+								                <treechildren >
+										            <treeitem id="Treeitem_21">
+										                <treerow>
+										                    <treecell label="ใบส่งล้าง Sendsterile" image="/images/ic_home_x32.png"/>
+										                </treerow>								                
+										            </treeitem>
+										            
+										            <treeitem id="Treeitem_22">
+										                <treerow>
+										                    <treecell label="ใบส่งล้าง (ไม่มีรหัสใช้งาน) "  image="/images/ic_home_x32.png"/>
+										                </treerow>								                
+										            </treeitem>
+										            
+									            </treechildren>								                
+								            </treeitem>
+								            
+								           <treeitem id="Treeitem_3">
+								                <treerow>
+								                    <treecell label="ข้อมูลสต็อก Stock" image="/images/ic_home_x32.png"/>
+								                </treerow>								                
+								            </treeitem>
+								            
+								            <treeitem id="Treeitem_4">
+								                <treerow>
+								                    <treecell label="ตั้งค่าระบบ Setting" image="/images/ic_home_x32.png"/>
+								                </treerow>								                
+								            </treeitem>
+								            
+							            </treechildren>
+							    	</tree>             						          	      	
+						        </vlayout>
+					        </west>   
+					                            
+                            <center border="none" style="background: #AAAAAA;" autoscroll="false">	  
+                            	<include id="Include_Src" mode="auto" height="100%" width="100%"/>
+                            </center>
+                        </borderlayout>
+                    </tabpanel>
+
+                </tabpanels>
+            </tabbox>
+        </center>
+    </borderlayout>
+    
+    <!-- Info -->
+    <window id="Window_PopUp" border="normal" closable="true" visible="false" onClose="event.stopPropagation();self.setVisible(false);" />
+    
+	<!-- In Process-->
+	<window id="Window_Process" border="normal" width="175px" height="175px" visible="false" onClick="self.setVisible(false);">
+		<div align="center">
+		  	<image src="/images/loading3_3.gif" width="160px" height="160px" />
+		</div>
+	</window>
+</zk>

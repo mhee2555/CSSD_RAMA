@@ -1,0 +1,58 @@
+<?page title="CSSD" contentType="text/html;charset=UTF-8"?>
+<?link rel="shortcut icon" type="image/x-icon" href="/images/pose_favicon.ico"?>
+<?link rel="icon" type="image/x-icon" href="/images/pose_favicon.ico"?>
+<zk>
+
+	<style>
+       tr.z-listitem-seld { background-image:none; background-color:yellow;}
+    </style>
+  
+  	<window id="WindowForm" apply="com.poseintelligence.cssd.transaction.DepartmentExpire" style="background: #2e5fbd;" border="normal" height="100%" width="100%">
+	
+		<caption image="/images/ic_dep_equipment_w.png" style="background: #2e5fbd;color:#FFFFFF;font-size:20px;" label="เตือนของหมดอายุ (Expire)"/> 
+	
+		<borderlayout height="100%" width="100%" >
+	        
+	        <north height="37px" border="none">
+	        	<div align="right" height="37px">
+	
+	           		<hlayout valign="middle" height="37px" >
+	           		
+						<label value="ค้นหารายการ"  style="color:#333333;position:relative;top:0px;left:30px;"/>
+						
+						<textbox id="Textbox_Search" style="position:relative;top:0px;left:33px;background: #ffffff;border: 1px solid #666666; color:#666666;" width="175px" />
+						
+						<image id="Image_SearchDoc" style="position:relative;top:0px;" src="/images/ic_search_c.png" width="24px" height="24px"/>
+								
+						<button id="Button_SearchDoc" visible="false" label="ค้นหา" image="/images/ic_search.png" width="100px" height="25px" style="color:#333333;background: #f7f7f7;border-radius: 4px;"/>	
+						
+						<space />
+						
+						<button id="Button_Send" label="นำส่งล้าง" image="/images/ic_import.png" width="125px" height="25px" style="color:#ffffff;background: #d9534f;border-radius: 4px;"/>
+					</hlayout>
+				</div>
+	        	
+	        </north>
+	        
+	        <center border="none">
+	        	<vlayout spacing="1px" vflex="true" style="background: #f4f4f4;">
+	        		<listbox id="Listbox_item_stock" vflex="true" checkmark="true" mold="paging" pageSize="20" multiple="true">
+		        		<listhead>
+		        			<listheader label="No." width="80px" style="background: #3979dd;color:#FFFFFF;font-size:16px;"/>
+		        			<listheader label="รหัสอุปกรณ์" width="110px" align="center" style="background: #3979dd;color:#FFFFFF;font-size:16px;"/>
+		        			<listheader label="อุปกรณ์" style="background: #3979dd;color:#FFFFFF;font-size:16px;"/>
+		        			<listheader label="วันบรรจุห่อ" width="100px" align="center" style="background: #3979dd;color:#FFFFFF;font-size:16px;"/>
+		        			<listheader label="วันหมดอายุ" width="100px" align="center" style="background: #3979dd;color:#FFFFFF;font-size:16px;"/>
+		        			<listheader label="แผนก"  width="200px" style="background: #3979dd;color:#FFFFFF;font-size:16px;"/>
+		        			<listheader label="สถานะ" width="150px" align="center" style="background: #3979dd;color:#FFFFFF;font-size:16px;"/>
+		        			<listheader label="UsageID" width="150px" align="center" style="background: #3979dd;color:#FFFFFF;font-size:16px;"/>
+		        			<listheader label="หมดอายุ" width="85px" align="center" style="background: #3979dd;color:#FFFFFF;font-size:16px;"/>
+	        			</listhead>
+	        		</listbox>
+	        	</vlayout>
+	        </center>
+	        
+	   	</borderlayout>
+	</window>
+        
+</zk>

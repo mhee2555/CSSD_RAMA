@@ -1,0 +1,33 @@
+<?page title="CSSD" contentType="text/html;charset=UTF-8"?>
+<?link rel="shortcut icon" type="image/x-icon" href="/images/pose_favicon.ico"?>
+<?link rel="icon" type="image/x-icon" href="/images/pose_favicon.ico"?>
+<?taglib uri="http://www.zkoss.org/dsp/web/core" prefix="c" ?>
+
+<zk>
+
+	<style>
+        .sysWin .z-window-embedded-cnt ,
+        .sysWin .z-window-overlapped-cnt,
+        .sysWin .z-window-popup-cnt {padding: 0px;}
+
+        .bigbutton {
+            border-radius: 8px;
+        }
+        .bigbutton > i {
+            font-size: 150px;
+            opacity: 0.6;
+        }
+        .iceblue_c .bigbutton > i {
+            opacity: 0.9;
+        }
+    </style>
+
+	<window id="Window_Form" apply="com.poseintelligence.cssd.transaction.DepartmentPortal" style="background: #2e5fbd;" sclass="sysWin" border="normal" height="100%" width="100%">
+		
+		<caption image="/images/ic_home_w.png" style="background: #2e5fbd;color:#FFFFFF;font-size:20px;" label="หน้าเมนูหลัก "/> 
+		
+		<hbox id="Hbox_form" spacing="12px"/>
+		
+	</window>
+
+</zk>

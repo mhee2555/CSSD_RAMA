@@ -1,0 +1,125 @@
+<?page title="CSSD" contentType="text/html;charset=UTF-8"?>
+<?link rel="shortcut icon" type="image/x-icon" href="/images/pose_favicon.ico"?>
+<?link rel="icon" type="image/x-icon" href="/images/pose_favicon.ico"?>
+<zk>
+
+	<style>
+       tr.z-listitem-seld { background-image:none; background-color:yellow;}
+    </style>
+  
+  	<window id="WindowForm"  style="background: #2e5fbd;" title="" border="normal" height="100%" width="100%" apply="com.poseintelligence.cssd.transaction.DepartmentTracking">
+	
+		<caption image="/images/ic_stock_w.png" style="background: #2e5fbd;color:#FFFFFF;font-size:20px;" label="ติดตามเครื่องมือ (Tracking)"/> 
+				
+		<borderlayout height="100%" width="100%" >
+	        
+	        <north height="37px" border="none">
+	        	<div align="left" height="37px">
+	
+	           		<hlayout valign="middle" height="37px" >
+	           		
+						<label value="ค้นหารายการ" />
+						
+						<textbox id="Textbox_Search" style="position:relative;top:0px;left:33px;background: #ffffff;border: 1px solid #666666; color:#666666;" width="165px" />
+								
+						<image id="Image_SearchDoc" style="position:relative;top:0px;" src="/images/ic_search_c.png" width="24px" height="24px"/>
+
+						<button id="Button_SearchDoc" label="ค้นหา" image="/images/ic_search2_x24.png" width="100px" height="25px" style="color:#333333;background: #FFFFFF;" visible="false"/>
+					
+					</hlayout>
+				</div>
+	        </north>
+	        
+	        <center border="none"  >
+	        	<vlayout spacing="1px"  vflex="true" style="background: #f4f4f4;">
+		        	<tree id="Treetracking"  width="100%"   style="background: #FFFFFF;" rows="20" pageSize="15" >
+						<treecols sizable="false">
+							<treecol align="center" width="50px" style="background: #2e5fbd;" />   
+	                      	<treecol label="รายการ"  align="center"  style="background: #2e5fbd;" />   
+							<treecol label="จำนวน"  align="center" width="100px" style="background: #2e5fbd;" />                       	
+	                       	<treecol label="หน่วยนับ"  align="center" width="100px" style="background: #2e5fbd;"/>
+	                      	
+	            		</treecols>
+					</tree>
+	        	</vlayout>
+	        </center>
+	        
+	        <east width="60%" splittable="true" >
+	        		<borderlayout height="100%" width="100%" >
+	        		
+				        <north height="100%" border="none">
+				        	<borderlayout>
+				        		<center border="none">
+				        			<borderlayout>
+				        				<north height="80%" border="none">
+				        					<div align="right" height="100%">		
+						           				<hlayout id="panelnorth" valign="middle" height="100%" visible="false" >
+						           		
+						           				<panel id="showDonut"  height="100%" width="100%" style="background: #ffffff;" ></panel>
+						           		
+
+												</hlayout>
+											</div>				        				
+				        				</north>
+				        				<south>
+				        					<vlayout id="panelsouth" spacing="1px" vflex="true" visible="false">
+												<hlayout>
+													<label id="labelLastTime" > </label>
+												</hlayout>
+						
+												<hlayout>
+													<textbox id="txtLastMins"  > </textbox>
+												</hlayout>
+						
+												<hlayout>
+													<label id="labelTimeDetail"> </label>
+												</hlayout>
+									
+											</vlayout>
+				        				</south>
+				        			
+				        			</borderlayout>
+				        		
+				        		
+					        		
+				        		</center>
+				        		
+				        		<west border="none" width="50%">
+				        			<div align="left" height="100%">		
+						           		<hlayout valign="middle" height="100%">
+			
+											<panel id="showStep" height="100%" width="100%" style="background: #ffffff;" ></panel>
+	
+										</hlayout>
+									</div>
+				        		</west>
+				        		
+		        		
+								
+				        	</borderlayout>
+				        </north>
+
+	        		
+	        		</borderlayout>
+
+					
+					
+					
+					
+					
+	        </east>
+	        
+	   	</borderlayout>
+	</window>
+	
+	<!-- Info -->
+	<window id="Window_PopUp" border="normal" closable="true" visible="false" onClose="event.stopPropagation();self.setVisible(false);" />
+
+	<!-- In Process-->
+	<window id="WinProcess" border="normal" width="175px" height="175px" visible="false" onClick="self.setVisible(false);">
+		<div align="center">
+			<image src="/images/loading3_3.gif" width="2000px" height="200px" />
+		</div>
+	</window>
+        
+</zk>

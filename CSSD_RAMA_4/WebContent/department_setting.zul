@@ -1,0 +1,164 @@
+<?page title="CSSD" contentType="text/html;charset=UTF-8"?>
+<?link rel="shortcut icon" type="image/x-icon" href="/images/pose_favicon.ico"?>
+<?link rel="icon" type="image/x-icon" href="/images/pose_favicon.ico"?>
+<?taglib uri="http://www.zkoss.org/dsp/web/core" prefix="c" ?>
+
+<zk>
+
+	<style>
+        .sysWin .z-window-embedded-cnt ,
+        .sysWin .z-window-overlapped-cnt,
+        .sysWin .z-window-popup-cnt {padding: 0px;}
+
+		.z-row:hover > .z-row-inner, .z-row:hover > .z-cell {background:#65bfe9; !important}
+    </style>
+
+	
+
+	<window id="WindowForm" apply="com.poseintelligence.cssd.transaction.DepartmentSetting" style="background: #2e5fbd;" title="" sclass="sysWin" border="normal" height="100%" width="100%">
+		
+		<caption image="/images/ic_settings_w.png" style="background: #2e5fbd;color:#FFFFFF;font-size:20px;" label="ตั้งค่าระบบ (Setting)"/> 
+		
+		<grid>
+	        <columns>
+	            <column/>
+	            <column width="160px" align="center"/>
+	        </columns>
+	        <auxhead>
+	            <auxheader colspan="2" label="1. ตั้งค่าเมนูรับของเข้าสต๊อก" style="background: #2e5fbd;color:#FFFFFF;"/>
+	        </auxhead>
+	        <rows>
+	        	<row>
+		            <hlayout>
+		            	<space width="35px"/>
+		                <label value="แผนกรับอุปกรณ์เข้าสต๊อกเอง" />
+	                </hlayout>
+	                <checkbox id="Checkbox_RC_IsUsedReceiveManual" mold="switch" />
+	            </row> 
+	            
+	            <row>
+		            <hlayout>
+		            	<space width="35px"/>
+		                <label value="สแกนรับอุปกรณ์เข้าสต๊อกแผนก (เปิด/ปิด)" />
+	                </hlayout>
+	                <checkbox id="Checkbox_RC_IsUsedReceiveByBarCode" mold="switch" />
+	            </row> 
+	        </rows>
+	    </grid>
+	    
+	    <grid>
+	        <columns>
+	            <column/>
+	            <column width="160px" align="center"/>
+	        </columns>
+	        <auxhead>
+	            <auxheader colspan="2" label="2. ตั้งค่าเมนูเบิกใช้อุปกรณ์" style="background: #2e5fbd;color:#FFFFFF;"/>
+	        </auxhead>
+	        <rows>
+	        	<row>
+	                <hlayout>
+		            	<space width="35px"/>
+		                <label value="ใช้งานเมนูเบิกใช้อุปกรณ์" />
+	                </hlayout>
+	                <checkbox id="Checkbox_DP_IsUsedDispatch" mold="switch"/>
+	            </row> 
+	            
+	            <row>
+	                <hlayout>
+		            	<space width="35px"/>
+		                <label value="สแกนตัดรหัสใช้งานจากสต๊อกแผนก" />
+	                </hlayout>
+	                <checkbox id="Checkbox_DP_IsUsedDispatchByBarCode" mold="switch"/>
+	            </row> 
+	        </rows>
+	    </grid>
+	    
+	    <grid>
+	        <columns>
+	            <column/>
+	            <column width="160px" align="center"/>
+	        </columns>
+	        <auxhead>
+	            <auxheader colspan="2" label="3. ตั้งค่าทั่วไป" style="background: #2e5fbd;color:#FFFFFF;"/>
+	        </auxhead>
+	        <rows>
+	            <row>
+	                <div>
+		            	<space width="35px"/>
+		                <label value="กำหนดการแจ้งเตือนของอุปกรณ์ใกล้หมดอายุ " />
+		                <space width="35px"/>
+		                <intbox id="Intbox_GN_WarningExpiringSoonDay" width="50px" style="text-align:center;font-weight:bold;" constraint="no negative"/>
+		                <label value="วัน " />
+	                </div>
+	                <checkbox id="Checkbox_GN_IsUsedWarningExpiringSoon" mold="switch"/>
+	            </row> 
+	            
+	            <row>
+	                <hlayout>
+		            	<space width="35px"/>
+		                <label value="กำหนดการแจ้งเตือนของอุปกรณ์หมดอายุ " />
+	                </hlayout>
+	                <checkbox id="Checkbox_GN_IsUsedWarningExpire" mold="switch"/>
+	            </row> 
+	        </rows>
+	    </grid>
+	    
+	    <grid>
+	        <columns>
+	            <column/>
+	            <column width="160px" align="center"/>
+	        </columns>
+	        <auxhead>
+	            <auxheader colspan="2" label="4. ตั้งค่ายืนยันส่งล้างอุปกรณ์" style="background: #2e5fbd;color:#FFFFFF;"/>
+	        </auxhead>
+	        <rows>
+	            <row>
+	                <hlayout>
+		            	<space width="35px"/>
+		                <label value="ไม่มีการยืนยันส่งล้าง ระบบจะบันทึกเอกสารส่งล้างทันที" />
+	                </hlayout>
+	                <checkbox id="Checkbox_SS_IsConfirmSendSterile" mold="switch"/>
+	            </row> 
+	            
+	            <row>
+	                <hlayout>
+		            	<space width="35px"/>
+		                <label value="ยืนยันก่อนส่งล้าง ระบบจะถามยืนยันการส่งล้าง" />
+	                </hlayout>
+	                <checkbox id="Checkbox_SS_IsUsedApproveBeforeSterile" mold="switch"/>
+	            </row> 
+	            
+	            <row>
+	                <hlayout>
+		            	<space width="35px"/>
+		                <label value="ยืนยันก่อนส่งล้าง ระบบให้สแกนรหัสพนักงาน" />
+	                </hlayout>
+	                <checkbox id="Checkbox_SS_IsUsedConfirmScanEmployee" mold="switch"/>
+	            </row> 
+	            
+	            <row>
+	                <hlayout>
+		            	<space width="35px"/>
+		                <label value="ค้นหาสถานะส่งล้าง" />
+	                </hlayout>
+	                
+	                <combobox id="Combobox_SS_IsFindStatus" width="150px" text="ทุกสถานะ" >
+	                	<comboitem label="ทุกสถานะ"/>
+		                <comboitem label="เบิกใช้ "/>
+		                <comboitem label="ไม่เบิกใช้ " />
+	                </combobox>
+	            </row> 
+	            
+	            <row>
+	                <hlayout>
+		            	<space width="35px"/>
+		                <label value="ค้นหาเฉพาะรายการในแผนก" />
+	                </hlayout>
+	                
+	                <checkbox id="Checkbox_SS_IsFindItemDepartment" mold="switch"/>
+	            </row> 
+
+	        </rows>
+	    </grid>
+	</window>
+</zk>

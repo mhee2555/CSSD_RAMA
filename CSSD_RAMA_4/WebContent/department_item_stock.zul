@@ -1,0 +1,78 @@
+<?page title="CSSD" contentType="text/html;charset=UTF-8"?>
+<?link rel="shortcut icon" type="image/x-icon" href="/images/pose_favicon.ico"?>
+<?link rel="icon" type="image/x-icon" href="/images/pose_favicon.ico"?>
+<zk>
+
+	<style>
+       tr.z-listitem-seld { background-image:none; background-color:yellow;}
+    </style>
+  
+  	<window id="WindowForm" apply="com.poseintelligence.cssd.transaction.DepartmentItemStock" style="background: #2e5fbd;" title="" border="normal" height="100%" width="100%">
+	
+		<caption image="/images/ic_stock_w.png" style="background: #2e5fbd;color:#FFFFFF;font-size:20px;" label="ข้อมูลสต็อก (Stock)"/> 
+				
+		<borderlayout height="100%" width="100%" >
+	        
+	        <north height="37px" border="none">
+	        	<div align="right" height="37px">
+	
+	           		<hlayout valign="middle" height="37px" >
+	           		
+						<label value="ค้นหารายการ"  style="color:#333333;position:relative;top:0px;left:30  px;"/>
+						
+						<textbox id="Textbox_Search" style="position:relative;top:0px;left:33px;background: #ffffff;border: 1px solid #666666; color:#666666;" width="165px" />
+								
+						<image id="Image_SearchDoc" style="position:relative;top:0px;" src="/images/ic_search_c.png" width="24px" height="24px"/>
+
+						<button id="Button_SearchDoc" label="ค้นหา" image="/images/ic_search2_x24.png" width="100px" height="25px" style="color:#333333;background: #FFFFFF;" visible="false"/>
+					
+					</hlayout>
+				</div>
+	        	
+	        </north>
+	        
+	        <center border="none">
+	        	<vlayout spacing="1px" vflex="true" style="background: #f4f4f4;">
+	        		<listbox id="Listbox_item" vflex="true" mold="paging" pageSize="20" multiple="false" >
+		        		<listhead>
+		        			<listheader label="No." width="40px" style="background: #2e5fbd;color:#FFFFFF;font-size:16px;"/>
+		        			<listheader label="รหัส" width="90px" align="center" style="background: #2e5fbd;color:#FFFFFF;font-size:16px;"/>
+		        			<listheader label="ชื่ออุปกรณ์"  style="background: #2e5fbd;color:#FFFFFF;font-size:16px;"/>
+		        			<listheader label="จำนวนทั้งหมด" width="120px" align="center" style="background: #2e5fbd;color:#FFFFFF;font-size:16px;"/>
+		        			<listheader label="เบิกใช้" width="90px" align="center" style="background: #2e5fbd;color:#FFFFFF;font-size:16px;"/>
+		        			<listheader label="จำนวนคงเหลือ" width="120px" align="center" style="background: #2e5fbd;color:#FFFFFF;font-size:16px;"/>
+	        			</listhead>
+	        		</listbox>
+	        	</vlayout>
+	        </center>
+	        
+	        <east width="50%" splittable="true">
+	        	<vlayout spacing="1px" vflex="true" style="background: #f4f4f4;">
+	        		<listbox id="Listbox_item_stock" vflex="true" mold="paging" pageSize="20" multiple="false">
+		        		<listhead>
+		        			<listheader label="No." width="50px" style="background: #2e5fbd;color:#FFFFFF;font-size:16px;"/>
+		        			<listheader label="รหัสอุปกรณ์" width="120px" align="center" style="background: #2e5fbd;color:#FFFFFF;font-size:16px;"/>
+		        			<listheader label="วันบรรจุห่อ" width="100px" align="center" style="background: #2e5fbd;color:#FFFFFF;font-size:16px;"/>
+		        			<listheader label="วันหมดอายุ" width="100px" align="center" style="background: #2e5fbd;color:#FFFFFF;font-size:16px;"/>
+		        			<listheader label="แผนก"  style="background: #2e5fbd;color:#FFFFFF;font-size:16px;"/>
+		        			<listheader label="สถานะ" width="150px" align="center" style="background: #2e5fbd;color:#FFFFFF;font-size:16px;"/>
+		        			<listheader label="UsageID" width="150px" align="center" style="background: #2e5fbd;color:#FFFFFF;font-size:16px;"/>
+	        			</listhead>
+	        		</listbox>
+	        	</vlayout>
+	        </east>
+	        
+	   	</borderlayout>
+	</window>
+	
+	<!-- Info -->
+	<window id="Window_PopUp" border="normal" closable="true" visible="false" onClose="event.stopPropagation();self.setVisible(false);" />
+
+	<!-- In Process-->
+	<window id="WinProcess" border="normal" width="175px" height="175px" visible="false" onClick="self.setVisible(false);">
+		<div align="center">
+			<image src="/images/loading3_3.gif" width="2000px" height="200px" />
+		</div>
+	</window>
+        
+</zk>
