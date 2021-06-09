@@ -33,7 +33,6 @@
 								<label value="ใบส่งล้าง" style="color:#333333;position:relative;top:0px;left:30px;" />
 								
 								<textbox id="Textbox_Search" style="position:relative;top:0px;left:33px;background: #ffffff;border: 1px solid #666666; color:#666666;" width="165px" />
-								<textbox id="Textbox_Search1111" style="position:relative;top:0px;left:33px;background: #ffffff;border: 1px solid #666666; color:#666666;" width="165px" />
 								
 								<image id="Image_SearchDoc" style="position:relative;top:0px;" src="/images/ic_search_c.png" width="24px" height="24px"/>
 								
