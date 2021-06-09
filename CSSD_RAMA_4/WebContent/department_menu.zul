@@ -163,6 +163,14 @@
 									</treerow>
 								</treeitem>
 								
+								<treeitem id="Treeitem_HN">
+									<treerow>
+										<treecell
+											label="สิบค้นข้อมูลจาก HN "
+											image="/images/ic_requistion.png" />
+									</treerow>
+								</treeitem>
+								
 								<treeitem id="Treeitem_Requisition">
 									<treerow>
 										<treecell
