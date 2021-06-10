@@ -38,6 +38,7 @@ import org.zkoss.zul.Vbox;
 import org.zkoss.zul.Vlayout;
 import org.zkoss.zul.Window;
 
+import com.poseintelligence.cssd.document.Payout;
 import com.poseintelligence.cssd.document.SendSterile;
 import com.poseintelligence.cssd.model.ModelMaster;
 import com.poseintelligence.cssd.utillity.DateTime;
@@ -56,6 +57,7 @@ public class DepartmentSendSterile extends GenericForwardComposer{
 	private int SS_IsFindStatus = 0;
 	private int SS_IsTag = 0;
 	private int SS_IsHn = 0;
+	private int SS_CreatePayout = 0;
 	
 	// Variable Session
 	private Session session = Sessions.getCurrent();
@@ -284,6 +286,13 @@ public class DepartmentSendSterile extends GenericForwardComposer{
 				CreateDocument_HN();
 
 
+	        }
+	    });
+		
+		btnSaveHn.addEventListener("onBlur", new EventListener<Event>() {
+			public void onEvent(Event event) throws Exception {
+				System.out.print("onNameTH");
+				CreateDocument_HN();
 	        }
 	    });
     }
@@ -1350,8 +1359,14 @@ public class DepartmentSendSterile extends GenericForwardComposer{
 
 				        }
 				    });
+					
+					if(rs.getString("IsStatus").equals("-5")) {
+						btn.setVisible(true);
+					}else {
+						btn.setVisible(false);
+					}
 				
-				
+
 				
 				
 				
@@ -1413,6 +1428,12 @@ public class DepartmentSendSterile extends GenericForwardComposer{
 			Window_PopUp_hn.setAttribute("DocNo",DocNo);
 			Window_PopUp_hn.setMode("modal");
 			Window_PopUp.setClosable(true);		
+			
+			
+			ComboboxNameHN.setText("");
+			txtNameHn.setText("");
+			txtOperationHn.setText("");
+
 		}else {
 			cancelHn(DocNo);
 		}
@@ -1556,6 +1577,17 @@ public class DepartmentSendSterile extends GenericForwardComposer{
 	        Listbox_Document.getItems().clear();
 	        
 	        Listbox_DocumentDetail.getItems().clear();
+	        
+	        
+	        
+	        if(SS_CreatePayout == 1) {
+	        	CreatePayout(S_DocNo_);
+	        }
+	        
+	        
+	        
+	        
+	        
 
 		}
 	}
@@ -2054,7 +2086,179 @@ public class DepartmentSendSterile extends GenericForwardComposer{
 		}
 	}
 	
+//create payout
+	
+	public void CreatePayout(String S_DocNo_)throws Exception {
+		
+		com.poseintelligence.cssd.db.Conn c = new com.poseintelligence.cssd.db.Conn();
+        Class.forName(c.S_MYSQL_DRIVER);
+        Connection conn = java.sql.DriverManager.getConnection(c.getHost(S_DB), c.S_USER, c.S_PASSWORD);
+        conn.setAutoCommit(false);
+        
+        Statement stmt = conn.createStatement();
+        ResultSet rs = null;
+		
+		
+		
+		try {
+			
+			String S_PADocNo;
+			
+    		S_PADocNo = Payout.getPayoutDocNo(S_DB, S_DocNo_, S_DeptId, S_UserId, "0", "สร้างจากการส่งล้าง" , null);
+    		
+    		
 
+
+    		String Sql_sendSterile = "SELECT" + 
+    				"            it.RowID," + 
+    				"            it.ItemCode,(" + 
+    				"            SELECT" + 
+    				"              COUNT(*) AS Cnt " + 
+    				"            FROM" + 
+    				"              sendsteriledetail" + 
+    				"              INNER JOIN itemstock ON sendsteriledetail.ItemstockID = itemstock.RowID" + 
+    				"              INNER JOIN sendsterile ON sendsterile.DocNo = sendsteriledetail.SendSterileDocNo " + 
+    				"            WHERE" + 
+    				"              sendsterile.DocNo = st.DocNo " + 
+    				"              AND itemstock.ItemCode = it.ItemCode " + 
+    				"            ) AS Cnt " + 
+    				"          FROM" + 
+    				"            sendsteriledetail" + 
+    				"            INNER JOIN itemstock AS it ON sendsteriledetail.ItemstockID = it.RowID" + 
+    				"            INNER JOIN sendsterile AS st ON st.DocNo = sendsteriledetail.SendSterileDocNo " + 
+    				"          WHERE" + 
+    				"            st.DocNo = '" + S_DocNo_ + "' " + 
+    				"          GROUP BY" + 
+    				"            it.ItemCode";
+    		
+			System.out.println(Sql_sendSterile);			
+			rs = stmt.executeQuery(Sql_sendSterile);
+			if(rs.next()) {
+				
+	    		String _RowID = null;
+	    		String _ItemCode = null;
+	    		String _Cnt = null;
+				
+	    	 _RowID 	= rs.getString("RowID");	 
+			 _ItemCode 	= rs.getString("ItemCode");	 
+			 _Cnt 		= rs.getString("Cnt");	 
+			 
+	        	String S_SqlUpdate = 
+						
+	        			" INSERT INTO  payoutdetail SET "
+	        			+ "DocNo = '" + S_PADocNo + "',"
+	        			+ "ItemCode = '" + _ItemCode + "',"
+	        			+ "ItemStockID = '" + _RowID + "',"
+	        			+ "Qty = '" + _Cnt + "',"
+	        			+ "IsStatus = 0,"
+	        			+ "Remark = '',"
+	        			+ "PayDate = NOW() ,"
+	        			+ "OccuranceTypeID = 0  " ;
+	        	
+			    System.out.println(S_SqlUpdate);
+			    
+				stmt.executeUpdate(S_SqlUpdate);
+			 
+			}
+			
+    		String _DocNoHn = null;
+    		String Sql_showHN = "SELECT hncode.DocNo FROM hncode WHERE hncode.DocNo_SS = '" + S_DocNo_ + "' ";
+
+			System.out.println(Sql_showHN);			
+			rs = stmt.executeQuery(Sql_showHN);
+			if(rs.next()) {
+	    		_DocNoHn 	= rs.getString("DocNo");		
+			}
+			
+			
+			if(!_DocNoHn.equals("")) {
+	    		String _ItemStockID = null;
+	    		String Sql_HNDetail = "SELECT" + 
+				    				"    hncode.DocNo," + 
+				    				"    hncode.DocDate," + 
+				    				"    hncode.HnCode," + 
+				    				"    hncode.DocNo_SS," + 
+				    				"    hncode.IsStatus," + 
+				    				"    hncode_detail.ItemStockID," + 
+				    				"    hncode_detail.Qty" + 
+				    				"    FROM" + 
+				    				"    hncode" + 
+				    				"    LEFT JOIN hncode_detail ON hncode.DocNo = hncode_detail.DocNo" + 
+				    				"    WHERE hncode.DocNo_SS = '" + S_DocNo_ + "' ";
+	    		
+				System.out.println(Sql_sendSterile);			
+				rs = stmt.executeQuery(Sql_sendSterile);
+				if(rs.next()) {
+					_ItemStockID 	= rs.getString("ItemStockID");		
+				}
+				
+				if(!_ItemStockID.equals("")) {
+					
+//		    		String Sql_sendSterileHN = "SELECT" + 
+//						    				"      sendsteriledetail.SendSterileDocNo," + 
+//						    				"      sendsteriledetail.ItemStockID," + 
+//						    				"      sendsteriledetail.Qty, " + 
+//						    				"	    itemstock.LastSterileDetailID" + 
+//						    				"      FROM" + 
+//						    				"      sendsteriledetail" + 
+//						    				"      INNER JOIN itemstock ON sendsteriledetail.ItemStockID = itemstock.RowID" + 
+//						    				"      WHERE sendsteriledetail.SendSterileDocNo = '$RefDocNo'";
+//		    		
+//					System.out.println(Sql_sendSterile);			
+//					rs = stmt.executeQuery(Sql_sendSterile);
+//					if(rs.next()) {
+//						
+//			    		String _RowID = null;
+//			    		String _ItemCode = null;
+//			    		String _Cnt = null;
+//						
+//			    	 _RowID 	= rs.getString("RowID");	 
+//					 _ItemCode 	= rs.getString("ItemCode");	 
+//					 _Cnt 		= rs.getString("Cnt");	 
+//					 
+//			        	String S_SqlUpdate = 
+//								
+//			        			" INSERT INTO  payoutdetail SET "
+//			        			+ "DocNo = '" + S_PADocNo + "',"
+//			        			+ "ItemCode = '" + _ItemCode + "',"
+//			        			+ "ItemStockID = '" + _RowID + "',"
+//			        			+ "Qty = '" + _Cnt + "',"
+//			        			+ "IsStatus = 0,"
+//			        			+ "Remark = '',"
+//			        			+ "PayDate = NOW() ,"
+//			        			+ "OccuranceTypeID = 0  " ;
+//			        	
+//					    System.out.println(S_SqlUpdate);
+//					    
+//						stmt.executeUpdate(S_SqlUpdate);
+//					 
+//					}
+					
+					
+				}
+				
+				
+			}
+			
+			
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+		}finally {
+	        if (stmt != null) {
+	            stmt.close();
+	        }
+	        
+	        if (conn != null) {
+	            conn.close();
+	        }
+	        
+	        if (rs != null) {
+                rs.close();
+            }
+		}
+		
+	}
 	
 	//	==============================================================================
 	//  HN 
@@ -2401,12 +2605,13 @@ public class DepartmentSendSterile extends GenericForwardComposer{
         
 		try{	
 			
-			rs = stmt.executeQuery("SELECT SS_IsFindStatus , SS_IsTag , SS_IsHn  FROM configuration_web LIMIT 1");
+			rs = stmt.executeQuery("SELECT SS_IsFindStatus , SS_IsTag , SS_IsHn , SS_CreatePayout   FROM configuration_web LIMIT 1");
 
 			if(rs.next()){
 				SS_IsFindStatus = rs.getInt("SS_IsFindStatus");
 				SS_IsTag = rs.getInt("SS_IsTag");
 				SS_IsHn = rs.getInt("SS_IsHn");
+				SS_CreatePayout = rs.getInt("SS_CreatePayout");
 			}
 		}catch(Exception e){
 			e.printStackTrace();
