@@ -285,7 +285,7 @@ public class DepartmentExpire extends GenericForwardComposer{
         	
         	String S_SSDocNo = null;
         	   
-        	S_SSDocNo = SendSterile.getSendSterileDocNo(S_DB, "", S_DeptId, S_UserId, "0", "ส่งล้างจากรายการหมดอายุ");
+        	S_SSDocNo = SendSterile.getSendSterileDocNo(S_DB, "", S_DeptId, S_UserId, "0", "ส่งล้างจากรายการหมดอายุ" , 0);
         			
 			if( S_SSDocNo != null && (!S_SSDocNo.equals("")) ){
 

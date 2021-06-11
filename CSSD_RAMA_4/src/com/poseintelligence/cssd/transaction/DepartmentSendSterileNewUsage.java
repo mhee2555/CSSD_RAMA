@@ -485,7 +485,7 @@ public class DepartmentSendSterileNewUsage extends GenericForwardComposer{
         	
 	        
         	if(S_DocNo == null) {
-        		S_SSDocNo = SendSterile.getSendSterileDocNo(S_DB, "", S_DeptId, S_UserId, S_TempStatus, "");
+        		S_SSDocNo = SendSterile.getSendSterileDocNo(S_DB, "", S_DeptId, S_UserId, S_TempStatus, "" , 0);
         	}else {
         		S_SSDocNo = S_DocNo;
         	}

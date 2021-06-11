@@ -1138,7 +1138,7 @@ public class DepartmentReceiveStock extends GenericForwardComposer{
 	        stmt.executeUpdate(S_Sql);
 	        
 	        // Create Send Sterile
-			String S_SSDocNo = SendSterile.getSendSterileDocNo(S_DB, S_DocNo, S_DeptId, S_UserId, "0",  "แผนกไม่รับส่งกลับมาล้างใหม่");
+			String S_SSDocNo = SendSterile.getSendSterileDocNo(S_DB, S_DocNo, S_DeptId, S_UserId, "0",  "แผนกไม่รับส่งกลับมาล้างใหม่" , 0);
 					
 			if( S_SSDocNo != null && (!S_SSDocNo.equals("")) ){
 

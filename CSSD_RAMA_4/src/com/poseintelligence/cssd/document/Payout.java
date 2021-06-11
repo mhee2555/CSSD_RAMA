@@ -90,7 +90,7 @@ public class Payout {
 		       	+ 	"   0, "
 		       	+ 	"   0, "
 		       	+ 	"   '" + S_Remark + "', "
-		      	+ 	"   " + ( S_RefDocNo == null ? "null" : ( "'" + S_PADocNo + "'" ) ) + ", "
+		      	+ 	"   " + ( S_RefDocNo == null ? "null" : ( "'" + S_RefDocNo + "'" ) ) + ", "
 		      	
 		      	+ 	"   1,"
 		       	+ 	"   '" + DepartmentRef + "', "
