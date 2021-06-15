@@ -20,7 +20,7 @@
 				<tab id="washdep" label="แผนกล้างเอง" width="10%" />
 			</tabs>
 		</tabbox>
-		<borderlayout id="Main" height="730px" width="100%">
+		<borderlayout id="Main" height="731px" width="100%">
 			<north height="37px" border="none">
 				<borderlayout>
 					<center border="none">
