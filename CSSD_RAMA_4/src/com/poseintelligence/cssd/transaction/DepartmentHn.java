@@ -2,28 +2,44 @@ package com.poseintelligence.cssd.transaction;
 
 import java.sql.Connection;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.Iterator;
 
+import org.zkoss.zhtml.Center;
 import org.zkoss.zk.ui.Executions;
 import org.zkoss.zk.ui.Session;
 import org.zkoss.zk.ui.Sessions;
 import org.zkoss.zk.ui.event.Event;
 import org.zkoss.zk.ui.event.EventListener;
+import org.zkoss.zk.ui.event.InputEvent;
 import org.zkoss.zk.ui.util.GenericForwardComposer;
+import org.zkoss.zul.A;
+import org.zkoss.zul.Borderlayout;
 import org.zkoss.zul.Button;
+import org.zkoss.zul.Checkbox;
 import org.zkoss.zul.Combobox;
 import org.zkoss.zul.Comboitem;
 import org.zkoss.zul.Datebox;
 import org.zkoss.zul.Decimalbox;
+import org.zkoss.zul.Div;
+import org.zkoss.zul.East;
 import org.zkoss.zul.Hlayout;
 import org.zkoss.zul.Image;
+import org.zkoss.zul.Label;
 import org.zkoss.zul.Listbox;
 import org.zkoss.zul.Listcell;
 import org.zkoss.zul.Listitem;
 import org.zkoss.zul.Messagebox;
+import org.zkoss.zul.North;
+import org.zkoss.zul.South;
+import org.zkoss.zul.Tabbox;
 import org.zkoss.zul.Textbox;
+import org.zkoss.zul.Vbox;
+import org.zkoss.zul.Vlayout;
+import org.zkoss.zul.West;
+import org.zkoss.zul.Window;
 
 import com.poseintelligence.cssd.document.Payout;
 import com.poseintelligence.cssd.utillity.DateTime;
@@ -33,21 +49,139 @@ public class DepartmentHn extends GenericForwardComposer{
 	private boolean B_IsCreate = true;
 	private Combobox Combobox_Department;
 	private Combobox Combobox_Status;
-	private Image    Image_Search;
-	private Listbox  Listbox_ItemLeft;
-	private Listbox  Listbox_Document;
-	private Listbox  Listbox_DocumentDetail; 
-	private Listbox  Listbox_Return_Document;
-	private Listbox  Listbox_Return_Item;
-	private Textbox  Textbox_SearchItemStock;
-	private Textbox  Textbox_SearchDoc;
-	private Button   Button_Send;
-	private String S_DocNo = null;
-	private String S_DocNo_Return = null;
+	private Combobox ComboboxNameHN;
+	private Combobox ComboboxNameHN_Add;
+	private Combobox Combobox_PreName;
+	
+	private Checkbox  chk_add;
+	
+	private Listbox  Listbox_HistoryDetail;
+	private Listbox  Listbox_HistoryDetail2;
+	private Listbox  Listboxhncode;
+	
+	private Tabbox Hn_patient;
+
+	private Textbox  TextboxBirthDayHn;
+	private Textbox  TextboxDocNo;
+	private Textbox  TextboxDocDate;
+	private Textbox  TextboxNameHN_Add;
+	private Textbox  TextboxName_Add;
+	private Textbox  TextboxBirthDayHn2;
+	private Textbox TextboxOld_Add;
+	private Textbox TextboxQRcode;
+	
+	private Button   Button_SearchDoc;
+	private Button   Button_SearchDoc2;
+	private Button   Button_AddHn;
+	private Button   Button_onSave;
+	
 	private Datebox Datebox_SDocDate;
 	private Datebox Datebox_EDocDate;	
-	private Datebox Datebox_Return_SDocDate;
-	private Datebox Datebox_Return_EDocDate;	
+	private Datebox Datebox_SDocDate2;
+	private Datebox Datebox_EDocDate2;	
+	private Datebox DateboxBirthDay_Add;
+	
+	private Hlayout hlayout_prename;
+	private Hlayout hlayout_prename2;	
+	private Hlayout hlayout_name;
+	private Hlayout hlayout_name2;	
+	private Hlayout hlayout_birthdayadd;
+	private Hlayout hlayout_birthdayadd2;
+	private Hlayout hlayout_old;
+	private Hlayout hlayout_old2;
+	private Hlayout hlayout_HN_new;
+	private Hlayout hlayout_HN_old;
+	private Hlayout hlayout_birthday;
+	private Hlayout hlayout_birthday2;
+	
+	private String DocNo = null;
+	private String xHn_Code = "";
+	private String UsageCode = null;
+	private String LastSterileDetailID = null;
+	// set HNwindow 
+	private Window HNwindow;
+	
+	private Borderlayout borderlayout_main;
+	private Borderlayout borderlayout_sub;
+	private Borderlayout borderlayout_sub2;
+	private Borderlayout borderlayout_sub3;
+	
+	private North north_main;
+	
+	private West west_sub;
+	private West west_sub2;
+	
+	private East east_sub;
+	private East east_sub2;
+	
+	private South south_main;
+	
+	private org.zkoss.zul.Center center_sub;
+	private org.zkoss.zul.Center center_main;
+	private org.zkoss.zul.Center center_sub2;
+	private org.zkoss.zul.Center center_sub3;
+	
+	private Hlayout hlayout_sub1;
+	private Hlayout hlayout_sub2;
+	private Hlayout hlayout_sub3;
+	private Hlayout hlayout_sub4;
+	private Hlayout hlayout_sub5;
+	private Hlayout hlayout_sub6;
+	private Hlayout hlayout_sub7;
+	private Hlayout hlayout_sub8;
+	private Hlayout hlayout_sub9;
+	private Hlayout hlayout_sub10;
+	private Hlayout hlayout_sub11;
+	private Hlayout hlayout_sub12;
+	private Hlayout hlayout_sub13;
+	private Hlayout hlayout_sub14;
+	private Hlayout hlayout_sub15;
+	private Hlayout hlayout_sub16;
+	private Hlayout hlayout_sub17;
+	private Hlayout hlayout_sub18;
+	private Hlayout hlayout_sub19;
+	private Hlayout hlayout_sub20;
+	
+	private Vlayout vlayout_westsub;
+	private Vlayout vlayout_center_sub;
+	private Vlayout vlayout_westsub2;
+	private Vlayout vlayout_eastsub2;
+	private Vlayout vlayout_centersub2;
+	private Vlayout vlayout_centersub3;
+	
+	private Vbox vbox_vlayout_center_sub;
+	private Vbox vbox_vlayout_westsub;
+	private Vbox vbox_vlayout_westsub2;
+	private Vbox vbox_vlayout_eastsub2;
+	private Vbox vbox_vlayout_centersub2;
+	
+	private Label HnCode_w_n;
+	private Label Fname_w_n;
+	private Label Date_w_n;
+	private Label Date_c_n;
+	private Label FItem_c_n;
+	private Label Round_c_n;
+	private Label sTime_c_n;
+	private Label eTime_c_n;
+	private Label Date_w_c;
+	private Label FItem_w_c;
+	private Label Usage_w_c;
+	private Label Ready_e_c;
+	private Label Check_e_c;
+	private Label Date_c_s;
+	private Label FItem_c_s;
+	private Label Round_c_s;
+	private Label sTime_c_s;
+	private Label eTime_c_s;
+	private Label Approve_c_n;
+	private Label Approve_c_n2;
+	private Label Approve_c_c;
+	private Label Approve_c_c2;
+	private Button btn_report;
+	
+	
+	// close set HNwindow
+	
 	// Variable Session
 	private Session session = Sessions.getCurrent();
 	
@@ -88,1146 +222,565 @@ public class DepartmentHn extends GenericForwardComposer{
 	
 	private void init() throws Exception{
 		
-		Datebox_SDocDate.setText(DateTime.getDateLastMonth());
+		init_HnWindow();
+		
+		Datebox_SDocDate.setText(DateTime.getDateNow());
 		Datebox_EDocDate.setText(DateTime.getDateNow());
 		
-		Datebox_Return_SDocDate.setText(DateTime.getDateLastMonth());
-		Datebox_Return_EDocDate.setText(DateTime.getDateNow());
+		Datebox_SDocDate2.setText(DateTime.getDateNow());
+		Datebox_EDocDate2.setText(DateTime.getDateNow());
+		Combobox_PreName.setSelectedIndex(0);
 		
-		selection_Department();
-		showdata_item();
-		onDisplayDocumentReturn();
+		onCheckAdd();
+		
+		
 	}
 	
-	public void onSelect$Listbox_Document(Event event) throws Exception {
+	public void init_HnWindow() {
 		
-		S_DocNo = (String)Listbox_Document.getSelectedItem().getAttribute("DocNo");
 		
-		// Display Pay Detail
-		if(S_DocNo != null && (!S_DocNo.equals("")))
-			onDisplayDetail(S_DocNo, true);
+		borderlayout_main = (Borderlayout) HNwindow.getChildren().get(0);
+		north_main = (North)  borderlayout_main.getChildren().get(0);
+		borderlayout_sub = (Borderlayout) north_main.getChildren().get(0);
+		
+		// west north_sub
+		west_sub = (West) borderlayout_sub.getChildren().get(0);
+		vlayout_westsub = (Vlayout) west_sub.getChildren().get(0);
+		vbox_vlayout_westsub = (Vbox) vlayout_westsub.getChildren().get(1);
+		hlayout_sub1 = (Hlayout) vbox_vlayout_westsub.getChildren().get(2);
+		hlayout_sub2 = (Hlayout) vbox_vlayout_westsub.getChildren().get(3);
+		hlayout_sub3 = (Hlayout) vbox_vlayout_westsub.getChildren().get(4);
+		HnCode_w_n = (Label) hlayout_sub1.getChildren().get(1);
+		Fname_w_n  = (Label) hlayout_sub2.getChildren().get(1);
+		Date_w_n  = (Label) hlayout_sub3.getChildren().get(1);
+		
+		
+		// center_sub
+		
+		center_sub =  (org.zkoss.zul.Center)  borderlayout_sub.getChildren().get(1);
+		vlayout_center_sub = (Vlayout) center_sub.getChildren().get(0);
+		vbox_vlayout_center_sub = (Vbox) vlayout_center_sub.getChildren().get(0);
+		hlayout_sub4 = (Hlayout) vbox_vlayout_center_sub.getChildren().get(0);
+		hlayout_sub5 = (Hlayout) vbox_vlayout_center_sub.getChildren().get(1);
+		hlayout_sub6 = (Hlayout) vbox_vlayout_center_sub.getChildren().get(2);
+		hlayout_sub7 = (Hlayout) vbox_vlayout_center_sub.getChildren().get(3);
+		hlayout_sub8 = (Hlayout) vbox_vlayout_center_sub.getChildren().get(4);
+		hlayout_sub20 = (Hlayout) ((Hlayout) vlayout_center_sub.getChildren().get(1)).getChildren().get(0);
+		
+		
+		Date_c_n =  (Label) hlayout_sub4.getChildren().get(1);
+		FItem_c_n =  (Label) hlayout_sub5.getChildren().get(1);
+		Round_c_n =  (Label) hlayout_sub6.getChildren().get(1);
+		sTime_c_n =  (Label) hlayout_sub7.getChildren().get(1);
+		eTime_c_n =  (Label) hlayout_sub8.getChildren().get(1);
+		Approve_c_n =  (Label) hlayout_sub20.getChildren().get(1);
+		Approve_c_n2  =  (Label) hlayout_sub20.getChildren().get(4);
+		
+		// east
+		east_sub = (East) borderlayout_sub.getChildren().get(2);
+		btn_report = (Button)  ( (Div)east_sub.getChildren().get(0)).getChildren().get(0);
+		
+		//center Main
+		center_main = (org.zkoss.zul.Center)  borderlayout_main.getChildren().get(1);
+		borderlayout_sub2 = (Borderlayout) center_main.getChildren().get(0);
+		// center main west_sub2
+		west_sub2 = (West)  borderlayout_sub2.getChildren().get(0);
+		vlayout_westsub2 = (Vlayout) west_sub2.getChildren().get(0);
+		vbox_vlayout_westsub2 =  (Vbox) vlayout_westsub2.getChildren().get(1);
+		hlayout_sub9 = (Hlayout) vbox_vlayout_westsub2.getChildren().get(2);
+		hlayout_sub10 = (Hlayout) vbox_vlayout_westsub2.getChildren().get(3);
+		hlayout_sub11 = (Hlayout) vbox_vlayout_westsub2.getChildren().get(4);
+		Date_w_c =  (Label) hlayout_sub9.getChildren().get(1);
+		FItem_w_c  =  (Label) hlayout_sub10.getChildren().get(1);
+		Usage_w_c  =  (Label) hlayout_sub11.getChildren().get(1);
+		
+		// center main center_sub3
+		
+		center_sub3 = (org.zkoss.zul.Center)  borderlayout_sub2.getChildren().get(1);
+		vlayout_centersub3   = (Vlayout) center_sub3.getChildren().get(0);
+		hlayout_sub19 = (Hlayout) vlayout_centersub3.getChildren().get(1);
+		Approve_c_c =  (Label) hlayout_sub19.getChildren().get(1);
+		Approve_c_c2 =  (Label) hlayout_sub19.getChildren().get(4);
+		
+		// center main east_sub2
+		east_sub2 = (East) borderlayout_sub2.getChildren().get(2);
+		vlayout_eastsub2 = (Vlayout) east_sub2.getChildren().get(0);
+		vbox_vlayout_eastsub2 =  (Vbox) vlayout_eastsub2.getChildren().get(1);
+		hlayout_sub12 = (Hlayout) vbox_vlayout_eastsub2.getChildren().get(2);
+		hlayout_sub13 = (Hlayout) vbox_vlayout_eastsub2.getChildren().get(3);
+		Ready_e_c =  (Label) hlayout_sub12.getChildren().get(1);
+		Check_e_c  =  (Label) hlayout_sub13.getChildren().get(1);
+		
+		// south main
+		
+		south_main = (South) borderlayout_main.getChildren().get(2);
+		borderlayout_sub3 = (Borderlayout) south_main.getChildren().get(0);
+		center_sub2 = (org.zkoss.zul.Center) borderlayout_sub3.getChildren().get(1);
+		vlayout_centersub2 = (Vlayout) center_sub2.getChildren().get(0);
+		vbox_vlayout_centersub2 =  (Vbox) vlayout_centersub2.getChildren().get(0);
+		hlayout_sub14 = (Hlayout) vbox_vlayout_centersub2.getChildren().get(0);
+		hlayout_sub15 = (Hlayout) vbox_vlayout_centersub2.getChildren().get(1);
+		hlayout_sub16 = (Hlayout) vbox_vlayout_centersub2.getChildren().get(2);
+		hlayout_sub17 = (Hlayout) vbox_vlayout_centersub2.getChildren().get(3);
+		hlayout_sub18 = (Hlayout) vbox_vlayout_centersub2.getChildren().get(4);
+		
+		Date_c_s =  (Label) hlayout_sub14.getChildren().get(1);
+		FItem_c_s =  (Label) hlayout_sub15.getChildren().get(1);
+		Round_c_s =  (Label) hlayout_sub16.getChildren().get(1);
+		sTime_c_s =  (Label) hlayout_sub17.getChildren().get(1);
+		eTime_c_s =  (Label) hlayout_sub18.getChildren().get(1);
+		
 	}
 	
-	public void onSelect$Listbox_Return_Document(Event event) throws Exception {
+	
+	public void onClick$Button_SearchDoc(Event event) throws Exception {
 		
-		S_DocNo_Return = (String)Listbox_Return_Document.getSelectedItem().getAttribute("DocNo");
+		onDisplayHistoryDetail(null);
+	}
+	
+	public void onClick$Button_SearchDoc2(Event event) throws Exception {
 		
-		// Display Pay Detail
-		if(S_DocNo_Return != null && (!S_DocNo_Return.equals("")))
-			onDisplayReturnDetail(S_DocNo_Return, true);
+		onDisplayHistoryDetail2();
+	}
+	
+	public void onClick$Button_AddHn(Event event) throws Exception {
+		
+		onUpdate();
+	}
+	
+	public void onClick$chk_add(Event event) throws Exception {
+		
+		onCheckAdd();
+	}
+	
+	public void onClick$Button_onSave(Event event) throws Exception {
+		
+		oncheck_save();
+	}
+	
+	public void onFocus$ComboboxNameHN(Event event) throws Exception {
+		
+		ComboboxNameHN.select();
 	}
 
 	
-	public void onClick$Image_Search(Event event) throws Exception {
-		// Display ItemStock
-		showdata_item();
-	}
-	
-	public void onClick$Button_Send(Event event) throws Exception {
-		onConfirmSend();
-	}
-	
-	public void onClick$Image_SearchDoc(Event event) throws Exception {
-		// Display Pay
-		onDisplayDocument(null);
-	}
-	
-	public void onClick$Button_Return_SearchDoc(Event event) throws Exception {
-		onDisplayDocumentReturn();
+	public void onChanging$ComboboxNameHN(InputEvent event2) throws Exception {
+		
+		defindName(event2.getValue(),ComboboxNameHN);
 	}
 
-	
-	
-	private void selection_Department() throws Exception{
+	public void onBlur$ComboboxNameHN(Event event) throws Exception {
 		
-		com.poseintelligence.cssd.db.Conn c = new com.poseintelligence.cssd.db.Conn();
-        Class.forName(c.S_MYSQL_DRIVER);
-        Connection conn = java.sql.DriverManager.getConnection(c.getHost(S_DB), c.S_USER, c.S_PASSWORD);
-        conn.setAutoCommit(false);
-        
-        Statement stmt = conn.createStatement();
-    	ResultSet rs = null;
-        
-		try{
-			
-			Combobox_Department.getItems().clear();
-
-			String S_Sql = "SELECT" + 
-							"	department.ID," + 
-							"	department.DepName " + 
-							"FROM" + 
-							"	department";
-			
-			System.out.println(S_Sql);
-			
-			rs = stmt.executeQuery(S_Sql);
-			
-			
-//			====
-			Comboitem cbi_defalut = new Comboitem();
-			cbi_defalut.setLabel("กรุณาเลือกแผนก");
-			cbi_defalut.setValue("0");
-			
-			Combobox_Department.appendChild(cbi_defalut);
-// 			====
-			
-			while(rs.next()){
-				Comboitem cbi = new Comboitem();
-				cbi.setLabel(rs.getString("DepName"));
-				cbi.setValue(rs.getString("ID"));
-				
-			
-				
-				Combobox_Department.appendChild(cbi);
-			}
-
-		}catch(Exception e){
-			e.printStackTrace();
-		}finally{
-			if (rs != null) {
-                rs.close();
-            }
-            
-            if (stmt != null) {
-                stmt.close();
-            }
-            
-            if (conn != null) {
-                conn.close();
-            }
-            
-		}
-    }
-	
-	private void showdata_item() throws Exception{
-		
-		com.poseintelligence.cssd.db.Conn c = new com.poseintelligence.cssd.db.Conn();
-        Class.forName(c.S_MYSQL_DRIVER);
-        Connection conn = java.sql.DriverManager.getConnection(c.getHost(S_DB), c.S_USER, c.S_PASSWORD);
-        conn.setAutoCommit(false);
-        
-        Statement stmt = conn.createStatement();
-    	ResultSet rs = null;
-        
-		try{
-		String S_Text = Textbox_SearchItemStock.getText();
-			
-			String S_Sql = "SELECT" + 
-							"	itemstock.RowID," + 
-							"	itemstock.UsageCode," + 
-							"	item.itemname," +
-							"	item.itemcode," + 
-							"	units.UnitName," + 
-							"	DATE( itemstock.ExpireDate ) AS ExpireDate " + 
-							"FROM" + 
-							"	itemstock" + 
-							"	INNER JOIN item ON itemstock.ItemCode = item.itemcode" + 
-							"	INNER JOIN units ON item.UnitID = units.ID " + 
-							"WHERE" + 
-							"	itemstock.IsNewUsage = 0 " + 
-							"	AND itemstock.IsNew = 0 " + 
-							"	AND itemstock.IsStatus = 5 " + 
-							"	AND itemstock.IsPay = 1 " +
-							"	AND itemstock.IsBorrow = 0 " + 
-							"	AND itemstock.IsDispatch = 0 " ;
-							if(!S_Text.trim().equals("")) {
-								S_Sql +=	
-								"	AND 		("
-								+ 	"				item.itemcode 		LIKE '%" + S_Text + "%' "
-								+ 	"				OR item.itemname 	LIKE '%" + S_Text + "%' "
-								+ 	"			) ";
-							}
-				 S_Sql +=
-							"	AND itemstock.DepID =  '" + S_DeptId + "' " + 
-							"ORDER BY" + 
-							"	itemstock.ExpireDate ASC," + 
-							"	itemstock.UsageCode ASC " + 
-							"	LIMIT 50 ";
-			
-			System.out.println(S_Sql);
-			
-			rs = stmt.executeQuery(S_Sql);
-			
-			
-			Listbox_ItemLeft.getItems().clear();
-			int I_No = 1;
-
-			
-			while(rs.next()){
-				final Listitem list = new Listitem();
-				
-				
-				
-				
-				
-				list.appendChild(new Listcell());
-				list.appendChild(new Listcell(rs.getString("UsageCode")));
-				list.appendChild(new Listcell(rs.getString("itemname")));
-				
-				list.setAttribute("RowID", rs.getString("RowID"));		
-				list.setAttribute("itemcode", rs.getString("itemcode"));		
-				Listbox_ItemLeft.appendChild(list);
-                
-                I_No++;
-
-			}
-
-		}catch(Exception e){
-			e.printStackTrace();
-		}finally{
-			if (rs != null) {
-                rs.close();
-            }
-            
-            if (stmt != null) {
-                stmt.close();
-            }
-            
-            if (conn != null) {
-                conn.close();
-            }
-            
-		}
-    }
-	
-//	createDocument ==================================================================================
-	
-	public void onConfirmSend() throws Exception{
-		
-		if(Combobox_Department.getSelectedItem().getValue().equals("0")) {
-			Messagebox.show("ไม่ได้เลือกแผนก !!", "CSSD", Messagebox.OK, Messagebox.INFORMATION);
-			return;
-		}
-		
-		if(Listbox_ItemLeft.getSelectedCount() == 0) {
-			Messagebox.show("ไม่ได้เลือกรายการ !!", "CSSD", Messagebox.OK, Messagebox.INFORMATION);
-			return;
-		}
-		
-		
-						
-		Messagebox.show("ยืนยันขอเบิกรายการ ?" , "CSSD", Messagebox.YES | Messagebox.NO, Messagebox.QUESTION,new EventListener<Event>() {
-    		public void onEvent(Event evt) throws Exception {
-    			switch (((Integer) evt.getData()).intValue()) {
-                  	case Messagebox.YES:
-                  		onRequest();
-                  		break;
-                  	case Messagebox.NO:
-                  		break;
-    			}
-    		}
-    	});
-				
-	}
-
-	public void onRequest() throws Exception{
-		
-		try {
-			
-			Iterator<Listitem> li = Listbox_ItemLeft.getSelectedItems().iterator();
-			
-			ArrayList<String> AS_ListRowID = new ArrayList<String>();
-			ArrayList<String> AS_Listitemcode = new ArrayList<String>();
-
-			
-			while(li.hasNext()){
-				Listitem list = (Listitem) li.next();	
-				
-				AS_ListRowID.add( (String)list.getAttribute("RowID") );
-				AS_Listitemcode.add( (String)list.getAttribute("itemcode") );
-				
-			}
-
-//			 Create Payout
-			crearePayout(AS_ListRowID,AS_Listitemcode);
-	
-		}catch(Exception e){
-			e.printStackTrace();
-		}finally {
-			
-		}
+		onNameTH(ComboboxNameHN.getText(),ComboboxNameHN,TextboxBirthDayHn);
 	}
 	
-	private void crearePayout(ArrayList<String> AS_ListRowID,ArrayList<String> AS_Listitemcode) throws Exception {
+	public void onFocus$ComboboxNameHN_Add(Event event) throws Exception {
 		
-		com.poseintelligence.cssd.db.Conn c = new com.poseintelligence.cssd.db.Conn();
-        Class.forName(c.S_MYSQL_DRIVER);
-        Connection conn = java.sql.DriverManager.getConnection(c.getHost(S_DB), c.S_USER, c.S_PASSWORD);
-        conn.setAutoCommit(false);
-        
-        Statement stmt = conn.createStatement();
-        ResultSet rs = null;
-        
-        try{
-        	// -------------------------------------------------------  
-        	// Create Payout
-        	// -------------------------------------------------------
-        	String S_PADocNo = null;
-        	
-	        
-        	if(S_DocNo == null) {
-        		
-        		String isStatus = "2";
-        		String DepartmentRef = (String)Combobox_Department.getSelectedItem().getValue();
-        		
-        		S_PADocNo = Payout.getPayoutDocNo(S_DB, "", S_DeptId, S_UserId, isStatus, "สร้างใบจ่ายเอกสารยืม" , DepartmentRef);
-        		
-    
-        		
-        	}else {
-        		S_PADocNo = S_DocNo; 	
-        	}
-        	
-        	// -------------------------------------------------------  
-        	// Create Payout Detail
-        	// -------------------------------------------------------
-        	
-        	String S_Value = "";
-        	String S_ValueSub = "";
-
-//        	insert payoutdetail
-
-        	for(int i=0; i< AS_ListRowID.size(); i++) {        	
-        		
-        		String _idPayoutDetail = null;
-        		
-        		String Sql_paydetail = "SELECT" + 
-        				"                 payoutdetail.ID" + 
-        				"               FROM" + 
-        				"                 payoutdetail" + 
-        				"               WHERE" + 
-        				"                 payoutdetail.DocNo = '" + S_PADocNo + "' " + 
-        				"                 AND payoutdetail.ItemCode = '" + AS_Listitemcode.get(i) + "'  ";
-    			System.out.println(Sql_paydetail);			
-    			rs = stmt.executeQuery(Sql_paydetail);
-    			if(rs.next()) {
-    			 _idPayoutDetail = rs.getString("ID");	 
-    			}
-    			
-    			 if(_idPayoutDetail == null) {
-    				 _idPayoutDetail = "";
-    			 }
-    			 
-        		if(_idPayoutDetail.equals("")) {
-            		S_Value = "('" + S_PADocNo + "' , '" + AS_ListRowID.get(i) + "' , '" + AS_Listitemcode.get(i) + "' , '1' ,'' , NOW(),  0),";
-            		
-            		
-                	if(!S_Value.equals("")) {
-                		addPayoutDetail(S_Value.substring(0, S_Value.length() - 1));
-                	}		
-        		}
-        		
-	        	String S_SqlUpdate = 
-						
-	        			" UPDATE itemstock SET IsDispatch = 0, IsBorrow = 1, IsNew = 0, IsNewUsage = 0, IsStatus = 5, IsPay = 1 WHERE itemstock.RowID = '" + AS_ListRowID.get(i) + "' " ;
-	        	
-			    System.out.println(S_SqlUpdate);
-			    
-				stmt.executeUpdate(S_SqlUpdate);
-        	} 
-        	
-
-        	
-        	
-//        	insert payoutdetailsub
-        	
-        	for(int i=0; i< AS_ListRowID.size(); i++) {        	
-
-        	
-    		String _idPayoutDetail_2 = null;
-
-        	
-	    		String Sql_paydetail_2 = "SELECT" + 
-	    				"                 payoutdetail.ID" + 
-	    				"               FROM" + 
-	    				"                 payoutdetail" + 
-	    				"               WHERE" + 
-	    				"                 payoutdetail.DocNo = '" + S_PADocNo + "' " + 
-	    				"                 AND payoutdetail.ItemCode = '" + AS_Listitemcode.get(i) + "'  ";
-				System.out.println(Sql_paydetail_2);			
-				rs = stmt.executeQuery(Sql_paydetail_2);
-				if(rs.next()) {
-					_idPayoutDetail_2 = rs.getString("ID");	 
-				}
-
-	   			 
-     			S_ValueSub = "('" + _idPayoutDetail_2 + "' , '" + AS_ListRowID.get(i) + "' , 1 , 0 , '' , '" + AS_ListRowID.get(i) + "' , NOW() , 0 ),";
-
-        	
-            	if(!S_ValueSub.equals("")) {
-            		addPayoutDetailSub(S_ValueSub.substring(0, S_ValueSub.length() - 1));
-            	}
-            	
-//            	count qty
-            	
-            	
-        		String _countQtyPayoutDetailSub = null;
-
-            	
-        		String Sql_Countpaydetail = "SELECT" + 
-        				"                          COUNT( payoutdetailsub.Payoutdetail_RowID )  AS count_id" + 
-        				"                        FROM" + 
-        				"                          payoutdetailsub" + 
-        				"                        WHERE payoutdetailsub.Payoutdetail_RowID = '" + _idPayoutDetail_2 + "'  ";
-    			System.out.println(Sql_Countpaydetail);			
-    			rs = stmt.executeQuery(Sql_Countpaydetail);
-    			if(rs.next()) {
-    				_countQtyPayoutDetailSub = rs.getString("count_id");	 
-    			}
-    			
-	        	String S_SqlUpdateQty = 
-						
-	        			"UPDATE payoutdetail SET Qty = '" + _countQtyPayoutDetailSub + "'  WHERE payoutdetail.ID = '" + _idPayoutDetail_2 + "' " ;
-	        	
-			    System.out.println(S_SqlUpdateQty);
-				stmt.executeUpdate(S_SqlUpdateQty);
-
-        	} 
-        	
-        	
-        	
-
-        	
-        	
-
-        	
-        	
-        	
-        	
-        	
-        	
-        	
-        	
-        	
-        	
-        	
-        	if(S_DocNo == null) {
-	        	
-	        	S_DocNo = S_PADocNo;
-	        	
-	        	onDisplayDocument(S_PADocNo);
-	        	
-	        	onDisplayDetail(S_PADocNo, false);
-	        	
-	        	showdata_item();
-	        	
-	        }else {
-	        	onDisplayDetail(S_PADocNo, false);	        	
-	        }
-        	
-		}catch(Exception e){
-			e.printStackTrace();
-		}finally{
-	        
-	        if (stmt != null) {
-	            stmt.close();
-	        }
-	        
-	        if (conn != null) {
-	            conn.close();
-	        }
-	        
-	        if (rs != null) {
-                rs.close();
-            }
-	        
-//	        Textbox_SearchItemStock.setText("");
-//	        
-//	        Textbox_SearchItemStock.focus();
-//	        
-//	        Listbox_Item.getItems().clear();
-		}
+		ComboboxNameHN_Add.select();
+	}
+	public void onBlur$DateboxBirthDay_Add(Event event) throws Exception {
+		
+		checkage();
 	}
 	
-	private void addPayoutDetail(String S_Value) throws Exception {
+	public void onChange$DateboxBirthDay_Add(Event event) throws Exception {
 		
-		com.poseintelligence.cssd.db.Conn c = new com.poseintelligence.cssd.db.Conn();
-        Class.forName(c.S_MYSQL_DRIVER);
-        Connection conn = java.sql.DriverManager.getConnection(c.getHost(S_DB), c.S_USER, c.S_PASSWORD);
-        conn.setAutoCommit(false);
-        
-        Statement stmt = conn.createStatement();
-        
-        
-        try {
-   
-		     // -----------------------------------------------------
-		     // Create Payout Detail
-		     // -----------------------------------------------------
-		     String S_Sql_Insert =  
-		        		
-		        		"	INSERT INTO payoutdetail ( " 
-		    		 
-		        	+	"	DocNo, " 
-		        	+	"	ItemStockID, " 
-					+	"	ItemCode, " 
-					+	"	Qty, " 
-					+	"	Remark, " 
-					+	"	PayDate, " 
-					+	"	IsStatus " 
-					
-					+	"	) VALUES ";
-		     
-
-		     
-		    System.out.println(S_Sql_Insert + S_Value);
-		    
-			stmt.executeUpdate(S_Sql_Insert + S_Value);
-				
-			conn.commit();
-				
-        }catch(Exception e){
-			e.printStackTrace();
-		}finally{
-		        
-		 	if (stmt != null) {
-		    	stmt.close();
-		 	}
-		        
-		 	if (conn != null) {
-		 		conn.close();
-		 	}
-        }
+		checkage();
+	}
+	
+	public void onChanging$ComboboxNameHN_Add(InputEvent event2) throws Exception {
+		
+		defindName(event2.getValue(),ComboboxNameHN_Add);
 	}
 
-	private void addPayoutDetailSub(String S_Value_Sub) throws Exception {
+	public void onBlur$ComboboxNameHN_Add(Event event) throws Exception {
 		
-		com.poseintelligence.cssd.db.Conn c = new com.poseintelligence.cssd.db.Conn();
-        Class.forName(c.S_MYSQL_DRIVER);
-        Connection conn = java.sql.DriverManager.getConnection(c.getHost(S_DB), c.S_USER, c.S_PASSWORD);
-        conn.setAutoCommit(false);
-        
-        Statement stmt = conn.createStatement();
-        
-        
-        try {
-   
-		     // -----------------------------------------------------
-		     // Create Payout Detail
-		     // -----------------------------------------------------
-		     String S_Sql_Insert =  
-		        		
-		        		"	INSERT INTO payoutdetailsub ( " 
-		    		 
-		        	+	"	Payoutdetail_RowID, " 
-		        	+	"	ItemStockID, " 
-					+	"	Qty, " 
-					+	"	IsStatus, " 
-					+	"	Remark, " 
-					+	"	UsageCode, " 
-					+	"	PayDate, " 
-					+	"	OccuranceTypeID " 
-
-					+	"	) VALUES ";
-		     
-
-		     
-		    System.out.println(S_Sql_Insert + S_Value_Sub);
-		    
-			stmt.executeUpdate(S_Sql_Insert + S_Value_Sub);
-				
-			conn.commit();
-				
-        }catch(Exception e){
-			e.printStackTrace();
-		}finally{
-		        
-		 	if (stmt != null) {
-		    	stmt.close();
-		 	}
-		        
-		 	if (conn != null) {
-		 		conn.close();
-		 	}
-        }
+		onNameTH(ComboboxNameHN_Add.getText(),ComboboxNameHN_Add,TextboxBirthDayHn2);
 	}
-//===================================================================================================
-
-//  showdocument ====================================================================================
 	
-	public void onDisplayDocument(String S_PADocNo) throws Exception{
-		
-		com.poseintelligence.cssd.db.Conn c = new com.poseintelligence.cssd.db.Conn();
-        Class.forName(c.S_MYSQL_DRIVER);
-        Connection conn = java.sql.DriverManager.getConnection(c.getHost(S_DB), c.S_USER, c.S_PASSWORD);
-        conn.setAutoCommit(false);
-        
-        Statement stmt = conn.createStatement();
-    	ResultSet rs = null;
-        
-		try{	
-			
-			rs = stmt.executeQuery(getSqlPayout(S_PADocNo));
-				
-			int I_No = 1;
-			
-			Listbox_Document.getItems().clear();
-//			Listbox_DocumentDetail.getItems().clear();
-			
-			while(rs.next()){
-				Listitem list = new Listitem();
 
-				list.appendChild(new Listcell(I_No + "."));
-				list.appendChild(new Listcell(rs.getString("DocNo")));
-				list.appendChild(new Listcell(rs.getString("DocDate")));
-				list.appendChild(new Listcell(rs.getString("Count_Detail")));
-				list.appendChild(new Listcell(rs.getString("DepName")));	
-				list.appendChild(newListcell(true, rs.getString("DocNo"), rs.getString("IsBorrowStatus")));
-				list.appendChild(newListcellDelete(true, rs.getString("DocNo"), rs.getString("IsBorrowStatus")));
-
-				//Attribute
-                list.setAttribute("DocNo", rs.getString("DocNo"));
-                list.setAttribute("IsStatus", rs.getString("IsStatus"));
-                
-                Listbox_Document.appendChild(list);
-      
-                I_No++;
-
-			}
-			
-			if(I_No == 1) {
-				 Messagebox.show("ไม่พบรายการ !!", "CSSD", Messagebox.OK, Messagebox.EXCLAMATION);
-			}
-			
-		}catch(Exception e){
-			e.printStackTrace();
-		}finally{
-			if (rs != null) {
-                rs.close();
-            }
-            
-            if (stmt != null) {
-                stmt.close();
-            }
-            
-            if (conn != null) {
-                conn.close();
-            }
-            
-            S_DocNo = null;
-		}
-    }
 	
-	private String getSqlPayout(String S_PADocNo) {
-		
-		final String S_Text = Textbox_SearchDoc.getText();
-		
-		String S_Sql = "";
-		
-		S_Sql =
-			"	SELECT 	payout.DocNo, "
-		+	"			DATE_FORMAT(payout.CreateDate, '%d-%m-%Y') AS DocDate, " 
-		+	"			COALESCE(payout.Remark, '') AS Descriptions, "
-		+	"			payout.`IsStatus` AS IsStatus, "
-		+	"			payout.`IsBorrowStatus`, " 
-		+	"			department.DepName, " 
-		
-		+	"			(SELECT SUM(Qty) FROM payoutdetail WHERE payoutdetail.DocNo = payout.DocNo) AS Count_Detail " 
-		
-		+	"	FROM 	payout "	
-		+	"   INNER JOIN department ON payout.DeptRec = department.ID  "
-		+	"	WHERE 	payout.IsCancel = 0 "
-		+ 	"	AND		payout.IsWeb = 1 "
-		+ 	"	AND		payout.IsBorrowStatus = 6 "
-		+ 	"	AND		payout.DeptID = " + S_DeptId + " "
-		+   "   AND  	payout.IsStatus = 2    "; 
+//	checkAdd  ==================================================================================
 	
-		if(S_PADocNo != null) {
-			S_Sql +=
-				"	AND  	payout.DocNo = '" + S_PADocNo + "' ";
+	public void onCheckAdd() throws Exception{
+		
+		
+		
+		if(chk_add.isChecked()==true) {
+			
+			hlayout_birthday.setVisible(false);
+			hlayout_birthday2.setVisible(false);
+			
+			hlayout_prename.setVisible(true);
+			hlayout_prename2.setVisible(true);
+			
+			hlayout_name.setVisible(true);
+			hlayout_name2.setVisible(true);
+			
+			hlayout_birthdayadd.setVisible(true);
+			hlayout_birthdayadd2.setVisible(true);
+			
+			hlayout_old.setVisible(true);
+			hlayout_old2.setVisible(true);
+			
+			hlayout_HN_new.setVisible(true);
+			hlayout_HN_old.setVisible(false);
 		}else {
-		
-			if (!S_Text.equals("")) {		
-				S_Sql +=
-				"	AND  	(payout.DocNo LIKE '%" + S_Text + "%') ";
-			}
 			
-
+			hlayout_birthday.setVisible(true);
+			hlayout_birthday2.setVisible(true);
 			
-			if (!Datebox_SDocDate.getText().trim().equals("") && !Datebox_EDocDate.getText().trim().equals("")) {		
-				S_Sql +=
-				"	AND  	( DATE(payout.CreateDate) BETWEEN DATE('" + DateTime.convertDate(Datebox_SDocDate.getText()) + "') AND DATE('" + DateTime.convertDate(Datebox_EDocDate.getText()) + "') ) ";
-			}
+			hlayout_prename.setVisible(false);
+			hlayout_prename2.setVisible(false);
 			
-			S_Sql += 
-				"	ORDER BY payout.`IsStatus`, DATE(payout.CreateDate) DESC, payout.DocNo DESC LIMIT 100 ";
-	
+			hlayout_name.setVisible(false);
+			hlayout_name2.setVisible(false);
+			
+			hlayout_birthdayadd.setVisible(false);
+			hlayout_birthdayadd2.setVisible(false);
+			
+			hlayout_old.setVisible(false);
+			hlayout_old2.setVisible(false);
+			
+			
+			hlayout_HN_new.setVisible(false);
+			hlayout_HN_old.setVisible(true);
 		}
-
-		System.out.println(S_Sql);
-	
-		return S_Sql;
-	
-	}
-
-	private Listcell newListcell(final boolean IsSave, final String S_DocNo, final String IsBorrowStatus){
-		Listcell lc = new Listcell();
-
-		if(IsBorrowStatus.equals("6")){
 			
-			Button btn = new Button("บันทึก");
-			
-			btn.setSclass("btn-success");
-			btn.setHeight("25px");
-			btn.setWidth("99%");
-			btn.setStyle("background: " + ("#0275d8;") + "color:#ffffff;border-radius: 4px;"); 
-			
-			btn.addEventListener("onClick", new EventListener<Event>() {
-				public void onEvent(Event event) throws Exception {
-					
-						if(Listbox_DocumentDetail.getItemCount() == 0)
-							onDisplayDetail(S_DocNo, false);
-						
-						Messagebox.show("ยืนยันการยืม?" , "CSSD", Messagebox.YES | Messagebox.NO, Messagebox.QUESTION,new EventListener<Event>() {
-				    		public void onEvent(Event evt) throws Exception {
-				    			switch (((Integer) evt.getData()).intValue()) {
-				                  	case Messagebox.YES:
-				                  		onConfirmToPayout(S_DocNo);
-				                  		break;
-				                  	case Messagebox.NO:
-				                  		break;
-				    			}
-				    		}
-				    	});
-					
-		        }
-		    });
-			
-			lc.appendChild(btn);
-		}else if(IsBorrowStatus.equals("7") || IsBorrowStatus.equals("8")) {
-			Button btn = new Button("คืน");
-			
-			btn.setSclass("btn-success");
-			btn.setHeight("25px");
-			btn.setWidth("99%");
-			btn.setStyle("background: " + ("#0275d8;") + "color:#ffffff;border-radius: 4px;"); 
-			
-			btn.addEventListener("onClick", new EventListener<Event>() {
-				public void onEvent(Event event) throws Exception {
-					
-//						if(Listbox_DocumentDetail.getItemCount() == 0)
-//							onDisplayDetail(S_DocNo, false);
-						
-						Messagebox.show("ยืนยันการคืน?" , "CSSD", Messagebox.YES | Messagebox.NO, Messagebox.QUESTION,new EventListener<Event>() {
-				    		public void onEvent(Event evt) throws Exception {
-				    			switch (((Integer) evt.getData()).intValue()) {
-				                  	case Messagebox.YES:
-				                  		onConfirmToPayoutReturn(S_DocNo);
-				                  		break;
-				                  	case Messagebox.NO:
-				                  		break;
-				    			}
-				    		}
-				    	});
-					
-		        }
-		    });
-			
-			lc.appendChild(btn);
-		}
-		
-		return lc;
-	}
-
-	private Listcell newListcellDelete(final boolean IsSave, final String S_DocNo, final String IsBorrowStatus){
-		Listcell lc = new Listcell();
-
-		if(IsBorrowStatus.equals("6")){
-			
-			Button btn = new Button("ยกเลิก");
-			
-			btn.setSclass("btn-danger");
-			btn.setHeight("25px");
-			btn.setWidth("99%");
-			btn.setStyle("background: " + ("#d9534f;") + "color:#ffffff;border-radius: 4px;"); 
-			
-			btn.addEventListener("onClick", new EventListener<Event>() {
-				public void onEvent(Event event) throws Exception {
-					
-						if(Listbox_DocumentDetail.getItemCount() == 0)
-							onDisplayDetail(S_DocNo, false);
-						
-						Messagebox.show("ยืนยันการยกเลิก?" , "CSSD", Messagebox.YES | Messagebox.NO, Messagebox.QUESTION,new EventListener<Event>() {
-				    		public void onEvent(Event evt) throws Exception {
-				    			switch (((Integer) evt.getData()).intValue()) {
-				                  	case Messagebox.YES:
-				                  		onCancelToPayout(S_DocNo);
-				                  		break;
-				                  	case Messagebox.NO:
-				                  		break;
-				    			}
-				    		}
-				    	});
-					
-		        }
-		    });
-			
-			lc.appendChild(btn);
-		}
-		
-		return lc;
-	}
-
-	
-	
-	public void onDisplayDocumentReturn() throws Exception{
-		
-		com.poseintelligence.cssd.db.Conn c = new com.poseintelligence.cssd.db.Conn();
-        Class.forName(c.S_MYSQL_DRIVER);
-        Connection conn = java.sql.DriverManager.getConnection(c.getHost(S_DB), c.S_USER, c.S_PASSWORD);
-        conn.setAutoCommit(false);
-        
-        Statement stmt = conn.createStatement();
-    	ResultSet rs = null;
-        
-		try{	
-			
-			rs = stmt.executeQuery(getSqlPayoutReturn());
-				
-			int I_No = 1;
-			
-			Listbox_Return_Document.getItems().clear();
-//			Listbox_DocumentDetail.getItems().clear();
-			
-			while(rs.next()){
-				Listitem list = new Listitem();
-
-				list.appendChild(new Listcell(I_No + "."));
-				list.appendChild(new Listcell(rs.getString("DocDate")));
-				list.appendChild(new Listcell(rs.getString("DocNo")));
-				list.appendChild(new Listcell(rs.getString("borrowName")));
-				list.appendChild(new Listcell(rs.getString("Qty")));	
-				list.appendChild(new Listcell(rs.getString("DepName")));	
-				list.appendChild(newListcell(true, rs.getString("DocNo"), rs.getString("IsBorrowStatus")));
-
-				//Attribute
-                list.setAttribute("DocNo", rs.getString("DocNo"));
-                
-                Listbox_Return_Document.appendChild(list);
-      
-                I_No++;
-
-			}
-			
-			if(I_No == 1) {
-				 Messagebox.show("ไม่พบรายการ !!", "CSSD", Messagebox.OK, Messagebox.EXCLAMATION);
-			}
-			
-		}catch(Exception e){
-			e.printStackTrace();
-		}finally{
-			if (rs != null) {
-                rs.close();
-            }
-            
-            if (stmt != null) {
-                stmt.close();
-            }
-            
-            if (conn != null) {
-                conn.close();
-            }
-            
-            S_DocNo = null;
-		}
-    }
-
-	
-	private String getSqlPayoutReturn() {
-		
-		
-		String S_Sql = "";
-		
-		S_Sql =
-			"SELECT" + 
-			"	payout.ID," + 
-			"	payout.DocNo," + 
-			"	DATE_FORMAT( payout.CreateDate, '%d/%m/%Y' ) AS DocDate," + 
-			"	payout.IsBorrowStatus," + 
-			"	department.DepName," + 
-			"	( SELECT COUNT( payoutdetailsub.Qty ) " + 
-			"					FROM payoutdetail" + 
-			"					INNER JOIN payoutdetailsub ON payoutdetailsub.Payoutdetail_RowID = payoutdetail.ID" + 
-			"					WHERE payoutdetail.DocNo = payout.DocNo AND payoutdetailsub.IsStatus = 0 ) AS Qty," + 
-			"CASE" + 
-			"		payout.IsBorrowStatus " + 
-			"		WHEN '7' THEN" + 
-			"		'รอคืน' " + 
-			"		WHEN '8' THEN" + 
-			"		'คืน (ค้างบางตัว)' " + 
-			"		WHEN '9' THEN" + 
-			"		'คืนครบ' " + 
-			"	END AS borrowName " + 
-			"FROM" + 
-			"	payout" + 
-			"	INNER JOIN department ON department.ID = payout.DeptRec " + 
-			"WHERE" + 
-			"	payout.IsStatus = 2 " + 
-			"	AND ( payout.IsBorrowStatus = 7 OR payout.IsBorrowStatus = 8 OR payout.IsBorrowStatus = 9 )"; 
-	
-
-
-		System.out.println(S_Sql);
-	
-		return S_Sql;
-	
 	}
 
 	
 	
 	
+	// sql
+	public String getSqlhn(String xSearch) {
+			
+			String Sql="SELECT " + 
+					"                      hotpitalnumber.HnCode,  " + 
+					"                      hotpitalnumber.Id , " + 
+					"                      hotpitalnumber.FName, " + 
+					"                      DATE_FORMAT(BirthDay ,'%d-%m-%Y') AS BirthDay " + 
+					"                    FROM  hotpitalnumber";
+					if(!xSearch.equals("")) {
+					Sql += "  WHERE ( (hotpitalnumber.HnCode LIKE  '%"+xSearch.replace(" ", "%")+"%') "+
+					"	OR (hotpitalnumber.FName LIKE  '%"+xSearch.replace(" ", "%")+"%') )  " ;
+			 		}
+					
+			
+			System.out.println("getSqlTab1 : " + Sql);
+			return Sql;
 	
+	}
 	
-	
-	
-//	=================================================================================================
-	
-//	showdetail ======================================================================================
-	
-	public void onDisplayDetail(String S_DocNo, boolean IsAlert) throws Exception{
+	public String getSqlHistoryDetail(String DocNo) {
 		
-		com.poseintelligence.cssd.db.Conn c = new com.poseintelligence.cssd.db.Conn();
-        Class.forName(c.S_MYSQL_DRIVER);
-        Connection conn = java.sql.DriverManager.getConnection(c.getHost(S_DB), c.S_USER, c.S_PASSWORD);
-        conn.setAutoCommit(false);
-        
-        Statement stmt = conn.createStatement();
-    	ResultSet rs = null;
-        
-		try{	
+		String Sql="SELECT " + 
+				"			hncode.DocNo, " +
+				"            hotpitalnumber.HnCode, " + 
+				"            hotpitalnumber.FName, " + 
+				"            itemstock.UsageCode, " + 
+				"            DATE_FORMAT(hotpitalnumber.BirthDay ,'%d-%m-%Y') AS BirthDay, " + 
+
+				"            hncode_detail.LastSterileDetailID, " + 
+				"            item.itemname, " + 
+				"            DATE_FORMAT( hncode.DocDate, '%d/%m/%Y' ) AS DocDate, " + 
+				"            hotpitalnumber.HnAge, " + 
+				"            hotpitalnumber.HnMonth, " + 
+				"            PERIOD_DIFF( " + 
+				"            DATE_FORMAT( NOW(), '%Y%m' ), " + 
+				"            DATE_FORMAT( hotpitalnumber.CreateDate, '%Y%m' )) AS DiffMonth  " + 
+				"          	 FROM hncode " + 
+				"            INNER JOIN hncode_detail ON hncode.DocNo = hncode_detail.DocNo " + 
+				"            INNER JOIN itemstock ON hncode_detail.ItemStockID = itemstock.RowID " + 
 			
-			this.S_DocNo = S_DocNo;
-			
-			rs = stmt.executeQuery(getSqlPayoutDetail(S_DocNo));
+
+				"            INNER JOIN item ON itemstock.ItemCode = item.itemcode " + 
+				"            INNER JOIN hotpitalnumber ON hncode.HnCode = hotpitalnumber.HnCode  ";
 				
-			int I_No = 1;
-			
-			Listbox_DocumentDetail.getItems().clear();
-			
-			while(rs.next()){
-				Listitem list = new Listitem();
-				
-				final String S_ID = rs.getString("ID");
-				final String S_ItemStockID = rs.getString("ItemStockID");
-				
-				list.appendChild(new Listcell(I_No + "."));
-				list.appendChild(new Listcell(rs.getString("UsageCode")));				
-				list.appendChild(new Listcell(rs.getString("itemname")));
-				list.appendChild(new Listcell(rs.getString("Qty")));
-				list.appendChild(new Listcell(rs.getString("UnitName")));
-				
-				if(rs.getString("IsBorrowStatus").equals("6")) {
-					
-					Listcell lc_del = new Listcell("", "/images/ic_delete.png");
-					lc_del.addEventListener("onClick", new EventListener<Event>() {
-						public void onEvent(Event event) throws Exception {
-							
-							Messagebox.show("ยืนยันการลบรายการ ?" , "CSSD", Messagebox.YES | Messagebox.NO, Messagebox.QUESTION,new EventListener<Event>() {
-					    		public void onEvent(Event evt) throws Exception {
-					    			switch (((Integer) evt.getData()).intValue()) {
-					                  	case Messagebox.YES:
-					                  		onUpdatePayoutDetail(S_ID,S_ItemStockID);
-					                  		break;
-					                  	case Messagebox.NO:
-					                  		break;
-					    			}
-					    		}
-					    	});
-				        }
-				    });
-					
-					list.appendChild(lc_del);
-					
+				if(DocNo == null) {
+					Sql += " WHERE hncode.HnCode ='"+xHn_Code+"'";
+					Sql += " AND DocDate BETWEEN '" + DateTime.convertDate(Datebox_SDocDate.getText()) + "' AND '" + DateTime.convertDate(Datebox_EDocDate.getText()) + "'  " ;
 				}else {
-					list.appendChild(new Listcell(""));
+					Sql += " WHERE hncode.DocNo ='"+DocNo+"'";
 				}
+				Sql += "ORDER BY hncode.DocDate DESC";
 				
-				//Attribute
-                list.setAttribute("ID", S_ID);
-                
-   
-                Listbox_DocumentDetail.appendChild(list);
-      
-                I_No++;
-
-			}
-			
-			if(IsAlert && I_No == 1) {
-				 Messagebox.show("ไม่พบรายการ !!", "CSSD", Messagebox.OK, Messagebox.EXCLAMATION);
-			}
-			
-		}catch(Exception e){
-			e.printStackTrace();
-		}finally{
-			if (rs != null) {
-                rs.close();
-            }
-            
-            if (stmt != null) {
-                stmt.close();
-            }
-            
-            if (conn != null) {
-                conn.close();
-            }
-		}
-    }
-	
-	private String getSqlPayoutDetail(String S_DocNo) {
+				System.out.println(Sql);
+				return Sql;
 		
-		String S_Sql = "";
 		
-		S_Sql =
-			"SELECT" + 
-			"            payoutdetailsub.ID," + 
-			"            payoutdetailsub.ItemStockID," + 
-			"            payoutdetail.DocNo," + 
-			"            itemstock.UsageCode," +
-			"            item.itemname," + 
-			"            item.itemcode," + 
-			"            units.UnitName," + 
-			"            payoutdetailsub.Qty," + 
-			"            ( SELECT payout.IsBorrowStatus FROM payout WHERE payout.DocNo = '" + S_DocNo + "' LIMIT 1 ) AS IsBorrowStatus " + 
-			"          FROM" + 
-			"            payoutdetailsub" + 
-			"            INNER JOIN itemstock ON payoutdetailsub.ItemstockID = itemstock.RowID" + 
-			"            INNER JOIN payoutdetail ON payoutdetail.ID = payoutdetailsub.Payoutdetail_RowID" + 
-			"            INNER JOIN item ON itemstock.ItemCode = item.itemcode" + 
-			"            INNER JOIN units ON item.UnitID = units.ID " + 
-			"          WHERE" + 
-			"            payoutdetail.DocNo = '" + S_DocNo + "' ";
-		
-		System.out.println(S_Sql);
-	
-		return S_Sql;
-	
 	}
+	
+	
+	public String getSqlHistoryDetail2() {
+		
+		 String Sql = "SELECT " + 
+			 		"            hotpitalnumber.HnCode, " + 
+					"			 hncode.DocNo,	"+
+			 		"            hotpitalnumber.FName, " + 
+			 		"            itemstock.UsageCode, " + 
+			 		"            hncode_detail.LastSterileDetailID, " + 
+			 		"            item.itemname, " + 
+			 		"            DATE_FORMAT( hncode.DocDate, '%d/%m/%Y' ) AS DocDate, " + 
+			 		"            hotpitalnumber.HnAge, " + 
+			 		"            hotpitalnumber.HnMonth, " + 
+			 		"            PERIOD_DIFF( " + 
+			 		"              DATE_FORMAT( NOW(), '%Y%m' ), " + 
+			 		"            DATE_FORMAT( hotpitalnumber.CreateDate, '%Y%m' )) AS DiffMonth  " + 
+			 		"          FROM " + 
+			 		"            hncode " + 
+			 		"            INNER JOIN hncode_detail ON hncode.DocNo = hncode_detail.DocNo " + 
+			 		"            INNER JOIN itemstock ON hncode_detail.ItemStockID = itemstock.RowID " + 
+			 		"            INNER JOIN item ON itemstock.ItemCode = item.itemcode " + 
+			 		"            INNER JOIN hotpitalnumber ON hncode.HnCode = hotpitalnumber.HnCode  " + 
+			 		"          WHERE " + 
+			 		"             hncode.IsCancel = 0  " + 
+			 		"            AND hncode.DeptID = "+S_DeptId+"  " + 
+			 		
+			 		"            AND DocDate BETWEEN '" + DateTime.convertDate(Datebox_SDocDate2.getText()) + "' AND '" + DateTime.convertDate(Datebox_EDocDate2.getText()) + "'  " + 
+			 		"			GROUP BY hncode.DocNo "	+
+			 		"          ORDER BY  hncode.DocDate DESC ";			
+		 System.out.println(Sql);
+				return Sql;
+		
+		
+	}
+	
+	public String getSqlWestNorth() {
+		
+		String Sql="SELECT " + 
+				"	hotpitalnumber.HnCode, " + 
+				"	hotpitalnumber.FName, " + 
+				"	itemstock.UsageCode, " + 
+				"	hncode_detail.LastSterileDetailID, " + 
+				"	item.itemname, " + 
+				"	DATE_FORMAT(hncode.DocDate, '%d/%m/%Y') AS DocDate, " + 
+				"	hotpitalnumber.HnAge, " + 
+				"	hotpitalnumber.HnMonth, " + 
+				"	PERIOD_DIFF( " + 
+				"		DATE_FORMAT(NOW(), '%Y%m'), " + 
+				"		DATE_FORMAT( " + 
+				"			hotpitalnumber.CreateDate, " + 
+				"			'%Y%m' " + 
+				"		) " + 
+				"	) AS DiffMonth " + 
+				"FROM " + 
+				"	hncode " + 
+				"INNER JOIN hncode_detail ON hncode.DocNo = hncode_detail.DocNo " + 
+				"INNER JOIN itemstock ON hncode_detail.ItemStockID = itemstock.RowID " + 
+				"INNER JOIN item ON itemstock.ItemCode = item.itemcode " + 
+				"INNER JOIN hotpitalnumber ON hncode.HnCode = hotpitalnumber.HnCode " + 
+				"WHERE " + 
+				"	hncode.IsCancel = 0 " +
+				"AND hncode.HnCode = '"+xHn_Code+"' " + 
+				"ORDER BY " + 
+				"	hncode.DocDate DESC " + 
+				"LIMIT 1  ";
+		
+//		System.out.println("getSqlWestNorth : " + Sql);
+		return Sql;
+		
+	}
+	
+	
+	public String getSqlCenterNorth() {
+		
+	String Sql="SELECT " + 
+			"            DATE_FORMAT( NOW(), '%d-%m-%Y' ) AS ddate, " + 
+			"            item.itemname, " + 
+			"			 steriledetail.ID, "+
+//			"            hncode_detail.LastSterileDetailID, " + 
+			"            itemstock.UsageCode, " + 
+			"            DATE_FORMAT( wash.DocDate, '%d-%m-%Y' ) AS washdate, " + 
+			"            washmachine.MachineName AS WashMachineName, " + 
+			"            wash.WashRoundNumber AS WashRoundNumber, " + 
+			"            TIME( wash.StartTime ) AS timeSdatew, " + 
+			"            TIME( wash.FinishTime ) AS timeEdatew, " + 
+			"            CONCAT( emp1.FirstName, ' ', emp1.LastName ) AS washBeforeApprovename, " + 
+			"            CONCAT( emp2.FirstName, ' ', emp2.LastName ) AS washAfterApprovename, " + 
+			"            DATE_FORMAT( sterile.DocDate, '%d-%m-%Y' ) AS steriledate, " + 
+			"            sterilemachine.MachineName2 AS SterileMachineName, " + 
+			"            sterile.SterileRoundNumber AS SterileRoundNumber, " + 
+			"            TIME( sterile.StartTime ) AS timeSdates, " + 
+			"            TIME( sterile.FinishTime ) AS timeEdates, " + 
+			"            CONCAT( emp3.FirstName, ' ', emp3.LastName ) AS ppsname, " + 
+			"            CONCAT( emp4.FirstName, ' ', emp4.LastName ) AS appsname, " + 
+			"            CONCAT( emp5.FirstName, ' ', emp5.LastName ) AS sterilesname, " + 
+			"            CONCAT( emp6.FirstName, ' ', emp6.LastName ) AS sterileBeforeApprovename, " + 
+			"            CONCAT( emp7.FirstName, ' ', emp7.LastName ) AS sterileAfterApprovename  " + 
+			"          FROM " + 
+			"            itemstock " + 
+			"            LEFT JOIN item ON itemstock.ItemCode = item.itemcode " + 
+			"            LEFT JOIN washdetail ON itemstock.RowID = washdetail.ItemStockID " + 
+//			"			 INNER JOIN hncode_detail ON itemstock.LastSterileDetailID = hncode_detail.LastSterileDetailID "+
+			"            LEFT JOIN wash ON washdetail.WashDocNo = wash.DocNo " + 
+			"            LEFT JOIN washmachine ON wash.WashMachineID = washmachine.ID " + 
+			"            LEFT JOIN employee AS emp1 ON wash.BeforeApprove = emp1.EmpCode " + 
+			"            LEFT JOIN employee AS emp2 ON wash.AfterApprove = emp2.EmpCode " + 
+			"            LEFT JOIN steriledetail ON itemstock.RowID = steriledetail.ItemStockID " + 
+			"            LEFT JOIN sterile ON steriledetail.DocNo = sterile.DocNo " + 
+			"            LEFT JOIN sterilemachine ON sterile.SterileMachineID = sterilemachine.ID " + 
+			"            LEFT JOIN employee AS emp3 ON sterile.PrepareCode = emp3.ID " + 
+			"            LEFT JOIN employee AS emp4 ON sterile.ApproveCode = emp4.ID " + 
+			"            LEFT JOIN employee AS emp5 ON sterile.SterileCode = emp5.ID " + 
+			"            LEFT JOIN employee AS emp6 ON sterile.BeforeApprove = emp6.EmpCode " + 
+			"            LEFT JOIN employee AS emp7 ON sterile.AfterApprove = emp7.EmpCode  " + 
+			"          WHERE " + 
+			"            itemstock.UsageCode = '"+UsageCode+"'  " + 
+			"            AND steriledetail.ID = '"+LastSterileDetailID+"' " + 
+			"          ORDER BY " + 
+			"            wash.DocDate DESC, " + 
+			"            sterile.DocDate DESC  " + 
+			"            LIMIT 1 ";
+		
+		return Sql;
+		
+	}
+	
+	
+	public String getSqlCreateDocument(String DocNo) {
+		
+		String Sql = "SELECT " + 
+		 		"            hotpitalnumber.HnCode, " + 
+				"			hncode.DocNo,	"+
+		 		"            hotpitalnumber.FName, " + 
+		 		"            hncode_detail.ID, " + 
+		 		"            itemstock.UsageCode, " + 
+		 		"            hncode_detail.LastSterileDetailID, " + 
+		 		"            item.itemname, " + 
+		 		"            DATE_FORMAT( hncode.DocDate, '%d/%m/%Y' ) AS DocDate, " + 
+		 		"            hotpitalnumber.HnAge, " + 
+		 		"            hotpitalnumber.HnMonth, " + 
+		 		"            PERIOD_DIFF( " + 
+		 		"              DATE_FORMAT( NOW(), '%Y%m' ), " + 
+		 		"            DATE_FORMAT( hotpitalnumber.CreateDate, '%Y%m' )) AS DiffMonth  " + 
+		 		"          FROM " + 
+		 		"            hncode " + 
+		 		"            INNER JOIN hncode_detail ON hncode.DocNo = hncode_detail.DocNo " + 
+		 		"            INNER JOIN itemstock ON hncode_detail.ItemStockID = itemstock.RowID " + 
+		 		"            INNER JOIN item ON itemstock.ItemCode = item.itemcode " + 
+		 		"            INNER JOIN hotpitalnumber ON hncode.HnCode = hotpitalnumber.HnCode  " + 
+		 		"          WHERE " + 
+		 		"             hncode.IsCancel = 0  " + 
+		 		"            AND hncode.DocNo = '"+DocNo+"'  " + 
+		 		"            AND hncode.DeptID = "+S_DeptId+"  " + 
+		 		"          ORDER BY  hncode.DocDate DESC ";
+//		 System.out.println(Sql);
+				return Sql;
+		
+		
+	}
+	
+	// defindName HN
+	public void defindName(String xSearch,Combobox cbb) throws Exception {
+		String HnCode = null;
+//		System.out.println("xSearch : "+xSearch);
+		
+		if (xSearch != null) {
+			if (xSearch.length() >= 1) {
+				cbb.setOpen(false);
+				cbb.getItems().clear();
 
-	private void onUpdatePayoutDetail(String S_ID, String S_ItemStockID) throws Exception {
-		com.poseintelligence.cssd.db.Conn c = new com.poseintelligence.cssd.db.Conn();
-        Class.forName(c.S_MYSQL_DRIVER);
-        Connection conn = java.sql.DriverManager.getConnection(c.getHost(S_DB), c.S_USER, c.S_PASSWORD);
-        conn.setAutoCommit(false);
-        
-        Statement stmt = conn.createStatement();
-        ResultSet rs = null;
-        
-        try{
-        	String _S_DocNo = S_DocNo ;
-        	
-    		String _Payoutdetail_RowID = null;
-    		int _count_paydetailsub = 0;
+				com.poseintelligence.cssd.db.Conn c = new com.poseintelligence.cssd.db.Conn();
+		        Class.forName(c.S_MYSQL_DRIVER);
+		        Connection conn = java.sql.DriverManager.getConnection(c.getHost(S_DB), c.S_USER, c.S_PASSWORD);
+		        conn.setAutoCommit(false);
+		        
+		        Statement stmt = conn.createStatement();
+		    	ResultSet rs = null;
+				
+				
+				try {
+					String sSql = "SELECT " + 
+							"                      hotpitalnumber.HnCode,  " + 
+							"                      hotpitalnumber.Id , " + 
+							"                      hotpitalnumber.FName " + 
+							"                    FROM  hotpitalnumber";
+					if(!xSearch.equals("")) {
+						sSql += "  WHERE ( (hotpitalnumber.HnCode LIKE  '%"+xSearch.replace(" ", "%")+"%') "+
+								"	OR (hotpitalnumber.FName LIKE  '%"+xSearch.replace(" ", "%")+"%') )  " ;
 
-        	
-    		String Sql_paydetailSub = "SELECT payoutdetailsub.Payoutdetail_RowID " + 
-    				"                   FROM payoutdetailsub " + 
-    				"                   WHERE payoutdetailsub.ID = '" + S_ID + "' ";
-			System.out.println(Sql_paydetailSub);			
-			rs = stmt.executeQuery(Sql_paydetailSub);
-			if(rs.next()) {
-				_Payoutdetail_RowID = rs.getString("Payoutdetail_RowID");	 
-			}
-			
-    		String Sql_paydetailSub_count = "SELECT COUNT(payoutdetailsub.Payoutdetail_RowID) AS count_paydetailsub " + 
-    				"                  FROM payoutdetailsub " + 
-    				"                  WHERE payoutdetailsub.Payoutdetail_RowID = '" + _Payoutdetail_RowID + "' ";
-			System.out.println(Sql_paydetailSub_count);			
-			rs = stmt.executeQuery(Sql_paydetailSub_count);
-			if(rs.next()) {
-				_count_paydetailsub = rs.getInt("count_paydetailsub");	 
-			}
-			
-
-        	
-//	          Delete DetailSub
-
-        	String S_SqlDeleteSub = 
-					
-        			"DELETE	"
-        		+ 	"FROM 	payoutdetailsub "
-        		+ 	"WHERE 	payoutdetailsub.ID = " + S_ID ;
-        	
-			System.out.println(S_SqlDeleteSub);
-			stmt.executeUpdate(S_SqlDeleteSub);
-
-			
-			if(_count_paydetailsub == 1) {
-//		          Delete Detail
-		        	String S_SqlDelete = 
-		        						
-		        			"DELETE	"
-		        		+ 	"FROM 	payoutdetail "
-		        		+ 	"WHERE 	ID = " + _Payoutdetail_RowID ;
-		        	
-					System.out.println(S_SqlDelete);
-					stmt.executeUpdate(S_SqlDelete);
-				}else {
-					
-		    		String _countQtyPayoutDetailSub = null;
-
-		        	
-		    		String Sql_Countpaydetail = "SELECT" + 
-		    				"                          COUNT( payoutdetailsub.Payoutdetail_RowID )  AS count_id" + 
-		    				"                        FROM" + 
-		    				"                          payoutdetailsub" + 
-		    				"                        WHERE payoutdetailsub.Payoutdetail_RowID = '" + _Payoutdetail_RowID + "'  ";
-					System.out.println(Sql_Countpaydetail);			
-					rs = stmt.executeQuery(Sql_Countpaydetail);
-					if(rs.next()) {
-						_countQtyPayoutDetailSub = rs.getString("count_id");	 
 					}
 					
-		        	String S_SqlUpdateQty = 
-							
-		        			"UPDATE payoutdetail SET Qty = '" + _countQtyPayoutDetailSub + "'  WHERE payoutdetail.ID = '" + _Payoutdetail_RowID + "' " ;
-		        	
-				    System.out.println(S_SqlUpdateQty);
-					stmt.executeUpdate(S_SqlUpdateQty);
-					
+					System.out.println(sSql);
+
+					rs = stmt.executeQuery(sSql);
+					while(rs.next()){
+
+						Comboitem citem = new Comboitem();
+
+						HnCode = rs.getString("FName") + " : " + rs.getString("HnCode") ;
+
+						citem.setLabel(HnCode);
+						citem.setValue(rs.getString("HnCode"));
+						
+
+						cbb.appendChild(citem);
+					}
+
+					if (cbb.getItemCount() > 0) {
+						cbb.setOpen(true);
+					}
+				
+					} catch (Exception e) {
+					e.printStackTrace();
+				} finally {
+			        if (stmt != null) {
+			            stmt.close();
+			        }
+			        
+			        if (conn != null) {
+			            conn.close();
+			        }
+			        
+			        if (rs != null) {
+		                rs.close();
+		            }
 				}
-        	
-        	
-        	String S_SqlUpdate = 
-					
-        			" UPDATE itemstock SET IsBorrow = 0 WHERE itemstock.RowID = '" + S_ItemStockID + "' " ;
-			System.out.println(S_SqlUpdate);
-			stmt.executeUpdate(S_SqlUpdate);
-			
-			
-
-
-	        conn.commit();
-  
-		}catch(Exception e){
-			e.printStackTrace();
-		}finally{
-	        
-	        if (stmt != null) {
-	            stmt.close();
-	        }
-	        
-	        if (conn != null) {
-	            conn.close();
-	        }
-	        
-	        if (rs != null) {
-                rs.close();
-            }
-	        
-	        onDisplayDetail(S_DocNo, false);
-	        
-//	        updateLabelQty();
-	        
-	        showdata_item();
-	        
-	        Textbox_SearchItemStock.setText("");
-	        Textbox_SearchItemStock.focus();
+			}
 		}
 	}
+	
+	
+ 	private void onNameTH(String xSearch,Combobox cbb,Textbox BirthDay) throws Exception {
+		int i = (Integer) xSearch.trim().indexOf(':');
 
+		if (i < 0)
+			return;
+
+		cbb.getItems().clear();
+		
+		
+		com.poseintelligence.cssd.db.Conn c = new com.poseintelligence.cssd.db.Conn();
+        Class.forName(c.S_MYSQL_DRIVER);
+        Connection conn = java.sql.DriverManager.getConnection(c.getHost(S_DB), c.S_USER, c.S_PASSWORD);
+        conn.setAutoCommit(false);
+        
+        Statement stmt = conn.createStatement();
+    	ResultSet rs = null;
+		System.out.println("cbb : " + xSearch);
+
+		try {
+			rs = stmt.executeQuery(getSqlhn(xSearch.trim().substring(0, i).replace(" ", "%")));
+
+			if (rs.next()) {
+				xHn_Code = rs.getString("HnCode");
+				cbb.setText(rs.getString("FName")+ " : " + rs.getString("HnCode"));
+				BirthDay.setText(rs.getString("BirthDay"));
+			}	
 	
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			if (rs != null) {
+				rs.close();
+			}
+		}
+	}
 	
-	public void onDisplayReturnDetail(String S_DocNo, boolean IsAlert) throws Exception{
+ 	// ondisplayHistoryDetail
+ 	
+ 	public void onDisplayHistoryDetail(String DocNo) throws Exception{
 		
 		com.poseintelligence.cssd.db.Conn c = new com.poseintelligence.cssd.db.Conn();
         Class.forName(c.S_MYSQL_DRIVER);
@@ -1239,43 +792,60 @@ public class DepartmentHn extends GenericForwardComposer{
         
 		try{	
 			
-			this.S_DocNo = S_DocNo;
-			
-			rs = stmt.executeQuery(getSqlPayoutReturnDetail(S_DocNo));
+			rs = stmt.executeQuery(getSqlHistoryDetail(DocNo));
 				
 			int I_No = 1;
 			
-			Listbox_Return_Item.getItems().clear();
+			Listbox_HistoryDetail.getItems().clear();
 			
+			String FName = null;
+			String HnCode = null;
+			String BirthDay = null;
 			while(rs.next()){
+				FName = rs.getString("FName");
+				xHn_Code = rs.getString("HnCode");
+				HnCode = rs.getString("HnCode");
+				BirthDay = rs.getString("BirthDay");
+				UsageCode = rs.getString("UsageCode");
+				LastSterileDetailID = rs.getString("LastSterileDetailID");
 				Listitem list = new Listitem();
-				
-				final String S_ID = rs.getString("ID");
-				final String S_ItemStockID = rs.getString("ItemStockID");
-				final String S_UsageCode = rs.getString("UsageCode");
 
-				list.appendChild(new Listcell());
-				list.appendChild(new Listcell(rs.getString("UsageCode")));				
-				list.appendChild(new Listcell(rs.getString("itemname")));
-				list.appendChild(new Listcell(rs.getString("Qty")));
-				list.appendChild(new Listcell(rs.getString("UnitName")));
-
+				list.appendChild(new Listcell(I_No + "."));
+				list.appendChild(new Listcell(rs.getString("DocDate")));
+				list.appendChild(new Listcell(rs.getString("UsageCode")));
+			
 				
+				Listcell lc_ItemName= new Listcell();
+				A ItemName = new A(rs.getString("itemname"));
+				
+				ItemName.addEventListener("onClick", new EventListener<Event>() {
+					public void onEvent(Event event) throws Exception {
+						
+						try {
+								openHnWiwdon();
+								onDisplayWestNorth();
+								onDisplayCenterNorth();
+					        
+						}catch (Exception e) {
+							e.printStackTrace();
+						}
+			        }
+			    });
+				
+				lc_ItemName.appendChild( ItemName );
+				list.appendChild( lc_ItemName );
+			
+
 				//Attribute
-                list.setAttribute("ID", S_ID);
-                list.setAttribute("ItemStockID", S_ItemStockID);
-                list.setAttribute("UsageCode", S_UsageCode);
-
-   
-                Listbox_Return_Item.appendChild(list);
+              
+                
+                Listbox_HistoryDetail.appendChild(list);
       
                 I_No++;
 
 			}
-			
-			if(IsAlert && I_No == 1) {
-				 Messagebox.show("ไม่พบรายการ !!", "CSSD", Messagebox.OK, Messagebox.EXCLAMATION);
-			}
+			ComboboxNameHN.setText(FName+ " : " + HnCode);
+			TextboxBirthDayHn.setText(BirthDay);
 			
 		}catch(Exception e){
 			e.printStackTrace();
@@ -1291,323 +861,755 @@ public class DepartmentHn extends GenericForwardComposer{
             if (conn != null) {
                 conn.close();
             }
+            
 		}
     }
+ 	
+ 	
+ 	public void onDisplayHistoryDetail2() throws Exception{
+		
+		com.poseintelligence.cssd.db.Conn c = new com.poseintelligence.cssd.db.Conn();
+        Class.forName(c.S_MYSQL_DRIVER);
+        Connection conn = java.sql.DriverManager.getConnection(c.getHost(S_DB), c.S_USER, c.S_PASSWORD);
+        conn.setAutoCommit(false);
+        
+        Statement stmt = conn.createStatement();
+    	ResultSet rs = null;
+        
+		try{	
+			
+			rs = stmt.executeQuery(getSqlHistoryDetail2());
+				
+			int I_No = 1;
+			
+			Listbox_HistoryDetail2.getItems().clear();
 
-	private String getSqlPayoutReturnDetail(String S_DocNo) {
+			
+			while(rs.next()){
+				Listitem list = new Listitem();
+
+				final String DocNo = rs.getString("DocNo");
+				
+				
+				list.appendChild(new Listcell(I_No + "."));
+				
+				list.appendChild(new Listcell(rs.getString("DocNo")));
+				list.appendChild(new Listcell(rs.getString("DocDate")));
+				
+				Listcell lc_HnCode= new Listcell();
+				
+				A L_HnCoe = new A(rs.getString("FName"));
+				
+				L_HnCoe.addEventListener("onClick", new EventListener<Event>() {
+					public void onEvent(Event event) throws Exception {
+						Hn_patient.setSelectedIndex(0);
+						onDisplayHistoryDetail(DocNo);
+						
+				    	
+			        }
+			    });
+				
+				lc_HnCode.appendChild( L_HnCoe );
+				list.appendChild( lc_HnCode );
+
+				//Attribute
+              
+                
+				Listbox_HistoryDetail2.appendChild(list);
+      
+                I_No++;
+
+			}
+			
+			
+			
+		}catch(Exception e){
+			e.printStackTrace();
+		}finally{
+			if (rs != null) {
+                rs.close();
+            }
+            
+            if (stmt != null) {
+                stmt.close();
+            }
+            
+            if (conn != null) {
+                conn.close();
+            }
+            
+		}
+    }
+ 	
+ 	// ondisplay HnWindow
+ 	
+ 	public void onDisplayWestNorth() throws Exception {
+ 		
+ 		com.poseintelligence.cssd.db.Conn c = new com.poseintelligence.cssd.db.Conn();
+        Class.forName(c.S_MYSQL_DRIVER);
+        Connection conn = java.sql.DriverManager.getConnection(c.getHost(S_DB), c.S_USER, c.S_PASSWORD);
+        conn.setAutoCommit(false);
+        
+        Statement stmt = conn.createStatement();
+    	ResultSet rs = null;
+        
+		try{	
+			
+			rs = stmt.executeQuery(getSqlWestNorth());
+				
+			if(rs.next()) {
+				
+				
+				HnCode_w_n.setValue(rs.getString("HnCode"));
+				Fname_w_n.setValue(rs.getString("FName"));
+				Date_w_n.setValue(rs.getString("DocDate"));
+			}
+
+			
+			
+			
+			
+		}catch(Exception e){
+			e.printStackTrace();
+		}finally{
+			if (rs != null) {
+                rs.close();
+            }
+            
+            if (stmt != null) {
+                stmt.close();
+            }
+            
+            if (conn != null) {
+                conn.close();
+            }
+            
+		}
+ 		
+ 	}
+ 	
+ 	public void onDisplayCenterNorth() throws Exception {
+ 		
+ 		com.poseintelligence.cssd.db.Conn c = new com.poseintelligence.cssd.db.Conn();
+        Class.forName(c.S_MYSQL_DRIVER);
+        Connection conn = java.sql.DriverManager.getConnection(c.getHost(S_DB), c.S_USER, c.S_PASSWORD);
+        conn.setAutoCommit(false);
+        
+        Statement stmt = conn.createStatement();
+    	ResultSet rs = null;
+        
+		try{	
+			
+			rs = stmt.executeQuery(getSqlCenterNorth());
+				
+			if(rs.next()) {
 		
-		String S_Sql = "";
-		
-		S_Sql =
-			"SELECT" + 
-			"            payoutdetailsub.ID," + 
-			"            payoutdetailsub.ItemStockID," + 
-			"            payoutdetail.DocNo," + 
-			"            itemstock.UsageCode," +
-			"            item.itemname," + 
-			"            item.itemcode," + 
-			"            units.UnitName," + 
-			"            payoutdetailsub.Qty," + 
-			"            ( SELECT payout.IsBorrowStatus FROM payout WHERE payout.DocNo = '" + S_DocNo + "' LIMIT 1 ) AS IsBorrowStatus " + 
-			"          FROM" + 
-			"            payoutdetailsub" + 
-			"            INNER JOIN itemstock ON payoutdetailsub.ItemstockID = itemstock.RowID" + 
-			"            INNER JOIN payoutdetail ON payoutdetail.ID = payoutdetailsub.Payoutdetail_RowID" + 
-			"            INNER JOIN item ON itemstock.ItemCode = item.itemcode" + 
-			"            INNER JOIN units ON item.UnitID = units.ID " + 
-			"          WHERE" + 
-			"            payoutdetail.DocNo = '" + S_DocNo + "' "
-					+ "AND payoutdetailsub.IsStatus = 0";
-		
-		System.out.println(S_Sql);
-	
-		return S_Sql;
-	
+					
+				
+				Date_c_n.setValue(rs.getString("washdate"));
+				FItem_c_n.setValue(rs.getString("WashMachineName"));
+				Round_c_n.setValue(rs.getString("WashRoundNumber"));
+				sTime_c_n.setValue(rs.getString("timeSdatew"));
+				eTime_c_n.setValue(rs.getString("timeEdatew"));
+				
+				Approve_c_n.setValue("DDDDDDDDDD");
+				Approve_c_n2.setValue("FFFFFFFFFFFFFFFF");
+				
+				 
+				 Date_w_c.setValue(rs.getString("ddate"));
+				 FItem_w_c.setValue(rs.getString("itemname"));
+				 Usage_w_c.setValue(rs.getString("UsageCode"));
+
+
+				 Approve_c_c.setValue("XXXXXXXXXXXXXXX");
+				 Approve_c_c2.setValue("AAAAAAAAAa");
+				 
+				 Ready_e_c.setValue(rs.getString("ppsname"));
+				 Check_e_c.setValue(rs.getString("appsname"));
+				 
+				 Date_c_s.setValue(rs.getString("steriledate"));
+				 FItem_c_s.setValue(rs.getString("SterileMachineName"));
+				 Round_c_s.setValue(rs.getString("SterileRoundNumber"));
+				 sTime_c_s.setValue(rs.getString("timeSdates")+" น.");
+				 eTime_c_s.setValue(rs.getString("timeEdates")+" น.");
+				 
+				 
+			}
+
+			
+		}catch(Exception e){
+			e.printStackTrace();
+		}finally{
+			if (rs != null) {
+                rs.close();
+            }
+            
+            if (stmt != null) {
+                stmt.close();
+            }
+            
+            if (conn != null) {
+                conn.close();
+            }
+            
+		}
+ 		
+ 	}
+ 	
+ 	public void oncheck_save() throws Exception {
+ 		
+ 		if(!chk_add.isChecked()) {	
+
+ 			onSaveHn();
+ 		}else {
+ 			onSaveNewEmp();
+ 		}
+ 	}
+ 	
+ 	public void onSaveHn() throws Exception {
+ 		com.poseintelligence.cssd.db.Conn c = new com.poseintelligence.cssd.db.Conn();
+	        Class.forName(c.S_MYSQL_DRIVER);
+	        Connection conn = java.sql.DriverManager.getConnection(c.getHost(S_DB), c.S_USER, c.S_PASSWORD);
+	        conn.setAutoCommit(false);
+	        
+	        Statement stmt = conn.createStatement();
+	    	ResultSet rs = null;
+ 		try {
+ 		
+ 		String	DocNo =	TextboxDocNo.getText();
+
+ 		if(DocNo.equals("")) {
+ 			DocNo = generateDoc();
+ 			TextboxDocNo.setText(DocNo);
+ 			
+ 			TextboxDocDate.setText(DateTime.getDateNow());
+ 			System.out.println("gen Doc = "+DocNo);
+ 			String insert = "INSERT INTO hncode( " + 
+ 					"              hncode.DocNo, " + 
+ 					"              hncode.DocDate, " + 
+ 					"              hncode.HnCode, " + 
+ 					"              hncode.ModifyDate, " + 
+ 					"              hncode.UserCode, " + 
+ 					"              hncode.DeptID, " + 
+ 					"              hncode.Qty, " + 
+ 					"              hncode.DocNo_SS, " + 
+ 					"              hncode.IsStatus, " + 
+ 					"              hncode.Remark, " + 
+ 					"              hncode.IsCancel, " + 
+ 					"              hncode.B_ID " + 
+ 					"            	)VALUES( " + 
+ 					"              '"+DocNo+"', " + 
+ 					"              DATE(NOW()), " + 
+ 					"              '"+xHn_Code+"', " + 
+ 					"              NOW(), " + 
+ 					"              '"+S_UserId+"', " + 
+ 					"              '"+S_DeptId+"', " + 
+ 					"              0, " + 
+ 					"              '', " + 
+ 					"              0, " + 
+ 					"              '', " + 
+ 					"              0, " + 
+ 					"              '1' " + 
+ 					"            ) ";
+ 			stmt.executeUpdate(insert);
+ 			System.out.println("insert : "+insert);
+ 			
+ 			
+ 			onSaveHn_Detail(DocNo);
+ 			
+ 		}else {
+ 			
+ 			String update ="UPDATE hncode SET hncode.ModifyDate = NOW() , hncode.UserCode = '"+S_UserId+"', hncode.DeptID = '"+S_DeptId+"' WHERE DocNo = '"+DocNo+"' ";
+
+ 			stmt.executeUpdate(update);
+ 			
+ 			onSaveHn_Detail(DocNo);
+ 			
+ 		}
+ 		chk_add.setDisabled(true);
+ 		}catch (Exception e) {
+ 			e.printStackTrace();
+ 			Messagebox.show("ERROR onSaveHn : " + e.getMessage());
+ 			System.out.println("ERROR onSaveHn : " + e.getMessage());
+ 		}finally{
+ 				if (rs != null) {
+ 	                rs.close();
+ 	            }
+ 	            
+ 	            if (stmt != null) {
+ 	                stmt.close();
+ 	            }
+ 	            
+ 	            if (conn != null) {
+ 	                conn.close();
+ 	            }
+ 	            
+ 			}
+ 		
+ 	}
+ 	
+ 	public String generateDoc() throws Exception{
+ 		
+ 		com.poseintelligence.cssd.db.Conn c = new com.poseintelligence.cssd.db.Conn();
+	        Class.forName(c.S_MYSQL_DRIVER);
+	        Connection conn = java.sql.DriverManager.getConnection(c.getHost(S_DB), c.S_USER, c.S_PASSWORD);
+	        conn.setAutoCommit(false);
+	        
+	        Statement stmt = conn.createStatement();
+	    	ResultSet rs = null;
+ 		
+ 	    try {
+ 	    	
+ 		        String sql = "SELECT CONCAT('HN',SUBSTRING(YEAR(DATE(NOW())),3,4),LPAD(MONTH(DATE(NOW())),2,0),'-', LPAD( (COALESCE(MAX(CONVERT(SUBSTRING(DocNo,8,5),UNSIGNED INTEGER)),0)+1) ,5,0)) AS DocNo " + 
+ 						"        FROM hncode " + 
+ 						"        WHERE DocNo Like CONCAT('HN',SUBSTRING(YEAR(DATE(NOW())),3,4),LPAD(MONTH(DATE(NOW())),2,0),'%') " + 
+ 						"        ORDER BY DocNo DESC LIMIT 1";
+ 		      
+ 		  rs = stmt.executeQuery(sql);
+ 		  if(rs.next()) {
+ 			  DocNo = rs.getString("DocNo");
+ 		  }
+ 		  
+ 		  
+ 		  System.out.println(sql);
+ 		
+ 		  
+ 		  
+	 	}catch (Exception e) {
+	 		e.printStackTrace();
+	 		Messagebox.show("ERROR generateDoc : " + e.getMessage());
+	 		System.out.println("ERROR generateDoc : " + e.getMessage());
+	 	}finally{
+				if (rs != null) {
+		                rs.close();
+		            }
+		            
+		            if (stmt != null) {
+		                stmt.close();
+		            }
+		            
+		            if (conn != null) {
+		                conn.close();
+		            }
+		            
+				}
+			
+	 	    return DocNo;
+ 	}
+ 		
+ 	public void onSaveNewEmp() throws Exception {
+ 			
+ 			com.poseintelligence.cssd.db.Conn c = new com.poseintelligence.cssd.db.Conn();
+ 	        Class.forName(c.S_MYSQL_DRIVER);
+ 	        Connection conn = java.sql.DriverManager.getConnection(c.getHost(S_DB), c.S_USER, c.S_PASSWORD);
+ 	        conn.setAutoCommit(false);
+ 	        
+ 	        Statement stmt = conn.createStatement();
+ 	    	ResultSet rs = null;
+ 		
+ 			try {
+ 				
+ 				String sqll="SELECT COUNT(*) AS cnt FROM hotpitalnumber WHERE HnCode ='"+TextboxNameHN_Add.getText()+"'";
+ 				int cnt =0;
+ 				rs= stmt.executeQuery(sqll);
+ 				if(rs.next()) {
+ 					cnt = rs.getInt("cnt");
+ 				}
+ 				
+ 				if(cnt>0) {
+ 					
+ 					String updatee = "UPDATE  hotpitalnumber SET CreateDate = NOW() WHERE HnCode ='"+TextboxNameHN_Add.getText()+"'";
+ 					stmt.executeUpdate(updatee);
+// 					Messagebox.show("มีรายชื่อHNนี้อยู่แล้ว. \n รหัสHNเลขที่ : \n [ "+TextboxNameHN2.getText()+" ]" );
+ 				}else {
+ 				
+ 				String insert2 = "INSERT INTO hotpitalnumber( " + 
+ 						"              hotpitalnumber.FName, " + 
+ 						"              hotpitalnumber.CreateDate, " + 
+ 						"              hotpitalnumber.HnCode, " + 
+ 						"              hotpitalnumber.HnAge, " + 
+ 						"              hotpitalnumber.TitleName, " + 
+ 						"              hotpitalnumber.BrithDay " + 
+ 						"              )VALUES( " + 
+ 						"              '"+TextboxName_Add.getText()+"', " + 
+ 						"              NOW(), " + 
+ 						"              '"+TextboxNameHN_Add.getText()+"', " + 
+ 						"              '"+TextboxOld_Add.getText()+"', " + 
+ 						"              '"+Combobox_PreName.getText()+"', " + 
+ 						"              '"+DateTime.convertDate(DateboxBirthDay_Add.getText())+"' " + 
+ 						
+ 						"            ) ";
+ 				stmt.executeUpdate(insert2);
+ 				}
+ 			String	DocNo =	TextboxDocNo.getText();
+
+ 			
+ 			
+	 			if(DocNo.equals("")) {
+	 				DocNo = generateDoc();
+	 				TextboxDocNo.setText(DocNo);
+	 				TextboxDocDate.setText(DateTime.getDateNow());
+	 				System.out.println("gen Doc = "+DocNo);
+	 				String insert = "INSERT INTO hncode( " + 
+	 						"              hncode.DocNo, " + 
+	 						"              hncode.DocDate, " + 
+	 						"              hncode.HnCode, " + 
+	 						"              hncode.ModifyDate, " + 
+	 						"              hncode.UserCode, " + 
+	 						"              hncode.DeptID, " + 
+	 						"              hncode.Qty, " + 
+	 						"              hncode.DocNo_SS, " + 
+	 						"              hncode.IsStatus, " + 
+	 						"              hncode.Remark, " + 
+	 						"              hncode.IsCancel, " + 
+	 						"              hncode.B_ID " + 
+	 						"            	)VALUES( " + 
+	 						"              '"+DocNo+"', " + 
+	 						"              DATE(NOW()), " + 
+	 						"              '"+TextboxNameHN_Add.getText()+"', " + 
+	 						"              NOW(), " + 
+	 						"              '"+S_UserId+"', " + 
+	 						"              '"+S_DeptId+"', " + 
+	 						"              0, " + 
+	 						"              '', " + 
+	 						"              0, " + 
+	 						"              '', " + 
+	 						"              0, " + 
+	 						"              '1' " + 
+	 						"            ) ";
+	 				stmt.executeUpdate(insert);
+	 				
+	 				onSaveHn_Detail(DocNo);
+	 			}else {
+	 				
+	 				String update ="UPDATE hncode SET hncode.ModifyDate = DATE(NOW()) , hncode.UserCode = '"+S_UserId+"', hncode.DeptID = '"+S_DeptId+"' WHERE DocNo = '"+DocNo+"' ";
+	 				
+	 				stmt.executeUpdate(update);
+	 				onSaveHn_Detail(DocNo);
+//	 				onDisplay();
+	 			}
+	 			chk_add.setDisabled(true);
+ 			}catch (Exception e) {
+ 				e.printStackTrace();
+ 				Messagebox.show("ERROR onSaveHn : " + e.getMessage());
+ 				System.out.println("ERROR onSaveHn : " + e.getMessage());
+ 			}finally{
+ 				if (rs != null) {
+ 	                rs.close();
+ 	            }
+ 	            
+ 	            if (stmt != null) {
+ 	                stmt.close();
+ 	            }
+ 	            
+ 	            if (conn != null) {
+ 	                conn.close();
+ 	            }
+ 	            
+ 			}
+ 		}
+ 		
+ 	public void onSaveHn_Detail(String DocNo) throws Exception {
+ 			
+ 			com.poseintelligence.cssd.db.Conn c = new com.poseintelligence.cssd.db.Conn();
+ 	        Class.forName(c.S_MYSQL_DRIVER);
+ 	        Connection conn = java.sql.DriverManager.getConnection(c.getHost(S_DB), c.S_USER, c.S_PASSWORD);
+ 	        conn.setAutoCommit(false);
+ 	        
+ 	        Statement stmt = conn.createStatement();
+ 	    	ResultSet rs = null;
+ 	    	ResultSet rs2 = null;
+ 		try {
+ 				
+ 				if(TextboxQRcode.getText().equals("")) {
+ 					Messagebox.show("ไม่สามารถเพิ่มรายการได้	"," ", Messagebox.YES, Messagebox.INFORMATION);
+ 					
+ 					return;
+ 					}
+ 				
+ 				
+ 			String sql="select UsageCode,RowID,LastSterileDetailID  from itemstock WHERE IsStatus = '5' AND IsPay = '1' AND UsageCode='"+TextboxQRcode.getText()+"' ";
+ 			String RowID = null;
+ 			String LastSterileDetailID = null;
+ 			String UsageCode = null;
+// 			String HnCode = null;
+
+ 			int cntHn = 0;
+ 			rs = stmt.executeQuery(sql);
+ 							System.out.println("DocNo= "+sql);	
+
+ 							
+ 						if(rs.next()) {
+ 							UsageCode = rs.getString("UsageCode");
+ 							RowID = rs.getString("RowID");
+ 							LastSterileDetailID = rs.getString("LastSterileDetailID");
+// 							HnCode = rs2.getString("HnCode");
+ 				System.out.println("DocNo= "+DocNo);
+ 			
+ 				
+ 				
+ 				String sqll="SELECT COUNT(hncode_detail.ItemStockID) AS ItemStockID FROM hncode_detail INNER JOIN hncode ON hncode_detail.DocNo = hncode.DocNo "
+ 						+ "	WHERE hncode_detail.DocNo='"+DocNo+"' AND hncode_detail.ItemStockID ='"+RowID+"' ";
+ 				
+// 				
+ 				System.out.println("cnt= ItemStockID "+sqll);	
+ 				rs2 = stmt.executeQuery(sqll);
+ 				
+ 				if(rs2.next()) {
+ 					cntHn = rs2.getInt("ItemStockID");
+ 					
+ 				}
+ 				System.out.println("cntHn= "+cntHn);
+ 				
+ 				
+ 				
+ 				if(cntHn>0) {
+ 					Messagebox.show("มีรายชื่ออุปกรณ์นี้อยู่แล้ว. \n รหัสใช้งานเลขที่ : \n [ "+UsageCode+" ]" ," ", Messagebox.YES, Messagebox.INFORMATION);
+ 					System.out.println("AAAAAAAAAAAA");
+ 				}else {
+ 				
+ 				
+
+ 				String insert2 = "INSERT INTO hncode_detail( " + 
+ 						"              hncode_detail.DocNo, " + 
+ 						"              hncode_detail.ItemStockID, " + 
+ 						"              hncode_detail.Qty, " + 
+ 						"              hncode_detail.IsStatus, " + 
+ 						"              hncode_detail.IsCancel, " + 
+ 						"              hncode_detail.B_ID, " + 
+ 						"              hncode_detail.LastSterileDetailID " + 
+ 						"            	)VALUES( " + 
+ 						"              '"+DocNo+"', " + 
+ 						"              '"+RowID+"', " + 
+ 						"               '1', " + 
+ 						"               '1', " + 
+ 						"              	'0', " + 
+ 						"              	'1', " + 
+ 						"               " +isNull(LastSterileDetailID) + " " + 
+ 						"            )  ";
+ 				stmt.executeUpdate(insert2);
+ 				System.out.println("SSSSSSSSSSSSSSsssss");
+ 				}
+
+ 				
+ 				
+ 							
+ 					}	
+ 				TextboxQRcode.setText("");		
+ 				CreateDocument(DocNo);
+
+ 						
+ 				
+ 		}catch (Exception e) {
+ 			e.printStackTrace();
+ 			Messagebox.show("ERROR onSaveHn_Detail : " + e.getMessage());
+ 			System.out.println("ERROR onSaveHn_Detail : " + e.getMessage());
+ 		}finally{
+ 			if (rs != null) {
+ 	               rs.close();
+ 	           }
+ 			
+ 			if (rs2 != null) {
+	               rs2.close();
+	           }
+ 	            
+ 	           if (stmt != null) {
+ 	                stmt.close();
+ 	           }
+ 	            
+ 	           if (conn != null) {
+ 	                conn.close();
+ 	           }
+ 	            
+ 			}
+ 	}
+ 	public void CreateDocument(String DocNo)throws Exception {
+ 		
+ 		com.poseintelligence.cssd.db.Conn c = new com.poseintelligence.cssd.db.Conn();
+	        Class.forName(c.S_MYSQL_DRIVER);
+	        Connection conn = java.sql.DriverManager.getConnection(c.getHost(S_DB), c.S_USER, c.S_PASSWORD);
+	        conn.setAutoCommit(false);
+	        
+	        Statement stmt = conn.createStatement();
+	    	ResultSet rs = null;
+ 		try {
+ 			
+ 			
+ 			rs = stmt.executeQuery(getSqlCreateDocument(DocNo));
+ 			Listboxhncode.getItems().clear();
+ 			int No = 1;
+ 			
+ 			while(rs.next()) {
+ 				
+ 				Listitem list = new Listitem();
+ 				
+ 				list.appendChild(new Listcell(No + "."));
+ 				list.appendChild(new Listcell(rs.getString("UsageCode")));
+ 				list.appendChild(new Listcell(rs.getString("itemname")));
+ 				list.appendChild(Delete(rs.getString("ID"),DocNo));
+ 				
+ 				list.setAttribute("TextboxDocNo", rs.getString("DocNo"));
+ 				Listboxhncode.appendChild(list);
+
+
+ 				No++;
+ 			}
+ 		}catch (Exception e) {
+ 			e.printStackTrace();
+ 			Messagebox.show("ERROR CreateDocument : " + e.getMessage());
+ 			System.out.println("ERROR CreateDocument : " + e.getMessage());
+ 		}finally{
+ 				if (rs != null) {
+ 	                rs.close();
+ 	            }
+ 	            
+ 	            if (stmt != null) {
+ 	                stmt.close();
+ 	            }
+ 	            
+ 	            if (conn != null) {
+ 	                conn.close();
+ 	            }
+ 	            
+ 			}
 	}
-
-	
-//	=================================================================================================
-	
-//	saveBorrow  AND cancelBorrow
-	
-	private void onConfirmToPayout(final String S_DocNo) throws Exception{
-		
-		com.poseintelligence.cssd.db.Conn c = new com.poseintelligence.cssd.db.Conn();
+ 	
+ 	public Listcell Delete(final String ID,final String DocNo)throws Exception {
+ 		
+ 		Listcell lc = new Listcell();
+ 		
+ 		Image imgdel = new Image();
+ 		imgdel.setHeight("25px");
+ 		imgdel.setSrc("/img/delete-24.png");
+ 		imgdel.setStyle("align:center;");
+ 		lc.setStyle("align:center; ");
+ 		imgdel.addEventListener("onClick", new EventListener<Event>() {
+ 			public void onEvent(Event event) throws Exception {
+ 				onDeleteItem(ID);
+ 				
+ 				CreateDocument(DocNo);
+ 				
+ 			}
+ 			
+ 				});
+// 		System.out.println("newListcell " + sql);
+ 		
+ 		lc.appendChild(imgdel);
+ 		return lc;
+ 	}
+ 	
+ 	public void onDeleteItem(final String ID) throws Exception {
+ 		com.poseintelligence.cssd.db.Conn c = new com.poseintelligence.cssd.db.Conn();
         Class.forName(c.S_MYSQL_DRIVER);
         Connection conn = java.sql.DriverManager.getConnection(c.getHost(S_DB), c.S_USER, c.S_PASSWORD);
         conn.setAutoCommit(false);
         
         Statement stmt = conn.createStatement();
-        
-		try{
-			
-        	// Update Detail
-			String S_SqlDetail = 
-					
-					"UPDATE		payoutdetail "
-				+ 	"SET		IsStatus = 0 "
-				+ 	"WHERE		DocNo = '" + S_DocNo + "' ";
-	
-			String S_Sql = 
-					
-					"UPDATE		payout "
-				+ 	"SET		IsBorrowStatus = 7, "
-				+ 	"			ModifyDate = NOW(), "
-				+ 	"			Remark = 'ยืมบันทึก(รอคืน)' "
-				+ 	"WHERE		DocNo = '" + S_DocNo + "' ";
-	
-			System.out.println(S_SqlDetail);
-			System.out.println(S_Sql);
-					
-			stmt.executeUpdate(S_SqlDetail);
-	        stmt.executeUpdate(S_Sql);
-	        
-	        conn.commit();
-	        
-	        Messagebox.show("บันทึกสำเร็จ !!", "CSSD", Messagebox.OK, Messagebox.INFORMATION);
-            			
-		}catch(Exception e){
-			e.printStackTrace();
-		}finally {
-			
-	        if (stmt != null) {
-	            stmt.close();
-	        }
-	        
-	        if (conn != null) {
-	            conn.close();
-	        }
-	        
-
-			
-			
-	        this.S_DocNo = null;
-	    	Listbox_Document.getItems().clear();	
-	    	Listbox_DocumentDetail.getItems().clear();
-	    	
-	    	Textbox_SearchItemStock.setText("");
-	    	Textbox_SearchItemStock.focus();
-		}
-    }
-	
-	private void onConfirmToPayoutReturn(final String S_DocNo) throws Exception{
+    	ResultSet rs = null;
+		try {
+		stmt.executeUpdate("DELETE FROM hncode_detail WHERE ID = '"+ID+"' ");
 		
-		com.poseintelligence.cssd.db.Conn c = new com.poseintelligence.cssd.db.Conn();
+		System.out.println("DELETE ID : " +ID);
+		
+		} catch (Exception e) {
+			e.printStackTrace();
+			Messagebox.show("ERROR Delete : " + e.getMessage());
+			System.out.println("ERROR Delete : " + e.getMessage());
+		}finally{
+ 				if (rs != null) {
+ 	                rs.close();
+ 	            }
+ 	            
+ 	            if (stmt != null) {
+ 	                stmt.close();
+ 	            }
+ 	            
+ 	            if (conn != null) {
+ 	                conn.close();
+ 	            }
+ 	            
+ 			}
+ 	}
+ 	public void onUpdate() throws Exception {
+ 		com.poseintelligence.cssd.db.Conn c = new com.poseintelligence.cssd.db.Conn();
         Class.forName(c.S_MYSQL_DRIVER);
         Connection conn = java.sql.DriverManager.getConnection(c.getHost(S_DB), c.S_USER, c.S_PASSWORD);
         conn.setAutoCommit(false);
         
         Statement stmt = conn.createStatement();
-        ResultSet rs = null;
-        Statement stmt2 = conn.createStatement();
-        ResultSet rs2 = null;
-
-		try{
-			
-			Iterator<Listitem> li = Listbox_Return_Item.getSelectedItems().iterator();
-			
-			ArrayList<String> AS_ItemStockID = new ArrayList<String>();
-			ArrayList<String> AS_PayoutDetailSubID = new ArrayList<String>();
-			ArrayList<String> AS_UsageCode = new ArrayList<String>();
-
-			int _count =  0;
-			while(li.hasNext()){
-				Listitem list = (Listitem) li.next();	
-				
-				
-				AS_ItemStockID.add( (String)list.getAttribute("ItemStockID") );
-				AS_UsageCode.add( (String)list.getAttribute("UsageCode") );
-				AS_PayoutDetailSubID.add( (String)list.getAttribute("ID") );
-				
-				
-				_count ++;
-			}
-			
-//			count all
-			int _countAll = Listbox_Return_Item.getItemCount();
-
-			
-//			check count
-			
-			if(_count == _countAll) {
-	        	// Update Detail
-				String S_SqlUpdateStatus = 
-						
-						"UPDATE		payout "
-					+ 	"SET		IsBorrowStatus = 9 "
-					+ 	"WHERE		DocNo = '" + S_DocNo + "' ";
-				
-				System.out.println(S_SqlUpdateStatus);				
-				stmt.executeUpdate(S_SqlUpdateStatus);
-			}else {
-				String S_SqlUpdateStatus = 
-						
-						"UPDATE		payout "
-					+ 	"SET		IsBorrowStatus = 8 "
-					+ 	"WHERE		DocNo = '" + S_DocNo + "' ";
-				
-				System.out.println(S_SqlUpdateStatus);				
-				stmt.executeUpdate(S_SqlUpdateStatus);
-			}
-			
-			
-			
-        	for(int i=0; i< AS_PayoutDetailSubID.size(); i++) {        	
-        		
-        		String _Payoutdetail_RowID = null;
-        		int _Payoutdetail_Count = 0;
-
-        		String Sql_paydetailSub = "SELECT" + 
-        				"                 payoutdetailsub.Payoutdetail_RowID" + 
-        				"               FROM" + 
-        				"                 payoutdetailsub" + 
-        				"               WHERE" + 
-        				"                 payoutdetailsub.ID = '" + AS_PayoutDetailSubID.get(i) + "'  ";
-        		
-    			System.out.println(Sql_paydetailSub);			
-    			rs = stmt.executeQuery(Sql_paydetailSub);
-    			if(rs.next()) {
-    				_Payoutdetail_RowID = rs.getString("Payoutdetail_RowID");	 
-    			}
-        		
-        		String Sql_paydetailSubCount = "SELECT" + 
-		        				"                 COUNT(payoutdetailsub.Payoutdetail_RowID) AS count_paydetailsub" + 
-		        				"               FROM" + 
-		        				"                 payoutdetailsub" + 
-		        				"               WHERE" + 
-		        				"                 payoutdetailsub.Payoutdetail_RowID = '" + _Payoutdetail_RowID + "'  " + 
-								"               AND payoutdetailsub.IsStatus = 0  ";
-        		
-    			System.out.println(Sql_paydetailSubCount);			
-    			rs2 = stmt2.executeQuery(Sql_paydetailSubCount);
-    			if(rs2.next()) {
-    				_Payoutdetail_Count = rs2.getInt("count_paydetailsub");	 
-    			}
-    			
-    			if(_Payoutdetail_Count == 1) {
-    				String S_SqlUpdatePayoutDetail = 
-    						
-    						"UPDATE		payoutdetail "
-    					+ 	"SET		IsStatus = 1 "
-    					+ 	"WHERE		ID = '" + _Payoutdetail_RowID + "' ";
-    				
-    				System.out.println(S_SqlUpdatePayoutDetail);				
-    				stmt.executeUpdate(S_SqlUpdatePayoutDetail);
-    			}
-    			
-				String S_SqlUpdatePayoutDetailSub = 
-						
-						"UPDATE		payoutdetailsub "
-					+ 	"SET		IsStatus = 3 "
-					+ 	"WHERE		ID = '" + AS_PayoutDetailSubID.get(i) + "' ";
-				
-				System.out.println(S_SqlUpdatePayoutDetailSub);				
-				stmt.executeUpdate(S_SqlUpdatePayoutDetailSub);
-				
-				String S_SqlUpdateItemStock = 
-						
-						"UPDATE		itemstock "
-					+ 	"SET		IsDispatch = 0, "
-					+ 	"		    IsBorrow = 0 "
-					+ 	"WHERE		RowID = '" + AS_ItemStockID.get(i) + "' ";
-				
-				System.out.println(S_SqlUpdatePayoutDetailSub);				
-				stmt.executeUpdate(S_SqlUpdatePayoutDetailSub);
-				
-        		
-        	}
-
-
-	        
-	        conn.commit();
-	        
-	        Messagebox.show("บันทึกสำเร็จ !!", "CSSD", Messagebox.OK, Messagebox.INFORMATION);
-            			
-		}catch(Exception e){
-			e.printStackTrace();
-		}finally {
-			
-	        if (stmt != null) {
-	            stmt.close();
-	        }
-	        
-	        if (conn != null) {
-	            conn.close();
-	        }
-	        
-			onDisplayReturnDetail(S_DocNo, true);
-			onDisplayDocumentReturn();
-	        
-	        this.S_DocNo = null;
-	    	Listbox_Document.getItems().clear();	
-	    	Listbox_DocumentDetail.getItems().clear();
-	    	
-	    	Textbox_SearchItemStock.setText("");
-	    	Textbox_SearchItemStock.focus();
-		}
-    }
-
-	
-	
-	
-	
-	private void onCancelToPayout(final String S_DocNo) throws Exception{
-		
-		com.poseintelligence.cssd.db.Conn c = new com.poseintelligence.cssd.db.Conn();
-        Class.forName(c.S_MYSQL_DRIVER);
-        Connection conn = java.sql.DriverManager.getConnection(c.getHost(S_DB), c.S_USER, c.S_PASSWORD);
-        conn.setAutoCommit(false);
-        
-        Statement stmt = conn.createStatement();
-        
-		try{
-			
-        	// Update Detail
-//			String S_SqlDetail = 
-//					
-//					"UPDATE		payoutdetail "
-//				+ 	"SET		IsCancel = 0 "
-//				+ 	"WHERE		DocNo = '" + S_DocNo + "' ";
-	
-			String S_Sql = 
-					
-					"UPDATE		payout "
-				+ 	"SET		IsCancel = 1, "
-				+ 	"			ModifyDate = NOW(), "
-				+ 	"			Remark = 'ยกเลิกเอกสารยืม' "
-				+ 	"WHERE		DocNo = '" + S_DocNo + "' ";
-	
-//			System.out.println(S_SqlDetail);
-			System.out.println(S_Sql);
-					
-//			stmt.executeUpdate(S_SqlDetail);
-	        stmt.executeUpdate(S_Sql);
-	        
-	        conn.commit();
-	        
-	        Messagebox.show("ยกเลิกสำเร็จ !!", "CSSD", Messagebox.OK, Messagebox.INFORMATION);
-            			
-		}catch(Exception e){
-			e.printStackTrace();
-		}finally {
-			
-	        if (stmt != null) {
-	            stmt.close();
-	        }
-	        
-	        if (conn != null) {
-	            conn.close();
-	        }
-	        
-	        this.S_DocNo = null;
-	    	Listbox_Document.getItems().clear();	
-	    	Listbox_DocumentDetail.getItems().clear();
-	    	
-	    	Textbox_SearchItemStock.setText("");
-	    	Textbox_SearchItemStock.focus();
-		}
-    }
-
-//	
-
+    	ResultSet rs = null;
+ 		try {
+ 		
+ 		String	DocNo =	TextboxDocNo.getText();
+ 		
+ 			if(DocNo.trim().equals("")) {
+ 				
+ 			}else {
+ 			
+ 			String update ="UPDATE hncode SET hncode.IsStatus = 1  WHERE DocNo = '"+DocNo+"' ";
+ 			
+ 			stmt.executeUpdate(update);
+ 			Messagebox.show("บันทึกสำเร็จ"," ", Messagebox.YES, Messagebox.INFORMATION);
+ 			onclr();
+ 			onDisplayHistoryDetail2();
+ 			}
+ 		}catch (Exception e) {
+ 			e.printStackTrace();
+ 			Messagebox.show("ERROR onSaveHn : " + e.getMessage());
+ 			System.out.println("ERROR onSaveHn : " + e.getMessage());
+ 		}finally{
+ 				if (rs != null) {
+ 	                rs.close();
+ 	            }
+ 	            
+ 	            if (stmt != null) {
+ 	                stmt.close();
+ 	            }
+ 	            
+ 	            if (conn != null) {
+ 	                conn.close();
+ 	            }
+ 	            
+ 			}
+ 	}
+ 	
+ 	public void onclr() {
+ 		
+ 		TextboxDocNo.setText("");
+ 		TextboxDocDate.setText("");
+ 		TextboxBirthDayHn2.setText("");
+ 		TextboxBirthDayHn.setText("");
+ 		TextboxName_Add.setText("");
+ 		TextboxQRcode.setText("");
+ 		TextboxOld_Add.setText("");
+ 		ComboboxNameHN_Add.setText("");
+ 		Listboxhncode.getItems().clear();
+ 		chk_add.setDisabled(false);
+ 	}
+ 	
+ 	public void checkage() {
+ 		
+ 		String year = DateTime.getYearNow();
+ 		String year_add =  DateboxBirthDay_Add.getText().substring(6,10);
+ 		int age ;
+ 		age = Integer.parseInt(year) - Integer.parseInt(year_add);
+ 		
+ 		TextboxOld_Add.setText(Integer.toString(age));
+ 		
+ 	}
+ 	
+ 	
+ 	public void openHnWiwdon() {
+ 		
+// 		HNwindow.getChildren().clear();
+ 		HNwindow.setVisible(true);
+ 		HNwindow.setFocus(true);
+ 		HNwindow.setPosition("center");
+ 		HNwindow.setMode("modal");
+ 		HNwindow.setClosable(true);		
+ 	}
+ 	
+ 	private String isNull(String Value){
+ 		return Value == null ? null : ("'" + Value + "'");
+ 	}
 }
