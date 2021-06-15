@@ -5,167 +5,362 @@
 
 <zk>
 
-	
-	<window id="WindowForm" apply="com.poseintelligence.cssd.transaction.DepartmentSendSterile" style="background: #2e5fbd;" title="" border="normal" height="100%" width="100%">
 
-		<caption image="/images/ic_use_equipment_w.png" style="background: #2e5fbd;color:#FFFFFF;font-size:20px;" label="แผนกส่งล้าง (Send Sterile by Department)"/> 
-				
-		<borderlayout id="Main" height="100%" width="100%" >
-	        
-	        <north height="37px" border="none">
-	        	<borderlayout>
-	        		<center border="none">
-		        		<div align="right" height="37px">		
-			           		<hlayout valign="middle" height="37px" >
-			
-			           			<combobox id="Combobox_Status" width="150px" text="ใบส่งล้างทั้งหมด">
-			           				<comboitem label="ใบส่งล้างทั้งหมด"/>
-			           				<comboitem label="ยังไม่ได้ส่ง"/>
-			           				<comboitem label="ส่งแล้ว"/>
-			           			</combobox>			        
-			           		
-			           			<label value="วันที่" />
-								<datebox id="Datebox_SDocDate" width="125px" format="dd-MM-yyyy" style="" />
-			
+	<window id="WindowForm"
+		apply="com.poseintelligence.cssd.transaction.DepartmentSendSterile"
+		style="background: #2e5fbd;" title="" border="normal" height="100%"
+		width="100%">
+
+		<caption image="/images/ic_use_equipment_w.png"
+			style="background: #2e5fbd;color:#FFFFFF;font-size:20px;"
+			label="แผนกส่งล้าง (Send Sterile by Department)" />
+		<tabbox>
+			<tabs id="tb" height="100%" width="100%">
+				<tab id="washcssd" label="ส่งล้างจ่ายกลาง" width="10%" />
+				<tab id="washdep" label="แผนกล้างเอง" width="10%" />
+			</tabs>
+		</tabbox>
+		<borderlayout id="Main" height="731px" width="100%">
+			<north height="37px" border="none">
+				<borderlayout>
+					<center border="none">
+						<div align="right" height="37px">
+							<hlayout valign="middle" height="37px">
+
+								<combobox id="Combobox_Status"
+									width="150px" text="ใบส่งล้างทั้งหมด">
+									<comboitem label="ใบส่งล้างทั้งหมด" />
+									<comboitem label="ยังไม่ได้ส่ง" />
+									<comboitem label="ส่งแล้ว" />
+								</combobox>
+
+								<label value="วันที่" />
+								<datebox id="Datebox_SDocDate"
+									width="125px" format="dd-MM-yyyy" style="" />
+
 								<label value="-" style="color:#428bca;" />
-								<datebox id="Datebox_EDocDate" width="125px" format="dd-MM-yyyy" style="" />
-			           		
-								<label value="ใบส่งล้าง" style="color:#333333;position:relative;top:0px;left:30px;" />
-								
-								<textbox id="Textbox_Search" style="position:relative;top:0px;left:33px;background: #ffffff;border: 1px solid #666666; color:#666666;" width="165px" />
-								
-								<image id="Image_SearchDoc" style="position:relative;top:0px;" src="/images/ic_search_c.png" width="24px" height="24px"/>
-								
-								<button id="Button_SearchDoc" visible="false" label="ค้นหา" image="/images/ic_search.png" width="100px" height="25px" style="color:#333333;background: #f7f7f7;border-radius: 4px;"/>	
-							
+								<datebox id="Datebox_EDocDate"
+									width="125px" format="dd-MM-yyyy" style="" />
+
+								<label value="ใบส่งล้าง"
+									style="color:#333333;position:relative;top:0px;left:30px;" />
+
+								<textbox id="Textbox_Search"
+									style="position:relative;top:0px;left:33px;background: #ffffff;border: 1px solid #666666; color:#666666;"
+									width="165px" />
+
+								<image id="Image_SearchDoc"
+									style="position:relative;top:0px;"
+									src="/images/ic_search_c.png" width="24px" height="24px" />
+
+								<button id="Button_SearchDoc"
+									visible="false" label="ค้นหา" image="/images/ic_search.png"
+									width="100px" height="25px"
+									style="color:#333333;background: #f7f7f7;border-radius: 4px;" />
+
 							</hlayout>
 						</div>
-	        		</center>
-	        		
-	        		<west border="none" width="40%">
-	        			<div align="right" height="37px">		
-			           		<hlayout valign="middle" height="37px" spacing="10px">
-			           		
-			           			<checkbox id="Checkbox_Group" label="แยก / รวม" mold="switch"/>
-			           			
-			           			<checkbox id="Checkbox_Mode" label="Text / QR" mold="switch"/>
+					</center>
 
-								<label id="Label_Search" value="ค้นหา"  style="color:#333333;position:relative;top:3px;left:38px;top:0px"/> 
-								
-								<textbox id="Textbox_SearchItemStock" style="background: #ffffff;border: 1px solid #666666; color:#666666;position:relative;top:3px;left:38px;top:0px" width="165px" />
-								
-								<image id="Image_Search" src="/images/ic_search_c.png" width="24px" height="24px"/>
-								
-								<button id="Button_SearchItemStock" visible="false" label="ค้นหา" image="/images/ic_search.png" width="95px" height="25px" style="color:#333333;background: #FFFFFF;"/>
-								
-								<button id="Button_Send" label="นำเข้า" image="/images/ic_import.png" width="85px" height="25px" style="color:#ffffff;background: #1eac74;border-radius: 4px;"/>
+					<west border="none" width="40%">
+						<div align="right" height="37px">
+							<hlayout valign="middle" height="37px"
+								spacing="10px">
+
+								<checkbox id="Checkbox_Group"
+									label="แยก / รวม" mold="switch" />
+
+								<checkbox id="Checkbox_Mode"
+									label="Text / QR" mold="switch" />
+
+								<label id="Label_Search" value="ค้นหา"
+									style="color:#333333;position:relative;top:3px;left:38px;top:0px" />
+
+								<textbox id="Textbox_SearchItemStock"
+									style="background: #ffffff;border: 1px solid #666666; color:#666666;position:relative;top:3px;left:38px;top:0px"
+									width="165px" />
+
+								<image id="Image_Search"
+									src="/images/ic_search_c.png" width="24px" height="24px" />
+
+								<button id="Button_SearchItemStock"
+									visible="false" label="ค้นหา" image="/images/ic_search.png"
+									width="95px" height="25px"
+									style="color:#333333;background: #FFFFFF;" />
+
+								<button id="Button_Send" label="นำเข้า"
+									image="/images/ic_import.png" width="85px" height="25px"
+									style="color:#ffffff;background: #1eac74;border-radius: 4px;" />
 							</hlayout>
 						</div>
-	        		</west>
-	        	</borderlayout>
-	        </north>
-	        
-	        <center border="none">
-	        
-	        	<borderlayout>
-	        		<north border="none" height="208px" splittable="true">
-			        	<vlayout spacing="1px" vflex="true" style="background: #f4f4f4;">
-			        		<listbox id="Listbox_Document" vflex="true" mold="paging" pageSize="17" multiple="false" >
-				        		<listhead>
-				        			<listheader label="No." width="50px" style="background: #2e5fbd;color:#FFFFFF;font-size:16px;"/>
-				        			<listheader label="วันที่" width="90px" align="center" style="background: #2e5fbd;color:#FFFFFF;font-size:16px;"/>
-				        			<listheader label="เลขที่ใบส่งล้าง"  width="115px" align="center" style="background: #2e5fbd;color:#FFFFFF;font-size:15px;"/>
-				        			<listheader label="จำนวนเช็ท" width="80px" align="center" style="background: #2e5fbd;color:#FFFFFF;font-size:14px;"/>
-				        			<listheader label="หมายเหตุ"    style="background: #2e5fbd;color:#FFFFFF;font-size:16px;"/>
-				        			<listheader label="Hn" width="80px" id="Listhead_Hn" align="center" style="background: #2e5fbd;color:#FFFFFF;font-size:14px;"/>
-				        			<listheader label="#" width="100px" align="center" style="background: #2e5fbd;color:#FFFFFF;font-size:16px;"/>
-			        			</listhead>
-			        		</listbox>
-			        	</vlayout>
-	        		</north>
-	        	
-	        		<center border="none">
-	        			<vlayout spacing="1px" vflex="true" style="background: #f4f4f4;">
-			        		<listbox id="Listbox_DocumentDetail" vflex="true" mold="paging" pageSize="17" multiple="true" checkmark="true">
-				        		<listhead>
-				        			<listheader label="No." width="65px" style="background: #2e5fbd;color:#FFFFFF;font-size:16px;"/>
-				        			<listheader label="UsageID" width="130px" align="center" style="background: #2e5fbd;color:#FFFFFF;font-size:16px;"/>
-				        			<listheader label="ชื่ออุปกรณ์"  align="left" style="background: #2e5fbd;color:#FFFFFF;font-size:16px;"/>
-				        			<listheader label="MFG" width="85px" align="center" style="background: #2e5fbd;color:#FFFFFF;font-size:16px;"/>
-				        			<listheader label="EXP" width="85px" align="center" style="background: #2e5fbd;color:#FFFFFF;font-size:16px;"/>
-				        			<listheader label="TAG" width="85px" align="center" id="Listhead_Tag" style="background: #2e5fbd;color:#FFFFFF;font-size:16px;"  />
-				        			<listheader width="100px" align="center" style="background: #2e5fbd;">
-				        				<hlayout valign="bottom">
-				        					<label id="Label_Resterile" value="Resterile" style="background: #2e5fbd;color:#FFFFFF;font-size:12px;cursor: pointer;"/>
-				        					<image id="Image_Resterile" width="18px" height="18px" src="/images/alert_0.png" style="cursor: pointer;" tooltiptext="Resterile"/>
-				        				</hlayout>
-				        			</listheader>
-				        			
-				        			<listheader width="100px" align="center" style="background: #2e5fbd;">
-				        				<hlayout valign="bottom">
-				        					<label id="Label_Delete" value="ลบรายการ" style="background: #2e5fbd;color:#FFFFFF;font-size:12px;cursor: pointer;"/>
-				        					<image id="Image_Delete" width="18px" height="18px" src="/images/ic_delete_2.png" style="cursor: pointer;" tooltiptext="ลบรายการ"/>
-				        				</hlayout>
-				        			</listheader>
-				        			
-			        			</listhead>
-			        		</listbox>
-			        	</vlayout>
-	        		</center>
-	        	</borderlayout>
-	        </center>
-	        
-	        <west width="40%" splittable="true">
-	        	<vlayout spacing="1px" vflex="true" style="background: #f4f4f4;">
-	        		<listbox id="Listbox_ItemStock" vflex="true" mold="paging" pageSize="20" multiple="true" checkmark="true">
-		        		<listhead>
-		        			<listheader label="" width="35px" align="center" style="background: #2e5fbd;color:#FFFFFF;font-size:16px;"/>     			
-		        			<listheader id="Listheader_UsageID" label="UsageID" width="130px" align="center" style="background: #2e5fbd;color:#FFFFFF;font-size:16px;"/>
-		        			<listheader label="ชื่ออุปกรณ์"  align="left" style="background: #2e5fbd;color:#FFFFFF;font-size:16px;"/>
-		        			<listheader id="Listheader_Mfg" label="MFG" width="85px" align="center" style="background: #2e5fbd;color:#FFFFFF;font-size:16px;"/>
-		        			<listheader id="Listheader_Exp" label="EXP" width="85px" align="center" style="background: #2e5fbd;color:#FFFFFF;font-size:16px;"/>
-	        			</listhead>
-	        		</listbox>
-	        	</vlayout>
-	        </west>
-	        
-	   	</borderlayout>
-   	</window>
-   	
-   	<!-- Info -->
-    <window id="Window_PopUp" border="normal" closable="true" visible="false" onClose="event.stopPropagation();self.setVisible(false);" />
-    
-    <window id="Window_PopUp_hn" height="500px" width="700px" visible="false" border="normal" closable="true"  position="center,center"   title="HN คนไข้" onClose="event.stopPropagation();self.setVisible(false);">
-    	<borderlayout id="PopUp_borderlayout">
-    		<north border="none" id="PopUp_north">
-    		<vlayout id="PopUp_vlayout">
-    				<label value="HN" />
-                  	<combobox id="ComboboxNameHN" width="100%" style="background:#FFFFFF;color:#000000;" autodrop="true" buttonVisible="false" />   			
-                  			
-   					 <label value="ชื่อคนไข้ " />
-   					<textbox id="txtNameHn"  width="100%"/>
-   					   					
-   					 <label value="Operation" />
-   					<textbox id="txtOperationHn"  width="100%"/>
-   					
-   					<hlayout style="text-align: end;" id="PopUp_hlayout">
-   					   	<button id="btnAddHn"    label="เพิ่มรายชื่อคนไข้"  width="130px" height="25px" style="color:#ffffff;background: #007bff;"/>
-   						<button id="btnSaveHn"    label="บันทึกHN" visible = "false"  width="130px" height="25px" style="color:#ffffff;background: #007bff;"/>
-   						<button id="btnCancelHn"  label="ยกเลิก"    width="130px" height="25px" style="color:#ffffff;background: #dc3545;"/>
-   					</hlayout>
-    		</vlayout>
+					</west>
+				</borderlayout>
+			</north>
 
-    		</north>
-    	</borderlayout>
+			<center border="none">
 
-    </window>
-    
-    
-    
+				<borderlayout>
+					<north border="none" height="208px"
+						splittable="true">
+						<vlayout spacing="1px" vflex="true"
+							style="background: #f4f4f4;">
+							<listbox id="Listbox_Document" vflex="true"
+								mold="paging" pageSize="17" multiple="false">
+								<listhead>
+									<listheader label="No." width="50px"
+										style="background: #2e5fbd;color:#FFFFFF;font-size:16px;" />
+									<listheader label="วันที่"
+										width="90px" align="center"
+										style="background: #2e5fbd;color:#FFFFFF;font-size:16px;" />
+									<listheader label="เลขที่ใบส่งล้าง"
+										width="115px" align="center"
+										style="background: #2e5fbd;color:#FFFFFF;font-size:15px;" />
+									<listheader label="จำนวนเช็ท"
+										width="80px" align="center"
+										style="background: #2e5fbd;color:#FFFFFF;font-size:14px;" />
+									<listheader label="หมายเหตุ"
+										style="background: #2e5fbd;color:#FFFFFF;font-size:16px;" />
+									<listheader label="Wash"
+										width="80px" id="Listhead_Wash" align="center" visible="false"
+										style="background: #2e5fbd;color:#FFFFFF;font-size:14px;" />
+									<listheader label="Hn" width="80px"
+										id="Listhead_Hn" align="center"
+										style="background: #2e5fbd;color:#FFFFFF;font-size:14px;" />
+									<listheader label="#" width="100px"
+										align="center"
+										style="background: #2e5fbd;color:#FFFFFF;font-size:16px;" />
+								</listhead>
+							</listbox>
+						</vlayout>
+					</north>
+
+					<center border="none">
+						<vlayout spacing="1px" vflex="true"
+							style="background: #f4f4f4;">
+							<listbox id="Listbox_DocumentDetail"
+								vflex="true" mold="paging" pageSize="17" multiple="true"
+								checkmark="true">
+								<listhead>
+									<listheader label="No." width="65px"
+										style="background: #2e5fbd;color:#FFFFFF;font-size:16px;" />
+									<listheader label="UsageID"
+										width="130px" align="center"
+										style="background: #2e5fbd;color:#FFFFFF;font-size:16px;" />
+									<listheader label="ชื่ออุปกรณ์"
+										align="left"
+										style="background: #2e5fbd;color:#FFFFFF;font-size:16px;" />
+									<listheader label="MFG" width="85px"
+										align="center"
+										style="background: #2e5fbd;color:#FFFFFF;font-size:16px;" />
+									<listheader label="EXP" width="85px"
+										align="center"
+										style="background: #2e5fbd;color:#FFFFFF;font-size:16px;" />
+									<listheader label="TAG" width="85px"
+										align="center" id="Listhead_Tag"
+										style="background: #2e5fbd;color:#FFFFFF;font-size:16px;" />
+									<listheader width="100px"
+										align="center" style="background: #2e5fbd;">
+										<hlayout valign="bottom">
+											<label id="Label_Resterile"
+												value="Resterile"
+												style="background: #2e5fbd;color:#FFFFFF;font-size:12px;cursor: pointer;" />
+											<image id="Image_Resterile"
+												width="18px" height="18px" src="/images/alert_0.png"
+												style="cursor: pointer;" tooltiptext="Resterile" />
+										</hlayout>
+									</listheader>
+
+									<listheader width="100px"
+										align="center" style="background: #2e5fbd;">
+										<hlayout valign="bottom">
+											<label id="Label_Delete"
+												value="ลบรายการ"
+												style="background: #2e5fbd;color:#FFFFFF;font-size:12px;cursor: pointer;" />
+											<image id="Image_Delete"
+												width="18px" height="18px" src="/images/ic_delete_2.png"
+												style="cursor: pointer;" tooltiptext="ลบรายการ" />
+										</hlayout>
+									</listheader>
+
+								</listhead>
+							</listbox>
+						</vlayout>
+					</center>
+				</borderlayout>
+			</center>
+
+			<west width="40%" splittable="true">
+				<vlayout spacing="1px" vflex="true"
+					style="background: #f4f4f4;">
+					<listbox id="Listbox_ItemStock" vflex="true"
+						mold="paging" pageSize="20" multiple="true" checkmark="true">
+						<listhead>
+							<listheader label="" width="35px"
+								align="center"
+								style="background: #2e5fbd;color:#FFFFFF;font-size:16px;" />
+							<listheader id="Listheader_UsageID"
+								label="UsageID" width="130px" align="center"
+								style="background: #2e5fbd;color:#FFFFFF;font-size:16px;" />
+							<listheader label="ชื่ออุปกรณ์" align="left"
+								style="background: #2e5fbd;color:#FFFFFF;font-size:16px;" />
+							<listheader id="Listheader_Mfg" label="MFG"
+								width="85px" align="center"
+								style="background: #2e5fbd;color:#FFFFFF;font-size:16px;" />
+							<listheader id="Listheader_Exp" label="EXP"
+								width="85px" align="center"
+								style="background: #2e5fbd;color:#FFFFFF;font-size:16px;" />
+						</listhead>
+					</listbox>
+				</vlayout>
+			</west>
+
+		</borderlayout>
+	</window>
+
+	<!-- Info -->
+	<window id="Window_PopUp" border="normal" closable="true"
+		visible="false"
+		onClose="event.stopPropagation();self.setVisible(false);" />
+
+	<window id="Window_PopUp_Wash" closable="true" visible="false" height="300px" width="700px"
+		border="normal"  position="center,center"
+		title="Wash"
+		onClose="event.stopPropagation();self.setVisible(false);">
+		<borderlayout id="PopUp_borderlayout_wash">
+			<north border="none" id="PopUp_north_wash">
+				<vlayout id="PopUp_vlayout_wash">
+					<label value="washprocess " />
+					<combobox id="washprocessName" width="100%"
+						style="background:#FFFFFF;color:#000000;" 
+						text="กรุณาเลือก washprocess" />
+					<label value="washmachine" />
+					<combobox id="washmachineName" width="100%"
+						style="background:#FFFFFF;color:#000000;" 
+						text="กรุณาเลือก washmachine" />
+					<hlayout style="text-align: center"
+						id="PopUp_hlayout_wash">
+						<button id="btnAddWash" label="บันทึก"
+							width="130px" height="25px"
+							style="color:#ffffff;background: #007bff;" />
+					</hlayout>
+				</vlayout>
+			</north>
+		</borderlayout>
+
+	</window>
+
+	<window id="Window_PopUp_hn" height="500px" width="700px"
+		visible="false" border="normal" closable="true"
+		position="center,center" title="HN คนไข้"
+		onClose="event.stopPropagation();self.setVisible(false);">
+		<borderlayout id="PopUp_borderlayout">
+			<north border="none" id="PopUp_north">
+				<vlayout id="PopUp_vlayout">
+					<label value="HN" />
+					<combobox id="ComboboxNameHN" width="100%"
+						style="background:#FFFFFF;color:#000000;" autodrop="true"
+						buttonVisible="false" />
+
+					<label value="ชื่อคนไข้ " />
+					<textbox id="txtNameHn" width="100%" />
+
+					<label value="Operation" />
+					<textbox id="txtOperationHn" width="100%" />
+
+					<hlayout style="text-align: end;"
+						id="PopUp_hlayout">
+						<button id="btnAddHn" label="เพิ่มรายชื่อคนไข้"
+							width="130px" height="25px"
+							style="color:#ffffff;background: #007bff;" />
+						<button id="btnSaveHn" label="บันทึกHN"
+							visible="false" width="130px" height="25px"
+							style="color:#ffffff;background: #007bff;" />
+						<button id="btnCancelHn" label="ยกเลิก"
+							width="130px" height="25px"
+							style="color:#ffffff;background: #dc3545;" visible="false" />
+					</hlayout>
+				</vlayout>
+
+			</north>
+		</borderlayout>
+
+	</window>
+
+	<window id="Window_PopUp_hn_Detail" height="500px" width="700px"
+		visible="false" border="normal" closable="true"
+		position="center,center" title="รายละเอียด HN"
+		onClose="event.stopPropagation();self.setVisible(false);">
+		<borderlayout id="PopUp_borderlayout_Detail">
+			<north border="none" id="PopUp_north_Detail">
+				<vlayout id="PopUp_vlayout_Detail">
+
+
+					<hlayout id="PopUp_hlayout_text_Detail_main_1">
+						<vlayout
+							id="PopUp_vlayout_text_Detail_sub_1_1">
+							<label value="HN " />
+							<textbox id="txtHn_Detail" width="300px"
+								readonly="true" />
+						</vlayout>
+					</hlayout>
+
+
+					<hlayout id="PopUp_hlayout_text_Detail_main_2">
+						<vlayout
+							id="PopUp_vlayout_text_Detail_sub_2_1">
+							<label value="ชื่อคนไข้ " />
+							<textbox id="txtNameHn_Detail" width="300px"
+								readonly="true" />
+						</vlayout>
+						<vlayout
+							id="PopUp_vlayout_text_Detail_sub_2_2">
+							<label value="Operation" />
+							<textbox id="txtOperationHn_Detail"
+								width="300px" readonly="true" />
+						</vlayout>
+					</hlayout>
+
+
+					<hlayout id="PopUp_hlayout_text_Detail_main_3">
+						<listbox id="Listbox_HnDetail" vflex="true"
+							mold="paging" pageSize="20" multiple="true" checkmark="false">
+							<listhead>
+								<listheader label="ลำดับ" width="130px"
+									align="center"
+									style="background: #2e5fbd;color:#FFFFFF;font-size:16px;" />
+								<listheader label="รายการ" align="left"
+									style="background: #2e5fbd;color:#FFFFFF;font-size:16px;" />
+								<listheader label="รหัสอุปกรณ์	"
+									width="150px" align="center"
+									style="background: #2e5fbd;color:#FFFFFF;font-size:16px;" />
+								<listheader label="ลบ" width="85px"
+									align="center"
+									style="background: #2e5fbd;color:#FFFFFF;font-size:16px;" />
+							</listhead>
+						</listbox>
+					</hlayout>
+
+
+					<div align="right" id="PopUp_hlayout_btn_Detail2">
+						<button id="btnSendHn_Detail" label="ส่ง"
+							width="130px" height="25px"
+							style="color:#ffffff;background: #007bff;" />
+					</div>
+				</vlayout>
+
+			</north>
+		</borderlayout>
+
+	</window>
+
+
+
 	<!-- In Process-->
-	<window id="WinProcess" border="normal" width="175px" height="175px" visible="false" onClick="self.setVisible(false);">
+	<window id="WinProcess" border="normal" width="175px" height="175px"
+		visible="false" onClick="self.setVisible(false);">
 		<div align="center">
-		  	<image src="/images/loading3_3.gif" width="160px" height="160px" />
+			<image src="/images/loading3_3.gif" width="160px"
+				height="160px" />
 		</div>
 	</window>
 </zk>

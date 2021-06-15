@@ -6,7 +6,7 @@ import java.sql.Statement;
 
 public class SendSterile {
 	
-	public static String getSendSterileDocNo(String S_DB, String S_RefDocNo, String S_DeptId, String S_UserId, String S_Status, String S_Remark) throws Exception {
+	public static String getSendSterileDocNo(String S_DB, String S_RefDocNo, String S_DeptId, String S_UserId, String S_Status, String S_Remark , int washdep) throws Exception {
 		com.poseintelligence.cssd.db.Conn c = new com.poseintelligence.cssd.db.Conn();
         Class.forName(c.S_MYSQL_DRIVER);
         Connection conn = java.sql.DriverManager.getConnection(c.getHost(S_DB), c.S_USER, c.S_PASSWORD);
@@ -47,7 +47,8 @@ public class SendSterile {
 		     	+ 	"   Remark, "
 		       	+ 	"   RefDocNo, "
 		       	+ 	"   IsWeb, "
-		       	+ 	"   IsStatus "
+		       	+ 	"   IsStatus, "
+		       	+ 	"   IsWashDept "
 		      	+ 	"   ) "
 		        + 	"VALUES "
 		      	+ 	"   (   "
@@ -61,7 +62,8 @@ public class SendSterile {
 		       	+ 	"   '" + S_Remark + "', "
 		      	+ 	"   '" + S_RefDocNo + "', "
 		      	+ 	"   1,"
-		      	+ 	" 	" + S_Status 
+		      	+ 	" 	" + S_Status + ", "
+		      	+ 	" 	" + washdep 
 		      	+ 	") ";
 	
 				System.out.println(S_SqlCreateSendSterile);

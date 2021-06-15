@@ -370,7 +370,7 @@ public class DepartmentBorrow extends GenericForwardComposer{
         		String isStatus = "2";
         		String DepartmentRef = (String)Combobox_Department.getSelectedItem().getValue();
         		
-        		S_PADocNo = Payout.getPayoutDocNo(S_DB, "", S_DeptId, S_UserId, isStatus, "สร้างใบจ่ายเอกสารยืม" , DepartmentRef);
+        		S_PADocNo = Payout.getPayoutDocNo(S_DB, "", S_DeptId, S_UserId, isStatus, "สร้างใบจ่ายเอกสารยืม" , null);
         		
     
         		
