@@ -6,7 +6,7 @@
 	<style>
        tr.z-listitem-seld { background-image:none; background-color:yellow;}
     </style>
-  
+ 
   	<window id="WindowForm" apply="com.poseintelligence.cssd.transaction.DepartmentHn"  style="background: #2e5fbd;" title="" border="normal" height="100%" width="100%">
 	
 		<caption image="/images/ic_stock_w.png" style="background: #2e5fbd;color:#FFFFFF;font-size:20px;" label="สืบค้นข้อมูลจาก HN"/> 

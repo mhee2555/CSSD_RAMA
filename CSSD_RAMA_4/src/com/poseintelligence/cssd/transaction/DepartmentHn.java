@@ -36,7 +36,7 @@ public class DepartmentHn extends GenericForwardComposer{
 	private Image    Image_Search;
 	private Listbox  Listbox_ItemLeft;
 	private Listbox  Listbox_Document;
-	private Listbox  Listbox_DocumentDetail;
+	private Listbox  Listbox_DocumentDetail; 
 	private Listbox  Listbox_Return_Document;
 	private Listbox  Listbox_Return_Item;
 	private Textbox  Textbox_SearchItemStock;
